@@ -120,9 +120,6 @@ export default function AddNewPage() {
             className=" p-1 rounded-md border-2 outline-primary"
           />
         </div>
-        <SaleDialog />
-        <DeliveryMoodle />
-        <TruckMoodle />
       </div>
     </>
   );
