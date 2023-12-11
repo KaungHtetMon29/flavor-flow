@@ -1,6 +1,6 @@
 import DeliveryMoodle from "@/components/Navbar/moodles/deliveryModle";
-import SaleMoodle from "@/components/Navbar/moodles/saleModle";
-import StockMoodle from "@/components/Navbar/moodles/stockMoodle";
+import SaleMoodle, { SaleDialog } from "@/components/Navbar/moodles/saleModle";
+import TruckMoodle from "@/components/Navbar/moodles/truckMoodle";
 
 export default function AddNewPage() {
   return (
@@ -120,9 +120,9 @@ export default function AddNewPage() {
             className=" p-1 rounded-md border-2 outline-primary"
           />
         </div>
-        {/* <SaleMoodle /> */}
+        <SaleDialog />
         <DeliveryMoodle />
-        {/* <StockMoodle /> */}
+        <TruckMoodle />
       </div>
     </>
   );
