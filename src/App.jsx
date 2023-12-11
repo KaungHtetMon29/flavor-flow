@@ -6,18 +6,22 @@ import SplashPage from './pages/SplashPage'
 import Signup from './pages/Signup'
 import Login from './pages/Login'
 import Home from './pages/Home'
-import { PreorderTable } from './components/PreorderTable/PreorderTable'
+import { StockTable } from './components/StockTable/StockTable'
+import { PreorderTable } from './components/PreorderFinalTable/PreorderTable'
+import TruckTable from './components/TruckTable/TruckTable'
 
 const App = () => (
   <>
-  <PreorderTable />
-  <Routes>
+  {/* <PreorderTable  /> */}
+  <TruckTable />
+  {/* <StockTable /> */}
+  {/* <Routes>
     <Route path="/" element={<SplashPage/>}></Route>
     <Route path='/signup' element={<Signup/>}></Route>
     <Route path='/login' element={<Login/>}></Route>
     <Route path='/home' element={<Home/>}></Route>
     <Route path="*" element={<ErrorPage/>}> </Route>
-  </Routes>
+  </Routes> */}
   </>
 )
 
