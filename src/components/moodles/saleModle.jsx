@@ -10,8 +10,9 @@ import {
 } from "@/components/ui/dialog";
 import { useMemo } from "react";
 import Moodle from "./moodleComponent";
+import ListOverflow from "./listOverflow";
 
-export function SaleDialog() {
+export default function SaleMoodle() {
   const defaultData = [
     { name: "blah", quantity: 10, price: 1000 },
     { name: "blah", quantity: 10, price: 1000 },
@@ -34,9 +35,9 @@ export function SaleDialog() {
           <h3>Town:</h3>
           <span>blhab lahf</span>
         </div>
-        <h4 className="font-bold">Order items</h4>
-        <hr />
-        <ul className="flex flex-col justify-start overflow-auto max-h-[26vh]">
+        {/* <h4 className="font-bold">Order items</h4>
+        <hr /> */}
+        {/* <ul className="flex flex-col justify-start overflow-auto max-h-[26vh]">
           {defaultData.map((data, index) => (
             <li key={index} className=" flex justify-between p-1">
               <h5>{data.name}</h5>
@@ -49,7 +50,12 @@ export function SaleDialog() {
         <div className=" flex justify-start">
           <h5>Total : </h5>
           <span>{total}ks</span>
-        </div>
+        </div> */}
+        <ListOverflow
+          totalPrice={total}
+          data={defaultData}
+          header={"Ordere items"}
+        ></ListOverflow>
       </section>
       <DialogFooter>
         <footer className="flex p-1 justify-start items-start w-full">

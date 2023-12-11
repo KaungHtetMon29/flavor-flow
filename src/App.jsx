@@ -6,7 +6,7 @@ import SplashPage from "./pages/SplashPage";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import Home from "./pages/Home";
-import AddNewPage from "./pages/addNewPage";
+import TestMoodles from "./components/moodles/tester";
 
 const App = () => (
   <Routes>
@@ -15,7 +15,7 @@ const App = () => (
     <Route path="/login" element={<Login />}></Route>
     <Route path="/home" element={<Home />}></Route>
     <Route path="*" element={<ErrorPage />}></Route>
-    <Route path="/addNewPage" element={<AddNewPage />}></Route>
+    <Route path="/testMoodles" element={<TestMoodles />}></Route>
   </Routes>
 );
 

@@ -1,4 +1,5 @@
-export default function ListOverflow({ children, data, header }) {
+// unorderlist for incoming datas with scrolling bar
+export default function ListOverflow({ children, data, header, totalPrice }) {
   return (
     <>
       <h4 className="font-bold">{header}</h4>
@@ -12,6 +13,11 @@ export default function ListOverflow({ children, data, header }) {
           </li>
         ))}
       </ul>
+      <hr />
+      <div className=" flex justify-start">
+        <h5>Total : </h5>
+        <span>{totalPrice}ks</span>
+      </div>
       {children}
     </>
   );

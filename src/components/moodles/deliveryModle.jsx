@@ -59,13 +59,11 @@ export default function DeliveryMoodle() {
             </li>
           </ul>
         </div>
-        <ListOverflow data={defaultData} header={"order items"}>
-          <hr />
-          <div className=" flex justify-start">
-            <h5>Total : </h5>
-            <span>{total}ks</span>
-          </div>
-        </ListOverflow>
+        <ListOverflow
+          data={defaultData}
+          header={"order items"}
+          totalPrice={total}
+        ></ListOverflow>
       </section>
     </Moodle>
   );
