@@ -9,12 +9,16 @@ import Home from "./pages/Home";
 import { StockTable } from "./components/StockTable/StockTable";
 import { PreorderTable } from "./components/PreorderFinalTable/PreorderTable";
 import TruckTable from "./components/TruckTable/TruckTable";
+import DelistatusTable from "./components/Delistatus/DelistatusTable";
+import DeliveryTable from "./components/DeliveryTable/DeliveryTable";
 
 const App = () => (
 	<>
-		{/* <PreorderTable  /> */}
+		<PreorderTable  />
 		<TruckTable />
-		{/* <StockTable /> */}
+    <DeliveryTable />
+    <DelistatusTable />
+		<StockTable />
 		{/* <Routes>
     <Route path="/" element={<SplashPage/>}></Route>
     <Route path='/signup' element={<Signup/>}></Route>

@@ -7,6 +7,7 @@ import {
 	TableHeader,
 	TableRow,
 } from "@/components/ui/table";
+
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -16,42 +17,43 @@ import {
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+
 import { Button } from "@/components/ui/button";
+
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
-
-
-const DelistatusTable = () => {
+const DeliveryTable = () => {
 	const [status, setStatus] = React.useState("sending");
 	const [isArrowUp, setIsArrowUp] = useState(false);
 	const handleDropdownOpenChange = (isOpen) => {
 		setIsArrowUp(isOpen);
 	};
-	const handlerClick = () => {
-		//click functionality
-	};
 	return (
 		<Table>
 			<TableHeader>
 				<TableRow>
-					<TableHead className="w-[200px] text-[22px]">
-						Preorder ID
-					</TableHead>
+					<TableHead className="w-[100px] text-[22px]">ID</TableHead>
 					<TableHead className="text-[22px]">Truck ID</TableHead>
-					<TableHead className="text-[22px]">Region</TableHead>
+					<TableHead className="text-[22px]">Town</TableHead>
+					<TableHead className="text-[22px]">Order ID</TableHead>
+					<TableHead className="text-[22px]">Distance</TableHead>
 					<TableHead className="text-[22px]">Status</TableHead>
 				</TableRow>
 			</TableHeader>
 			<TableBody>
 				<TableRow>
-					<TableCell className="font-medium">1</TableCell>
-					<TableCell className="text-[18px]">12/321</TableCell>
-					<TableCell className="text-[18px]">Yangon</TableCell>
+					<TableCell className="font-medium text-[18px]">INV001</TableCell>
+					<TableCell className="text-[18px]">Paid</TableCell>
+					<TableCell className="text-[18px]">Credit Card</TableCell>
+					<TableCell className="text-[18px]">1234</TableCell>
+					<TableCell className="text-[18px]">123 mile</TableCell>
 					<TableCell>
-						{/* //dropdown// */}
 						<DropdownMenu onOpenChange={handleDropdownOpenChange}>
 							<DropdownMenuTrigger asChild>
-								<Button variant="outline" className="flex gap-3">
-									{status}
+								<Button
+									variant="outline"
+									className="flex gap-3 items-center"
+								>
+									<p>{status}</p>
 									{isArrowUp ? (
 										<IoIosArrowUp />
 									) : (
@@ -68,23 +70,18 @@ const DelistatusTable = () => {
 									value={status}
 									onValueChange={setStatus}
 								>
+									<DropdownMenuRadioItem value="processing">
+										Processing
+									</DropdownMenuRadioItem>
 									<DropdownMenuRadioItem value="sending">
 										Sending
 									</DropdownMenuRadioItem>
-									<DropdownMenuRadioItem value="pending">
-										Pending
-									</DropdownMenuRadioItem>
-									<DropdownMenuRadioItem value="cancel">
-										Cancel
+									<DropdownMenuRadioItem value="sent">
+										Sent
 									</DropdownMenuRadioItem>
 								</DropdownMenuRadioGroup>
 							</DropdownMenuContent>
 						</DropdownMenu>
-					</TableCell>
-					<TableCell>
-						<Button variant={"outline"} onClick={handlerClick}>
-							Assignment
-						</Button>
 					</TableCell>
 				</TableRow>
 			</TableBody>
@@ -92,4 +89,4 @@ const DelistatusTable = () => {
 	);
 };
 
-export default DelistatusTable;
+export default DeliveryTable;
