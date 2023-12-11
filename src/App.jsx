@@ -6,8 +6,11 @@ import SplashPage from './pages/SplashPage'
 import Signup from './pages/Signup'
 import Login from './pages/Login'
 import Home from './pages/Home'
+import { PreorderTable } from './components/PreorderTable/PreorderTable'
 
 const App = () => (
+  <>
+  <PreorderTable />
   <Routes>
     <Route path="/" element={<SplashPage/>}></Route>
     <Route path='/signup' element={<Signup/>}></Route>
@@ -15,6 +18,7 @@ const App = () => (
     <Route path='/home' element={<Home/>}></Route>
     <Route path="*" element={<ErrorPage/>}> </Route>
   </Routes>
+  </>
 )
 
 export default App
