@@ -1,11 +1,10 @@
-import React from 'react'
+import Sidenav from '@/components/SideNav/Sidenav';
+import MainLayout from '@/layout/MainLayout';
+import React, { useEffect } from 'react'
 
 const Home = () => {
-  return (
-    <div>
-      <h1>This is Home</h1>
-    </div>
-  )
+  
+  return <MainLayout><p className='text-black'>te</p></MainLayout>
 }
 
-export default Home
+export default Home;
