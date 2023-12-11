@@ -19,7 +19,7 @@ export default function SearchDropdown() {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent
-          className={`border-2 w-40 flex flex-col mt-2 rounded-xl`}
+          className={`border-2 z-[50] w-40 flex flex-col mt-2 rounded-xl  bg-white shadow-md`}
         >
           <DropdownMenuCheckboxItem
             className={`p-2 ${

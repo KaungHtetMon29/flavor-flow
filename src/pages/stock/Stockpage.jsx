@@ -16,17 +16,14 @@ import SidepageLayout from "@/layout/SidepageFrame";
 import SidepagebdyLayout from "@/layout/sidepagebdylayout";
 import React, { useEffect } from "react";
 
-const Home = () => {
+const Stockpage = () => {
   return (
     <MainLayout>
       <SidepageLayout>
         <SearchBox />
-        <SearchDropdown />
-        <CalendarComponent />
-        <Sortfunction />
       </SidepageLayout>
       <SidepagebdyLayout>
-        <PreorderTable />
+        <StockTable />
       </SidepagebdyLayout>
       <FooterFrame>
         <AddNewBtn />
@@ -35,4 +32,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Stockpage;

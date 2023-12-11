@@ -16,7 +16,7 @@ import SidepageLayout from "@/layout/SidepageFrame";
 import SidepagebdyLayout from "@/layout/sidepagebdylayout";
 import React, { useEffect } from "react";
 
-const Home = () => {
+const DeliPage = () => {
   return (
     <MainLayout>
       <SidepageLayout>
@@ -26,7 +26,7 @@ const Home = () => {
         <Sortfunction />
       </SidepageLayout>
       <SidepagebdyLayout>
-        <PreorderTable />
+        <DeliveryTable />
       </SidepagebdyLayout>
       <FooterFrame>
         <AddNewBtn />
@@ -35,4 +35,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default DeliPage;

@@ -16,7 +16,7 @@ import SidepageLayout from "@/layout/SidepageFrame";
 import SidepagebdyLayout from "@/layout/sidepagebdylayout";
 import React, { useEffect } from "react";
 
-const Home = () => {
+const SalePage = () => {
   return (
     <MainLayout>
       <SidepageLayout>
@@ -35,4 +35,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default SalePage;
