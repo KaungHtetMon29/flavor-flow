@@ -19,10 +19,10 @@ export default function SearchDropdown() {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent
-          className={`border-2 z-[50] w-40 flex flex-col mt-2 rounded-xl  bg-white shadow-md`}
+          className={`border-2 z-[50] w-[11.5rem] flex flex-col mt-2 rounded-xl  bg-white shadow-md`}
         >
           <DropdownMenuCheckboxItem
-            className={`p-2 ${
+            className={`p-2 cursor-pointer ${
               checkboxstatus === "sending"
                 ? "opacity-100 font-semibold"
                 : "opacity-70"
@@ -32,7 +32,7 @@ export default function SearchDropdown() {
             Sending
           </DropdownMenuCheckboxItem>
           <DropdownMenuCheckboxItem
-            className={`p-2 ${
+            className={`p-2 cursor-pointer ${
               checkboxstatus === "sent"
                 ? "opacity-100 font-semibold"
                 : "opacity-70"
@@ -42,7 +42,7 @@ export default function SearchDropdown() {
             Sent
           </DropdownMenuCheckboxItem>
           <DropdownMenuCheckboxItem
-            className={`p-2 ${
+            className={`p-2 cursor-pointer ${
               checkboxstatus === "processing"
                 ? "opacity-100 font-semibold"
                 : "opacity-70"

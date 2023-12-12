@@ -14,8 +14,7 @@ export default function ListOverflow({ children, data, header, totalPrice }) {
           </li>
         ))}
       </ul>
-
-      <div className=" flex justify-start border-b-2 border-black">
+      <div className=" flex justify-end pr-5 gap-3 pb-2 border-b-2 border-black">
         <h5 className="font-bold ">Total : </h5>
         <span>{totalPrice}ks</span>
       </div>

@@ -5,7 +5,7 @@ export default function Sidenav({ navs, mainroute }) {
   const navi = useNavigate();
   const location = useLocation();
   return (
-    <div className="sticky w-[300px] py-12 min-h-[100vh] max-h-full bg-gray-200 text-xl font-semibold items-center flex flex-col gap-6">
+    <div className="sticky shadow-lg w-[300px] py-12 min-h-[100vh] max-h-full bg-gray-200 text-xl font-semibold items-center flex flex-col gap-6">
       <div className="">
         {console.log(location.pathname.split("/")[2])}
         <div

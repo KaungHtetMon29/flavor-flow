@@ -23,12 +23,12 @@ export default function SaleMoodle({ hide }) {
   console.log("been here");
   return (
     <NormalMoodle hide={hide}>
-      <div className="flex justify-between my-2">
-        <h3>Client name:</h3>
+      <div className="flex justify-start my-2">
+        <h3 className="w-3/12">Client name:</h3>
         <span>blhab lahf</span>
       </div>
-      <div className="flex justify-between my-2 border-b-2 border-black">
-        <h3>Town:</h3>
+      <div className="flex justify-start my-2 border-b-2 border-black">
+        <h3 className="w-3/12">Town:</h3>
         <span>blhab lahf</span>
       </div>
       <ListOverflow
