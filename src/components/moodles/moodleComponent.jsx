@@ -9,11 +9,11 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 
-export default function Moodle({ children, moodleName }) {
+export default function Moodle({ children, buttonName }) {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline">{moodleName} </Button>
+        <Button variant="outline">{buttonName}</Button>
       </DialogTrigger>
       <DialogContent className="sm:min-w-[30vw]">
         {/* <DialogHeader>

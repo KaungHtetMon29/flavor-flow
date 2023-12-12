@@ -18,6 +18,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
+import TruckMoodle from "../moodles/truckMoodle";
+import { IoCar } from "react-icons/io5";
 
 const DelistatusTable = () => {
   const [status, setStatus] = React.useState("sending");
@@ -84,9 +86,9 @@ const DelistatusTable = () => {
             </DropdownMenu>
           </TableCell>
           <TableCell>
-            <Button variant={"outline"} onClick={handlerClick}>
-              Assignment
-            </Button>
+            <TruckMoodle>
+              <IoCar />
+            </TruckMoodle>
           </TableCell>
         </TableRow>
       </TableBody>

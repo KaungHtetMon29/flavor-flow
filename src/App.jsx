@@ -12,6 +12,7 @@ import Stockpage from "./pages/stock/Stockpage";
 import DeliPage from "./pages/Delipage/Delipage";
 import RouteProtector from "./pages/salemain/Salemain";
 import TruckPage from "./pages/Truckpage/Truckpage";
+import DeliStatus from "./pages/Delistatus/Delistatus";
 
 const App = () => {
   const navi = useNavigate();
@@ -35,7 +36,7 @@ const App = () => {
           <RouteProtector mroute={"logistic"} subroute={"deliverystatus"} />
         }
       >
-        <Route path="deliverystatus" element={<SalePage />}></Route>
+        <Route path="deliverystatus" element={<DeliStatus />}></Route>
         <Route path="truck" element={<TruckPage />}></Route>
       </Route>
 

@@ -6,6 +6,7 @@ import { PreorderTable } from "@/components/PreorderFinalTable/PreorderTable";
 import Sidenav from "@/components/SideNav/Sidenav";
 import { StockTable } from "@/components/StockTable/StockTable";
 import TruckTable from "@/components/TruckTable/TruckTable";
+import DeliveryMoodle from "@/components/moodles/deliveryModle";
 import SearchBox from "@/components/searchbox/Searchbox";
 import SearchDropdown from "@/components/searchdropdown/Searchdropdown";
 import Sortfunction from "@/components/sort/Sortfunction";

@@ -1,10 +1,11 @@
 // unorderlist for incoming datas with scrolling bar
+
 export default function ListOverflow({ children, data, header, totalPrice }) {
   return (
     <>
       <h4 className="font-bold">{header}</h4>
-      <hr />
-      <ul className="w-full flex flex-col justify-start max-h-[26vh] overflow-auto">
+
+      <ul className="w-full flex flex-col border-b-2 border-black my-2 justify-start max-h-[26vh] overflow-auto">
         {data.map((data, index) => (
           <li key={index} className=" flex justify-between p-1">
             <h5>{data.name}</h5>
@@ -13,9 +14,9 @@ export default function ListOverflow({ children, data, header, totalPrice }) {
           </li>
         ))}
       </ul>
-      <hr />
-      <div className=" flex justify-start">
-        <h5>Total : </h5>
+
+      <div className=" flex justify-start border-b-2 border-black">
+        <h5 className="font-bold ">Total : </h5>
         <span>{totalPrice}ks</span>
       </div>
       {children}

@@ -26,7 +26,7 @@ const DeliStatus = () => {
         <Sortfunction />
       </SidepageLayout>
       <SidepagebdyLayout>
-        <DeliStatus />
+        <DelistatusTable />
       </SidepagebdyLayout>
       <FooterFrame>
         <AddNewBtn />

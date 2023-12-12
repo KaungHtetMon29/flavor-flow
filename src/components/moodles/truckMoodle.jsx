@@ -1,3 +1,5 @@
+import { IoCar } from "react-icons/io5";
+
 import {
   Command,
   CommandEmpty,
@@ -20,6 +22,7 @@ import {
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import clsx from "clsx";
+import { Input } from "../ui/input";
 export function TruckCommand() {
   const truckLists = [
     { truckId: 0, truckNo: "6042" },
@@ -39,7 +42,7 @@ export function TruckCommand() {
         (truckList) =>
           truckLists
             .map((truck) => {
-              if (truck.truckNo.includes(commandSearchText)) {
+              if (truck.truckNo.indexOf(commandSearchText) !== -1) {
                 return truck;
               }
               return null;
@@ -81,15 +84,80 @@ export function TruckCommand() {
 
 export default function TruckMoodle() {
   return (
-    <Moodle moodleName={"truck moodle"}>
+    <Moodle buttonName={"Assignment"}>
       <div className="grid gap-1 py-2">
         <section className=" relative flex flex-col justify-start w-full rounded-lg">
           <label>Record No:</label>
           <input className=" border rounded-md p-1 my-3" type="text" />
           <label>Truck No:</label>
-          <TruckCommand />
+          <Truck_Command>
+            <IoCar />
+          </Truck_Command>
         </section>
       </div>
     </Moodle>
+  );
+}
+
+export function Truck_Command({ children }) {
+  const truckLists = [
+    { truckId: 0, truckNo: "60424" },
+    { truckId: 1, truckNo: "15242" },
+    { truckId: 2, truckNo: "24353" },
+    { truckId: 3, truckNo: "32241" },
+    { truckId: 4, truckNo: "43244" },
+    { truckId: 5, truckNo: "52429" },
+    { truckId: 6, truckNo: "243583" },
+    { truckId: 7, truckNo: "32241" },
+    { truckId: 8, truckNo: "43224" },
+    { truckId: 9, truckNo: "52342" },
+  ];
+  const [commandSearchText, setcommandSearchText] = useState("");
+  const [truckList, setTruckList] = useState(truckLists);
+
+  useEffect(() => {
+    if (commandSearchText) {
+      setTruckList(
+        (truckList) =>
+          truckLists
+            .map((truck) => {
+              if (truck.truckNo.indexOf(commandSearchText) !== -1) {
+                return truck;
+              }
+              return null;
+            })
+            .filter(Boolean)
+        //filter unidefined truck
+      );
+    } else {
+      setTruckList([]);
+    }
+  }, [commandSearchText]);
+  console.log(commandSearchText, "current search text");
+  console.log(truckList, "current trucks");
+  return (
+    <div className="flex flex-col justify-between h-fit">
+      <Input
+        className={"rounded-md p-2 w-full z-20"}
+        onChange={(e) => setcommandSearchText(e.target.value)}
+      />
+      <ul className="w-full flex flex-col overflow-auto max-h-[30vh] justify-start ">
+        {truckList &&
+          truckList.map((truck) => (
+            <li
+              className=" flex justify-start items-center p-2 border rounded-md hover:bg-slate-500"
+              key={truck.truckId}
+            >
+              {children}
+              <span className="mx-4 "> {truck.truckNo}</span>
+            </li>
+          ))}
+      </ul>
+      {truckList.length === 0 && commandSearchText && (
+        <small className="text-sm text-yellow-400 p-2 text-start">
+          No results
+        </small>
+      )}
+    </div>
   );
 }

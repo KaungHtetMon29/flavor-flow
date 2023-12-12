@@ -1,18 +1,10 @@
-import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
 import { useMemo } from "react";
-import Moodle from "./moodleComponent";
 import ListOverflow from "./listOverflow";
 
-export default function SaleMoodle() {
+import { Button } from "../ui/button";
+import NormalMoodle from "./normalMoodle";
+
+export default function SaleMoodle({ hide }) {
   const defaultData = [
     { name: "blah", quantity: 10, price: 1000 },
     { name: "blah", quantity: 10, price: 1000 },
@@ -28,45 +20,29 @@ export default function SaleMoodle() {
     defaultData.forEach((data) => (total += data.price));
     return total;
   }, [defaultData]);
+  console.log("been here");
   return (
-    <Moodle moodleName={"Sale Moodle"}>
-      <section className=" relative flex flex-col justify-start p-10 w-full rounded-lg ">
-        <div className="flex justify-between my-2">
-          <h3>Town:</h3>
-          <span>blhab lahf</span>
-        </div>
-        {/* <h4 className="font-bold">Order items</h4>
-        <hr /> */}
-        {/* <ul className="flex flex-col justify-start overflow-auto max-h-[26vh]">
-          {defaultData.map((data, index) => (
-            <li key={index} className=" flex justify-between p-1">
-              <h5>{data.name}</h5>
-              <h5>{data.quantity}</h5>
-              <h5>{data.price}ks</h5>
-            </li>
-          ))}
-        </ul>
-        <hr />
-        <div className=" flex justify-start">
-          <h5>Total : </h5>
-          <span>{total}ks</span>
-        </div> */}
-        <ListOverflow
-          totalPrice={total}
-          data={defaultData}
-          header={"Ordere items"}
-        ></ListOverflow>
-      </section>
-      <DialogFooter>
-        <footer className="flex p-1 justify-start items-start w-full">
-          <span className="mr-2 font-bold">Note: </span>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos
-            veniam suscipit volupt
-          </p>
-        </footer>
-        {/* <Button type="submit">Save changes</Button> */}
-      </DialogFooter>
-    </Moodle>
+    <NormalMoodle hide={hide}>
+      <div className="flex justify-between my-2">
+        <h3>Client name:</h3>
+        <span>blhab lahf</span>
+      </div>
+      <div className="flex justify-between my-2 border-b-2 border-black">
+        <h3>Town:</h3>
+        <span>blhab lahf</span>
+      </div>
+      <ListOverflow
+        totalPrice={total}
+        data={defaultData}
+        header={"Ordere items"}
+      ></ListOverflow>
+      <footer className="flex p-1 justify-start items-start w-full">
+        <span className="mr-2 font-bold">Note: </span>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos
+          veniam suscipit volupt
+        </p>
+      </footer>
+    </NormalMoodle>
   );
 }

@@ -6,10 +6,7 @@ import TruckMoodle from "./truckMoodle";
 export default function TestMoodles() {
   return (
     <>
-      <DeliveryMoodle />
-      <SaleMoodle />
       <TruckMoodle />
-      <AddNewOrder />
     </>
   );
 }
