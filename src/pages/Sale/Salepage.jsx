@@ -29,7 +29,7 @@ const SalePage = () => {
         <PreorderTable />
       </SidepagebdyLayout>
       <FooterFrame>
-        <AddNewBtn />
+        <AddNewBtn route="new" />
       </FooterFrame>
     </MainLayout>
   );

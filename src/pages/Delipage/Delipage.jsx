@@ -21,16 +21,11 @@ const DeliPage = () => {
     <MainLayout>
       <SidepageLayout>
         <SearchBox />
-        <SearchDropdown />
-        <CalendarComponent />
-        <Sortfunction />
+        <SearchBox />
       </SidepageLayout>
       <SidepagebdyLayout>
         <DeliveryTable />
       </SidepagebdyLayout>
-      <FooterFrame>
-        <AddNewBtn />
-      </FooterFrame>
     </MainLayout>
   );
 };

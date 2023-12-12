@@ -8,7 +8,7 @@ export default function CalendarComponent() {
   return (
     <div className="select-none ">
       <IoIosCalendar
-        className="text-[3rem]"
+        className="text-[3.3rem]"
         onClick={() => {
           setshowdate(!showdate);
         }}

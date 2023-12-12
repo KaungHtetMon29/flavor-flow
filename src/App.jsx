@@ -12,6 +12,9 @@ import Stockpage from "./pages/stock/Stockpage";
 import DeliPage from "./pages/Delipage/Delipage";
 import RouteProtector from "./pages/salemain/Salemain";
 import TruckPage from "./pages/Truckpage/Truckpage";
+import DelistatusTable from "./components/Delistatus/DelistatusTable";
+import DeliStatus from "./pages/Delistatus/Delistatus";
+import AddSalePage from "./pages/Sale/addsale/AddSale";
 
 const App = () => {
   const navi = useNavigate();
@@ -26,6 +29,7 @@ const App = () => {
         element={<RouteProtector mroute={"sale"} subroute={"preorder"} />}
       >
         <Route path="preorder" element={<SalePage />}></Route>
+        <Route path="preorder/new" element={<AddSalePage />}></Route>
         <Route path="stock" element={<Stockpage />}></Route>
         <Route path="delivery" element={<DeliPage />}></Route>
       </Route>
@@ -35,7 +39,7 @@ const App = () => {
           <RouteProtector mroute={"logistic"} subroute={"deliverystatus"} />
         }
       >
-        <Route path="deliverystatus" element={<SalePage />}></Route>
+        <Route path="deliverystatus" element={<DeliStatus />}></Route>
         <Route path="truck" element={<TruckPage />}></Route>
       </Route>
 

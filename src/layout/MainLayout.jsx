@@ -9,6 +9,11 @@ import CalendarComponent from "@/components/Calendar/Calendarcomponent";
 import { LuArrowUpDown } from "react-icons/lu";
 import { useLocation, useParams, useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { FaBoxArchive, FaList, FaCar } from "react-icons/fa6";
+import { RxAvatar } from "react-icons/rx";
+import { IoCheckmarkDoneCircle } from "react-icons/io5";
+import { IoIosDocument } from "react-icons/io";
+
 export default function MainLayout(props) {
   const params = useLocation();
   const [path, setpath] = useState();
@@ -28,13 +33,37 @@ export default function MainLayout(props) {
 }
 
 export const salepaths = [
-  { path: "preorder", pathname: "Pre-Order" },
-  { path: "stock", pathname: "Stock" },
-  { path: "client", pathname: "Client" },
-  { path: "delivery", pathname: "Delivery" },
-  { path: "permission", pathname: "Permission" },
+  {
+    path: "preorder",
+    pathname: "Pre-Order",
+    icon: <FaList className="text-2xl" />,
+  },
+  {
+    path: "stock",
+    pathname: "Stock",
+    icon: <FaBoxArchive className="text-2xl" />,
+  },
+  {
+    path: "client",
+    pathname: "Client",
+    icon: <RxAvatar className="text-3xl" />,
+  },
+  {
+    path: "delivery",
+    pathname: "Delivery",
+    icon: <FaCar className="text-2xl" />,
+  },
+  {
+    path: "permission",
+    pathname: "Permission",
+    icon: <IoCheckmarkDoneCircle className="text-3xl" />,
+  },
 ];
 export const logisticpaths = [
-  { path: "deliverystatus", pathname: "Delivery Status" },
-  { path: "truck", pathname: "Truck" },
+  {
+    path: "deliverystatus",
+    pathname: "Delivery Status",
+    icon: <IoIosDocument className="text-4xl" />,
+  },
+  { path: "truck", pathname: "Truck", icon: <FaCar className="text-3xl" /> },
 ];
