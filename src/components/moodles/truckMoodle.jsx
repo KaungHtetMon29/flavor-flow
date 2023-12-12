@@ -70,17 +70,18 @@ export function Truck_Command({ children }) {
     }
   };
   return (
-    <div className="flex flex-col justify-between h-fit">
+    <div className="flex flex-col justify-between h-fit relative">
+      {/*form dropdown style fix*/}
       <Input
-        className={"rounded-md p-2 w-full z-20"}
+        className={"rounded-md p-2 w-full z-20 relative"}
         value={selectedTruckNo || commandSearchText}
         onChange={(e) => handleSearchingCarNo(e.target.value)}
       />
-      <ul className="w-full flex flex-col overflow-auto max-h-[30vh] justify-start ">
-        {truckList &&
-          truckList.map((truck) => (
+      {truckList && (
+        <ul className="w-fit z-50 flex flex-col overflow-auto max-h-[30vh] justify-start absolute">
+          {truckList.map((truck) => (
             <li
-              className=" flex justify-start items-center p-2 border rounded-md hover:bg-slate-500"
+              className=" flex z-50 justify-start items-center p-2 border rounded-md hover:bg-slate-500"
               key={truck.truckId}
               onClick={() => hanldeSelectCarNo(truck.truckNo)}
             >
@@ -88,9 +89,10 @@ export function Truck_Command({ children }) {
               <span className="mx-4 "> {truck.truckNo}</span>
             </li>
           ))}
-      </ul>
+        </ul>
+      )}
       {truckList.length === 0 && commandSearchText && (
-        <small className="text-sm text-yellow-400 p-2 text-start">
+        <small className="text-sm text-yellow-400 p-2 text-start absolute z-50">
           No results
         </small>
       )}

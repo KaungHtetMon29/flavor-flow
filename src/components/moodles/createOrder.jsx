@@ -2,6 +2,7 @@ import { useMemo } from "react";
 import { Button } from "../ui/button";
 import { CiSquareMinus } from "react-icons/ci";
 import { Checkbox } from "../ui/checkbox";
+import { Truck_Command } from "./truckMoodle";
 
 export default function AddNewOrder() {
   const defaultItemsInfo = [
@@ -24,9 +25,10 @@ export default function AddNewOrder() {
     <>
       <div className=" w-full h-full flex flex-col text-[20px] gap-2 overflow-hidden">
         <section className="flex justify-start flex-col p-1 w-fit mx-1">
-          <div className="flex justify-center p-2 items-center">
+          <div className="flex justify-start p-2 items-center">
             <lable className="min-w-[100px]">Client:</lable>
-            <input className="border-primary p-2 rounded-md min-w-[200px] border outline-primary" />
+            <Truck_Command />
+            {/* <input className="border-primary p-2 rounded-md min-w-[200px] border outline-primary" /> */}
           </div>
           <div className="flex justify-center p-2 items-center ">
             <lable className="min-w-[100px]">Due date:</lable>
@@ -45,8 +47,7 @@ export default function AddNewOrder() {
                 key={item.id}
               >
                 <div className="flex justify-between">
-                  <label>Items info:</label>
-                  <span>{item.itemInfo}</span>
+                  <Truck_Command />
                 </div>
                 <div className="flex justify-between">
                   <label>Quantity:</label>

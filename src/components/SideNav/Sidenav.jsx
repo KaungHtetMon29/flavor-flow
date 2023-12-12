@@ -13,7 +13,7 @@ export default function Sidenav({ navs, mainroute }) {
             <div
               onClick={() => navi(`/${mainroute}/${e.path}`)}
               key={e.path}
-              className={` gap-4 hover:text-gray-50 border-b-2 flex items-center w-48 border-opacity-10 text-start border-black py-5 ${
+              className={`cursor-pointer gap-4 hover:text-gray-50 border-b-2 flex items-center w-48 border-opacity-10 text-start border-black py-5 ${
                 i === 0 && "border-t-2"
               }`}
             >

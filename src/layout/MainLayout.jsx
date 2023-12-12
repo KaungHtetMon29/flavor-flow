@@ -33,7 +33,7 @@ export default function MainLayout(props) {
 }
 
 export const salepaths = [
-  { path: "dashboard" },
+  { path: "dashboard", pathname: "Dashboard" },
   {
     path: "preorder",
     pathname: "Pre-Order",
