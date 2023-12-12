@@ -5,6 +5,7 @@ import preOrderSliceReducer from "./preOrderSlice";
 import deliverySliceReducer from "./deliverySlice";
 import clientSliceReducer from "./clientSlice";
 import stockSliceReducer from "./stockSlice";
+import truckSliceReducer from "./truckSlice";
 const store = configureStore({
     reducer: {
         authentication: authSliceReducer,
@@ -12,6 +13,7 @@ const store = configureStore({
         delivery: deliverySliceReducer,
         client: clientSliceReducer,
         stock: stockSliceReducer,
+        truck: truckSliceReducer,
     }
 })
 
