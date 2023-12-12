@@ -15,6 +15,7 @@ import TruckPage from "./pages/Truckpage/Truckpage";
 import DelistatusTable from "./components/Delistatus/DelistatusTable";
 import DeliStatus from "./pages/Delistatus/Delistatus";
 import AddSalePage from "./pages/Sale/addsale/AddSale";
+import DashboardPage from "./pages/Dashboard/DashboardPage";
 
 const App = () => {
   const navi = useNavigate();
@@ -26,8 +27,9 @@ const App = () => {
       <Route path="/home" element={<Home />}></Route>
       <Route
         path="/sale"
-        element={<RouteProtector mroute={"sale"} subroute={"preorder"} />}
+        element={<RouteProtector mroute={"sale"} subroute={"dashboard"} />}
       >
+        <Route path="dashboard" element={<DashboardPage />}></Route>
         <Route path="preorder" element={<SalePage />}></Route>
         <Route path="preorder/new" element={<AddSalePage />}></Route>
         <Route path="stock" element={<Stockpage />}></Route>

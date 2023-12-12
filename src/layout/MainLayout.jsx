@@ -33,6 +33,7 @@ export default function MainLayout(props) {
 }
 
 export const salepaths = [
+  { path: "dashboard" },
   {
     path: "preorder",
     pathname: "Pre-Order",
@@ -63,7 +64,7 @@ export const logisticpaths = [
   {
     path: "deliverystatus",
     pathname: "Delivery Status",
-    icon: <IoIosDocument className="text-4xl" />,
+    icon: <IoCheckmarkDoneCircle className="text-3xl" />,
   },
   { path: "truck", pathname: "Truck", icon: <FaCar className="text-3xl" /> },
 ];

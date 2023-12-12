@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 export default function Sidenav({ navs, mainroute }) {
   const navi = useNavigate();
   return (
-    <div className="sticky w-[300px] py-12 min-h-500 max-h-full bg-gray-200 text-xl font-semibold items-center flex flex-col gap-6">
+    <div className="sticky w-[300px] py-12 min-h-[100vh] max-h-full bg-gray-200 text-xl font-semibold items-center flex flex-col gap-6">
       <div className="">
         <div className="bg-white w-20 h-20"></div>
       </div>
@@ -17,7 +17,7 @@ export default function Sidenav({ navs, mainroute }) {
                 i === 0 && "border-t-2"
               }`}
             >
-              <div>{e.icon}</div>
+              <div className="w-1/6">{e.icon}</div>
               <div>
                 <p className="">{e.pathname}</p>
               </div>
