@@ -34,7 +34,7 @@ const deliverySlice = createSlice({
         })
 
         builder.addCase(createDelivery.fulfilled, (state, action) => {
-            const createdDelivery = action.payload;
+            const createdDelivery = action.payload; 
             state.deliveries = [...state.deliveries, createdDelivery];
         })
         
