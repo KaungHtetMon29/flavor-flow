@@ -29,9 +29,9 @@ const DelistatusTable = () => {
   const handleDropdownOpenChange = (isOpen) => {
     setIsArrowUp(isOpen);
   };
-  const handlerClick = () => {
-    //click functionality
-  };
+  // const handlerClick = () => {
+  //   //click functionality
+  // };
   return (
     <>
       {showDetail && <DeliveryMoodle hide={() => setShowDetail(false)} />}
