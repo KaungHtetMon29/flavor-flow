@@ -5,6 +5,7 @@ const initialState = {
     isLoading: true,
     error: '',
     trucks: [],
+    availableTrucks: [],
 };
 
 const TRUCKURL = 'https://flavor-wave.onrender.com/api/v1/trucks'
@@ -26,6 +27,7 @@ const truckSlice = createSlice({
         builder.addCase(fetchTrucks.fulfilled, (state, action) => {
             state.isLoading = false;
             state.trucks = action.payload;
+            state.availableTrucks = state.trucks.filter((truck) => truck.available === true) ;
         })
 
 
