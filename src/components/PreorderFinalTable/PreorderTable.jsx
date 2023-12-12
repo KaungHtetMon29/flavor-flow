@@ -68,7 +68,12 @@ export function PreorderTable() {
                 {invoice.clientName}
               </TableCell>
               <TableCell className="text-[18px]">{invoice.DueDate}</TableCell>
-              <TableCell className="text-[18px]">
+              <TableCell
+                className="text-[18px]"
+                onClick={(e) => {
+                  e.stopPropagation();
+                }}
+              >
                 <DropdownMenu onOpenChange={handleDropdownOpenChange}>
                   <DropdownMenuTrigger asChild>
                     <Button
