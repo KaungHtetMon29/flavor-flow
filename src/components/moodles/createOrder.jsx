@@ -1,5 +1,7 @@
 import { useMemo } from "react";
 import { Button } from "../ui/button";
+import { CiSquareMinus } from "react-icons/ci";
+import { Checkbox } from "../ui/checkbox";
 
 export default function AddNewOrder() {
   const defaultItemsInfo = [
@@ -9,6 +11,8 @@ export default function AddNewOrder() {
     { itemInfo: "blah blah", quantity: 10, price: 1000, id: 3 },
     { itemInfo: "blah blah", quantity: 10, price: 1000, id: 4 },
     { itemInfo: "blah blah", quantity: 10, price: 1000, id: 5 },
+    { itemInfo: "blah blah", quantity: 10, price: 1000, id: 6 },
+    { itemInfo: "blah blah", quantity: 10, price: 1000, id: 7 },
   ];
 
   const total = useMemo(() => {
@@ -18,20 +22,23 @@ export default function AddNewOrder() {
   }, [defaultItemsInfo]);
   return (
     <>
-      <div className=" w-full h-full flex flex-col ">
-        <section className="flex justify-start flex-col p-1 w-fit m-1">
+      <div className=" w-full h-full flex flex-col text-[20px] gap-2 overflow-hidden">
+        <section className="flex justify-start flex-col p-1 w-fit mx-1">
           <div className="flex justify-center p-2 items-center">
             <lable className="min-w-[100px]">Client:</lable>
-            <input className=" p-2 rounded-md min-w-[200px] border outline-primary" />
+            <input className="border-primary p-2 rounded-md min-w-[200px] border outline-primary" />
           </div>
           <div className="flex justify-center p-2 items-center ">
             <lable className="min-w-[100px]">Due date:</lable>
-            <input className=" p-2 rounded-md min-w-[200px] border outline-primary" />
+            <input className="border-primary p-2 rounded-md min-w-[200px] border outline-primary" />
           </div>
         </section>
 
-        <section className=" mt-2 w-full justify-start">
-          <ul className="flex flex-col overflow-auto justify-between items-center py-2 px-2 border-2 rounded-md p-1 w-full max-h-[30vh] ">
+        <section className="p-4 flex w-full justify-start">
+          <div className="w-1/12">
+            <p className="py-6">Items info:</p>
+          </div>
+          <ul className="flex flex-col gap-6 overflow-auto justify-between items-center py-6 px-2 border-y-2 rounded-none w-full max-h-[35vh] ">
             {defaultItemsInfo.map((item) => (
               <li
                 className="flex justify-between items-center w-full"
@@ -46,28 +53,39 @@ export default function AddNewOrder() {
                   <span>{item.quantity}</span>
                 </div>
                 <span>{item.price}ks</span>
-                <Button className="border rounded-2xl  hover:bg-red-400">
-                  -
-                </Button>
+
+                <CiSquareMinus className="text-4xl" />
               </li>
             ))}
           </ul>
         </section>
-        <div className="m-2 flex justify-start">
-          <span className="font-bold">Total Price:</span>
-          <div>{total}ks</div>
+        <div className="flex items-center m-2">
+          <div className=" flex justify-start px-1 gap-4 grow">
+            <span className="font-bold">Total Price:</span>
+            <div>{total}ks</div>
+          </div>
+          <div>
+            <Button className={"w-fit text-[18px]"}>Add News</Button>
+          </div>
         </div>
-        <Button className={"w-fit"}>Add new</Button>
-        <div className="flex justify-between w-fit my-2">
-          <input className=" border-2 p-2 mx-1" type="checkbox" />
-          <span>Urgent</span>
-        </div>
-        <div className="flex my-2 justify-start items-center">
-          <span className=" mr-2">Note :</span>
-          <input
-            type="text"
-            className=" p-1 rounded-md border-2 outline-primary"
-          />
+
+        <div className="flex gap-16 items-center w-full  mx-2">
+          <div className="flex gap-2">
+            <Button className={"w-fit text-[18px]"}>Cancel</Button>
+            <Button className={"w-fit text-[18px]"}>Confirm</Button>
+          </div>
+
+          <div className="flex justify-between items-center gap-2 w-fit my-2">
+            <Checkbox className="border-2 w-6 h-6" />
+            <span>Urgent</span>
+          </div>
+          <div className="flex my-2 mx-2 justify-start items-center">
+            <span className=" mr-2">Note :</span>
+            <input
+              type="text"
+              className=" p-1 rounded-md border-2 outline-primary w-80"
+            />
+          </div>
         </div>
       </div>
     </>

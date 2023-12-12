@@ -6,6 +6,7 @@ import { PreorderTable } from "@/components/PreorderFinalTable/PreorderTable";
 import Sidenav from "@/components/SideNav/Sidenav";
 import { StockTable } from "@/components/StockTable/StockTable";
 import TruckTable from "@/components/TruckTable/TruckTable";
+import AddNewOrder from "@/components/moodles/createOrder";
 import SearchBox from "@/components/searchbox/Searchbox";
 import SearchDropdown from "@/components/searchdropdown/Searchdropdown";
 import Sortfunction from "@/components/sort/Sortfunction";
@@ -16,17 +17,20 @@ import SidepageLayout from "@/layout/SidepageFrame";
 import SidepagebdyLayout from "@/layout/sidepagebdylayout";
 import React, { useEffect } from "react";
 
-const Stockpage = () => {
+const AddSalePage = () => {
   return (
     <MainLayout>
       <SidepageLayout>
         <SearchBox />
+        <SearchDropdown />
+        <CalendarComponent />
+        <Sortfunction />
       </SidepageLayout>
       <SidepagebdyLayout>
-        <StockTable />
+        <AddNewOrder />
       </SidepagebdyLayout>
     </MainLayout>
   );
 };
 
-export default Stockpage;
+export default AddSalePage;

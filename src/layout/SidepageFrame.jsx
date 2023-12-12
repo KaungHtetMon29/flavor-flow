@@ -14,7 +14,7 @@ export default function SidepageLayout(props) {
     );
   }, [pname]);
   return (
-    <div className="flex w-full gap-12 items-center relative">
+    <div className="flex w-full gap-6 items-center relative">
       {console.log(paths.pathname.split("/")[2])}
       <div className="grow flex items-center gap-8  ">
         {paths.pathname.split("/")[1] === "sale" && (

@@ -11,10 +11,10 @@ import { useState } from "react";
 export default function SearchDropdown() {
   const [checkboxstatus, setcheckboxstatus] = useState("sending");
   return (
-    <div className="w-fit">
+    <div className="w-fit   ">
       <DropdownMenu className="w-fit">
         <DropdownMenuTrigger asChild>
-          <Button className="flex gap-2">
+          <Button className="flex gap-2 text-[18px]">
             Delivery Status <IoIosArrowDown className="text-white text-2xl" />
           </Button>
         </DropdownMenuTrigger>

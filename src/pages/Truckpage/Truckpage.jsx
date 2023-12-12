@@ -21,16 +21,11 @@ const TruckPage = () => {
     <MainLayout>
       <SidepageLayout>
         <SearchBox />
-        <SearchDropdown />
-        <CalendarComponent />
-        <Sortfunction />
+        <SearchBox />
       </SidepageLayout>
       <SidepagebdyLayout>
         <TruckTable />
       </SidepagebdyLayout>
-      <FooterFrame>
-        <AddNewBtn />
-      </FooterFrame>
     </MainLayout>
   );
 };
