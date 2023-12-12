@@ -10,14 +10,8 @@ const initialState = {
     message: '',
 }
 
-const LOGIN_URL = 'http://127.0.0.1:3000/login'
-const SIGNUP_URL = 'http://127.0.0.1:3000/signup'
-const LOGOUT_URL = 'http://127.0.0.1:3000/logout'
-
-export const userSignUp = createAsyncThunk('user/signup', async (newUser) => {
-    const response = await axios.post(`${SIGNUP_URL}`, newUser );
-    return response.data
-})
+const LOGIN_URL = 'https://flavor-wave.onrender.com/login'
+const LOGOUT_URL = 'https://flavor-wave.onrender.com/logout'
 
 export const userLogIn = createAsyncThunk('user/login', async (newUser) => {
     const response = await axios.post(`${LOGIN_URL}`, newUser);
@@ -38,15 +32,6 @@ const authSlice = createSlice({
     name: 'authentication',
     initialState,
     extraReducers: (builder) => {
-        builder.addCase(userSignUp.pending, (state) => {
-            console.log(state.isLoading)
-        });
-
-        builder.addCase(userSignUp.fulfilled, (state, action) => ({
-            ...state,
-            response: action.payload,
-        }));
-
         builder.addCase(userLogIn.fulfilled, (state, action) => ({
             ...state,
             isLoading: false,
