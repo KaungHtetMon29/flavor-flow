@@ -11,6 +11,7 @@ const DELIVERYURL = 'https://flavor-wave.onrender.com/api/v1/deliveries';
 
 export const fetchDeliveries = createAsyncThunk('list/deliveries', async () => {
     const response = await axios.get(`${DELIVERYURL}`);
+    console.log('fetch delivery')
    return response.data;
 })
 

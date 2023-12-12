@@ -12,7 +12,6 @@ const PREORDERURL = 'https://flavor-wave.onrender.com/api/v1/preorders';
 export const fetchPreOrders = createAsyncThunk('index/preOrders', async () => {
     const response = await axios.get(`${PREORDERURL}`);
     const data = response.data;
-    console.log(data);
     return data;
 })
 
