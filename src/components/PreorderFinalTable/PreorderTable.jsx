@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Table,
   TableBody,
@@ -22,8 +22,9 @@ import { Button } from "@/components/ui/button";
 
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import SaleMoodle from "../moodles/saleModle";
-
-const invoices = [
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchPreOrders } from "../../redux/preOrderSlice";
+const preOrders = [
   {
     preorderId: 1,
     clientName: "John Doe",
@@ -34,15 +35,22 @@ const invoices = [
 export function PreorderTable() {
   const [status, setStatus] = React.useState("sending");
   const [isArrowUp, setIsArrowUp] = useState(false);
+  const preOrders = useSelector((state) => state.preorder.preOrders);
+  const clients = useSelector((state) => state.client.clients);
+  const dispatch = useDispatch();
   const handleDropdownOpenChange = (isOpen) => {
     setIsArrowUp(isOpen);
   };
   const [showDetail, setShowDetail] = useState(false);
   function handleShowDetail(Boolean) {
     setShowDetail(Boolean);
-    console.log("handle");
-    console.log(showDetail);
   }
+
+  useEffect(() => {
+    dispatch(fetchPreOrders())
+    console.log(clients)
+  },[dispatch])
+
   return (
     <>
       <Table>
@@ -55,19 +63,19 @@ export function PreorderTable() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {invoices.map((invoice) => (
+          {preOrders?.map((preOrder) => (
             <TableRow
               className={"w-full"}
-              key={invoice.preorderId}
+              key={preOrder.id}
               onClick={() => handleShowDetail(true)}
             >
               <TableCell className="font-medium text-[18px]">
-                {invoice.preorderId}
+                {preOrder.id}
               </TableCell>
               <TableCell className="text-[18px]">
-                {invoice.clientName}
+                {preOrder.client.name}
               </TableCell>
-              <TableCell className="text-[18px]">{invoice.DueDate}</TableCell>
+              <TableCell className="text-[18px]">{preOrder.order_date}</TableCell>
               <TableCell
                 className="text-[18px]"
                 onClick={(e) => {
