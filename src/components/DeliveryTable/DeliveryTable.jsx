@@ -11,7 +11,6 @@ import {
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuLabel,
   DropdownMenuRadioGroup,
   DropdownMenuRadioItem,
   DropdownMenuSeparator,
@@ -22,7 +21,7 @@ import { Button } from "@/components/ui/button";
 
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 const DeliveryTable = () => {
-  const [status, setStatus] = React.useState("sending");
+  const [status, setStatus] = React.useState("Sending");
   const [isArrowUp, setIsArrowUp] = useState(false);
   const handleDropdownOpenChange = (isOpen) => {
     setIsArrowUp(isOpen);
@@ -31,50 +30,49 @@ const DeliveryTable = () => {
     <Table>
       <TableHeader className="sticky top-0 bg-white">
         <TableRow>
-          <TableHead className="w-[100px] text-[22px]">ID</TableHead>
-          <TableHead className="text-[22px]">Truck ID</TableHead>
-          <TableHead className="text-[22px]">Town</TableHead>
-          <TableHead className="text-[22px]">Order ID</TableHead>
-          <TableHead className="text-[22px]">Distance</TableHead>
-          <TableHead className="text-[22px]">Status</TableHead>
+          <TableHead className="w-[100px]">ID</TableHead>
+          <TableHead>Truck ID</TableHead>
+          <TableHead>Town</TableHead>
+          <TableHead>Order ID</TableHead>
+          <TableHead>Distance</TableHead>
+          <TableHead className="text-center px-20">Status</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
         <TableRow>
-          <TableCell className="font-medium text-[18px]">INV001</TableCell>
-          <TableCell className="text-[18px]">Paid</TableCell>
-          <TableCell className="text-[18px]">Credit Card</TableCell>
-          <TableCell className="text-[18px]">1234</TableCell>
-          <TableCell className="text-[18px]">123 mile</TableCell>
-          <TableCell>
+          <TableCell className="font-medium">INV001</TableCell>
+          <TableCell>Paid</TableCell>
+          <TableCell>Credit Card</TableCell>
+          <TableCell>1234</TableCell>
+          <TableCell>123 mile</TableCell>
+          <TableCell className="flex justify-center">
             <DropdownMenu onOpenChange={handleDropdownOpenChange}>
               <DropdownMenuTrigger asChild>
                 <Button
                   variant="outline"
-                  className="flex gap-3 w-32 justify-start"
+                  className="flex gap-3 w-40 justify-start"
                 >
-                  <div className="">
-                    <p className="text-start">{status}</p>
+                  <div>
+                    <p className="text-start text-[18px]">{status}</p>
                   </div>
                   <div className="justify-end flex w-full">
                     {isArrowUp ? <IoIosArrowUp /> : <IoIosArrowDown />}
                   </div>
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent className="w-56">
-                <DropdownMenuLabel>Order Status</DropdownMenuLabel>
+              <DropdownMenuContent className="w-60">
                 <DropdownMenuSeparator />
                 <DropdownMenuRadioGroup
                   value={status}
                   onValueChange={setStatus}
                 >
-                  <DropdownMenuRadioItem value="processing">
+                  <DropdownMenuRadioItem value="Processing">
                     Processing
                   </DropdownMenuRadioItem>
-                  <DropdownMenuRadioItem value="sending">
+                  <DropdownMenuRadioItem value="Sending">
                     Sending
                   </DropdownMenuRadioItem>
-                  <DropdownMenuRadioItem value="sent">
+                  <DropdownMenuRadioItem value="Sent">
                     Sent
                   </DropdownMenuRadioItem>
                 </DropdownMenuRadioGroup>

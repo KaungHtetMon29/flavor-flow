@@ -1,5 +1,6 @@
 import AddNewBtn from "@/components/Addnewbtn/CustBtn";
 import CalendarComponent from "@/components/Calendar/Calendarcomponent";
+import ClientTable from "@/components/ClientTable/ClientTable";
 import DelistatusTable from "@/components/Delistatus/DelistatusTable";
 import DeliveryTable from "@/components/DeliveryTable/DeliveryTable";
 import { PreorderTable } from "@/components/PreorderFinalTable/PreorderTable";

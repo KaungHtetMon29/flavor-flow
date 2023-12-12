@@ -17,22 +17,22 @@ import SidepagebdyLayout from "@/layout/sidepagebdylayout";
 import React, { useEffect } from "react";
 
 const DeliStatus = () => {
-  return (
-    <MainLayout>
-      <SidepageLayout>
-        <SearchBox />
-        <SearchDropdown />
-        <CalendarComponent />
-        <Sortfunction />
-      </SidepageLayout>
-      <SidepagebdyLayout>
-        <DeliStatus />
-      </SidepagebdyLayout>
-      <FooterFrame>
-        <AddNewBtn />
-      </FooterFrame>
-    </MainLayout>
-  );
+	return (
+		<MainLayout>
+			<SidepageLayout>
+				<SearchBox />
+				<SearchDropdown />
+				<CalendarComponent />
+				<Sortfunction />
+			</SidepageLayout>
+			<SidepagebdyLayout>
+				<DelistatusTable />
+			</SidepagebdyLayout>
+			<FooterFrame>
+				<AddNewBtn />
+			</FooterFrame>
+		</MainLayout>
+	);
 };
 
 export default DeliStatus;
