@@ -1,11 +1,23 @@
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { IoIosLogOut } from "react-icons/io";
 
 export default function Sidenav({ navs, mainroute }) {
   const navi = useNavigate();
+  const location = useLocation();
   return (
     <div className="sticky w-[300px] py-12 min-h-[100vh] max-h-full bg-gray-200 text-xl font-semibold items-center flex flex-col gap-6">
       <div className="">
-        <div className="bg-white w-20 h-20"></div>
+        {console.log(location.pathname.split("/")[2])}
+        <div
+          className={`bg-white w-20 h-20 ${
+            location.pathname.split("/")[2] !== "deliverystatus" &&
+            "cursor - pointer"
+          }`}
+          onClick={() => {
+            location.pathname.split("/")[2] !== "deliverystatus" &&
+              navi("/sale/dashboard");
+          }}
+        ></div>
       </div>
       <div className="flex flex-col grow">
         {navs !== undefined &&
@@ -28,9 +40,13 @@ export default function Sidenav({ navs, mainroute }) {
           )}
       </div>
       <div className="flex flex-col items-center gap-8">
-        <div className="hover:text-gray-50">Logout</div>
-        <div className="text-sm w-3/4 text-center leading-6">
-          All Right Reserved. Developed by TripleR
+        <div className="hover:text-gray-50 flex items-center gap-2">
+          Logout
+          <IoIosLogOut className="text-3xl" />
+        </div>
+        <div className="text-sm w-full text-center leading-6 font-normal">
+          <p>All Right Reserved.</p>
+          <p>Developed by TripleR Dev team</p>
         </div>
       </div>
     </div>
