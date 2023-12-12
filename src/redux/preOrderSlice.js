@@ -36,7 +36,7 @@ export const filterOrderStatus = createAsyncThunk('filterStatus/preOrders', asyn
         return response.data;
 })
 
-export const filterOrderDate = createAsyncThunk('filterDate/preOrders', async (orderDate) => {
+export const filterByOrderDate = createAsyncThunk('filterDate/preOrders', async (orderDate) => {
     const response = await axios.get(`${PREORDERURL}?order_date=${orderDate}`);
     return response.data;
 })
@@ -121,3 +121,4 @@ const preOrderSlice = createSlice({
 });
 
 export default preOrderSlice.reducer;
+export const { filterByOrderDate, filterByOrderStatus } = preOrderSlice.actions;
