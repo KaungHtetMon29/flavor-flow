@@ -17,9 +17,10 @@ export default function SidepageLayout(props) {
     <div className="flex w-full gap-6 items-center relative">
       {console.log(paths.pathname.split("/")[2])}
       <div className="grow flex items-center gap-8  ">
-        {paths.pathname.split("/")[1] === "sale" && (
-          <FaArrowLeft className="text-black text-3xl hover:text-white" />
-        )}
+        {paths.pathname.split("/")[1] === "sale" ||
+          (paths.pathname.split("/")[1] === "dashboard" && (
+            <FaArrowLeft className="text-black text-3xl hover:text-white" />
+          ))}
 
         <p className="text-2xl font-bold">{pname}</p>
       </div>

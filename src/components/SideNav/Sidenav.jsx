@@ -9,20 +9,23 @@ export default function Sidenav({ navs, mainroute }) {
       </div>
       <div className="flex flex-col grow">
         {navs !== undefined &&
-          navs.map((e, i) => (
-            <div
-              onClick={() => navi(`/${mainroute}/${e.path}`)}
-              key={e.path}
-              className={`cursor-pointer gap-4 hover:text-gray-50 border-b-2 flex items-center w-48 border-opacity-10 text-start border-black py-5 ${
-                i === 0 && "border-t-2"
-              }`}
-            >
-              <div className="w-1/6">{e.icon}</div>
-              <div>
-                <p className="">{e.pathname}</p>
-              </div>
-            </div>
-          ))}
+          navs.map(
+            (e, i) =>
+              e.pathname !== "Dashboard" && (
+                <div
+                  onClick={() => navi(`/${mainroute}/${e.path}`)}
+                  key={e.path}
+                  className={`cursor-pointer gap-4 hover:text-gray-50 border-b-2 flex items-center w-48 border-opacity-10 text-start border-black py-5 ${
+                    i === 0 && "border-t-2"
+                  }`}
+                >
+                  <div className="w-1/6">{e.icon}</div>
+                  <div>
+                    <p className="">{e.pathname}</p>
+                  </div>
+                </div>
+              )
+          )}
       </div>
       <div className="flex flex-col items-center gap-8">
         <div className="hover:text-gray-50">Logout</div>
