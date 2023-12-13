@@ -8,19 +8,26 @@ import OrderMoodle from "./createOrderMoodle";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import clsx from "clsx";
 var currentId = 1;
-var defaultItemsInfo = [
-  { itemInfo: "blah blah", quantity: 0, price: 1000, id: 0 },
-];
+var defaultItemsInfo = [{ itemInfo: "", quantity: 0, price: 1000, id: 0 }];
 export default function AddNewOrder() {
   const [itemData, setItemData] = useState(defaultItemsInfo);
   const [currentSearching, setCurrentSearching] = useState(false);
   const [selectedItemInfo, setSelectedItemInfo] = useState({});
+  const isValidToSubmit = useCallback(() => {
+    const isValid = !itemData.find(
+      (item) => item.itemInfo === "" || item.quantity <= 0
+    );
+    console.log(isValid);
+    return isValid;
+  }, [itemData]);
   const handleAddItemInfo = () => {
-    currentId += 1;
-    setItemData((items) => [
-      ...items,
-      { itemInfo: "blah blah", quantity: 10, price: 1000, id: currentId },
-    ]);
+    if (isValidToSubmit()) {
+      currentId += 1;
+      setItemData((items) => [
+        ...items,
+        { itemInfo: "", quantity: 0, price: 1000, id: currentId },
+      ]);
+    }
   };
   const handleRemoveItemInfo = (itemId) => {
     setItemData((itemData) => itemData.filter((item) => item.id !== itemId));
@@ -31,14 +38,6 @@ export default function AddNewOrder() {
     defaultItemsInfo.forEach((item) => (total += item.price));
     return total;
   }, [defaultItemsInfo]);
-
-  const isValidToSubmit = useCallback(() => {
-    const isValid = !itemData.find(
-      (item) => item.itemInfo === "" || item.quantity <= 0
-    );
-    console.log(isValid);
-    return isValid;
-  }, [itemData]);
 
   const handleChangeQuantity = (quantity, id) => {
     setItemData((itemData) =>
@@ -113,6 +112,9 @@ export default function AddNewOrder() {
                     <label className="mr-2">Quantity:</label>
                     <Input
                       type="number"
+                      className={clsx(" block outline-none  ", {
+                        " outline-1 outline-red-500": item.quantity <= 0,
+                      })}
                       value={item.quantity}
                       onChange={(e) =>
                         handleChangeQuantity(e.target.value, item.id)
@@ -142,7 +144,12 @@ export default function AddNewOrder() {
             <div>{total}ks</div>
           </div>
           <div>
-            <Button className={"w-fit text-[18px]"} onClick={handleAddItemInfo}>
+            <Button
+              className={clsx("w-fit text-[18px]", {
+                " bg-slate-500 hover:bg-slate-500": !isValidToSubmit(),
+              })}
+              onClick={handleAddItemInfo}
+            >
               Add New
             </Button>
           </div>
@@ -153,10 +160,10 @@ export default function AddNewOrder() {
             <Button className={"w-fit text-[18px]"}>Cancel</Button>
             <Button
               className={clsx("w-fit text-[18px]", {
-                " bg-slate-700": !isValidToSubmit,
+                " bg-slate-500 hover:bg-slate-500": !isValidToSubmit(),
               })}
               onClick={() => {
-                if (isValidToSubmit) {
+                if (isValidToSubmit()) {
                   return console.log("submit");
                 } else {
                   return;
