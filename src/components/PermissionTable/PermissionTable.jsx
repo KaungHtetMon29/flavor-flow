@@ -18,25 +18,37 @@ import {
 import { Button } from "../ui/button";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchPreOrders } from "../../redux/preOrderSlice";
+import { acceptGrant, fetchPreOrders, removeGrant } from "../../redux/preOrderSlice";
 import NoData from "../NoData/NoData";
+import { updateStatus } from "../../redux/preOrderSlice";
+import { updatePreOrder } from "../../redux/preOrderSlice";
 const PermissionTable = () => {
+	const [status, setStatus] = useState('pending');
 	const dispatch = useDispatch();
-	const [status, setStatus] = useState("Sending");
-	const [isArrowUp, setIsArrowUp] = useState(false);
-	const [isGrant, setIsGrant] = useState(true);
-	const unPermitOrders = useSelector((state) => state.preorder.unPermitOrders);
-	console.log(unPermitOrders)
-	const handleDropdownOpenChange = (isOpen) => {
-		setIsArrowUp(isOpen);
-	};
+	// const unPermitOrders = useSelector((state) => state.preorder.unPermitOrders);
+	// const preOrders = useSelector((state) => state.preorder.preOrders);
+	const urgentOrders = useSelector((state) => state.preorder.urgentOrders);
+	  console.log(urgentOrders)
 
-	const handleClick = () => {
-		setIsGrant(!isGrant )
-	}
+	  const handleClick = (id, grant) => {
+		console.log(grant)
+		if(grant) {
+			dispatch(acceptGrant(id));
+
+		} else {
+			dispatch(removeGrant(id));
+
+		}
+	  }
+
+	const updateOrderStatus = (id, value) => {
+		dispatch(updateStatus({id, value}));
+		dispatch(updatePreOrder({id, value}))
+		setStatus(value)
+ };
 
 	useEffect(() => {
-		dispatch(fetchPreOrders()	)
+		dispatch(fetchPreOrders())
 	},[])
 	
 	return (
@@ -53,17 +65,17 @@ const PermissionTable = () => {
 				</TableRow>
 			</TableHeader>
 			<TableBody>
-				{ unPermitOrders.length > 0 ? (
-					unPermitOrders.map((unPermitOrder) => (
-						<TableRow key={unPermitOrder.id}>
+				{ urgentOrders.length > 0 ? (
+					urgentOrders.map((urgentOrder) => (
+						<TableRow key={urgentOrder.id}>
 							<TableCell className="font-medium">
-								{unPermitOrder.id}
+								{urgentOrder.id}
 							</TableCell>
-							<TableCell>{unPermitOrder.client.name}</TableCell>
-							<TableCell>{unPermitOrder.order_date}</TableCell>
+							<TableCell>{urgentOrder.client.name}</TableCell>
+							<TableCell>{urgentOrder.order_date}</TableCell>
 							<TableCell className="">
 								<DropdownMenu
-									onOpenChange={handleDropdownOpenChange}
+									
 								>
 									<DropdownMenuTrigger asChild>
 										<Button
@@ -72,51 +84,36 @@ const PermissionTable = () => {
 										>
 											<div>
 												<p className="text-start text-[18px]">
-													{status}
+													{urgentOrder.order_status}
 												</p>
-											</div>
-											<div>
-												{isArrowUp ? (
-													<IoIosArrowUp />
-												) : (
-													<IoIosArrowDown />
-												)}
 											</div>
 										</Button>
 									</DropdownMenuTrigger>
-									<DropdownMenuContent className="w-52">
-										<DropdownMenuSeparator />
-										<DropdownMenuRadioGroup
-											value={status}
-											onValueChange={setStatus}
-										>
-											<DropdownMenuRadioItem value="Processing">
-												Processing
-											</DropdownMenuRadioItem>
-											<DropdownMenuRadioItem value="Sending">
-												Sending
-											</DropdownMenuRadioItem>
-											<DropdownMenuRadioItem value="Sent">
-												Sent
-											</DropdownMenuRadioItem>
-										</DropdownMenuRadioGroup>
-									</DropdownMenuContent>
+									<DropdownMenuContent className="w-56">
+                      <DropdownMenuSeparator />
+                      <DropdownMenuRadioGroup
+                        onValueChange={(e) => updateOrderStatus(urgentOrder.id, e)}
+						disabled
+                      >
+                        <DropdownMenuRadioItem value="pending" disabled>
+                          Pending
+                        </DropdownMenuRadioItem>
+                        <DropdownMenuRadioItem value="processing" disabled>
+                          Processing
+                        </DropdownMenuRadioItem>
+                        <DropdownMenuRadioItem value="delivered" disabled>
+                          Delivered
+                        </DropdownMenuRadioItem>
+                      </DropdownMenuRadioGroup>
+                    </DropdownMenuContent>
 								</DropdownMenu>
 							</TableCell>
 							<TableCell className="flex justify-center gap-4 flex-row-reverse">
 									<Button
 										className="text-[18px]"
-										disabled={isGrant}
-										onClick={handleClick}
+										onClick={() => handleClick(urgentOrder.id, urgentOrder.isGrant)}
 									>
-										Grant
-									</Button>
-									<Button
-										className="text-[18px]"
-										disabled={!isGrant}
-										onClick={handleClick}
-									>
-										Deny
+										{!urgentOrder.isGrant ? 'grant' : 'decline'}
 									</Button>
 							</TableCell>
 						</TableRow>

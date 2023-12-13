@@ -7,6 +7,7 @@ const initialState = {
   filterOrderStatus: [],
   preOrders: [],
   unPermitOrders: [],
+  urgentOrders: [],
   preOrderItems: [],
   loadingPreOrderItem: true,
 };
@@ -85,10 +86,33 @@ const preOrderSlice = createSlice({
         
       const filterOrders = state.preOrders.filter( (el) => el.order_status === targetStatus );
       state.filterOrderStatus = [...filterOrders];
-      console.log(state.filterOrderStatus)
       }
 
     },
+
+    acceptGrant: (state, action) => {
+      const id = action.payload;
+      const updatedOrders = state.urgentOrders.map((order) =>
+        order.id === id ? { ...order, permission: true, isGrant: false, urgent: true } : order
+      );
+      return {
+        ...state,
+        urgentOrders: updatedOrders,
+      };
+    },
+    
+    removeGrant: (state, action) => {
+      const id = action.payload;
+      const updatedOrders = state.urgentOrders.map((order) =>
+        order.id === id ? { ...order, permission: false, isGrant: true, urgent: false } : order
+      );
+
+      return {
+        ...state,
+        urgentOrders: updatedOrders,
+      };
+    },
+    
 
     filterByOrderDate: (state, action) => {
       const targetDate = action.payload;
@@ -106,7 +130,9 @@ const preOrderSlice = createSlice({
       const updatedOrders = state.preOrders.map((preOrder) =>
         preOrder.id === id ? { ...preOrder, order_status: value } : preOrder
       );
-    
+
+      // const urgentOrders = updatedOrders.filter((order) => order.urgent && !order.pemermission)
+      // state.urgentOrders = [...urgentOrders];
       return {
         ...state,
         preOrders: updatedOrders,
@@ -123,6 +149,11 @@ const preOrderSlice = createSlice({
       state.filterOrderStatus = action.payload.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
       state.preOrders = action.payload.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
       state.unPermitOrders = state.preOrders.filter((order) => !order.permission);
+      const orderIsGrant = state.preOrders.map((order) => ({
+        ...order,
+        isGrant: false,
+        }));	
+        state.urgentOrders = orderIsGrant.filter((order) => order.urgent && !order.pemermission);
       state.isLoading = false;
       state.error = "";
     });
@@ -143,11 +174,11 @@ const preOrderSlice = createSlice({
 
     builder.addCase(updatePreOrder.fulfilled, (state, action) => {
       const updatedData = action.payload;
-      console.log(updatedData);
       state.preOrders = state.preOrders.map((item) =>
         item.id === updatedData.id ? updatedData : item
       );
       state.filterOrderStatus = [...state.preOrders]
+      state.urgentOrders = [...state.preOrders]
     });
 
     builder.addCase(filterOrderDate.pending, (state) => {
@@ -179,5 +210,5 @@ const preOrderSlice = createSlice({
 });
 
 export default preOrderSlice.reducer;
-export const { filterByOrderDate, filterByOrderStatus, updateStatus } =
+export const { filterByOrderDate, filterByOrderStatus, updateStatus, acceptGrant, removeGrant } =
   preOrderSlice.actions;
