@@ -6,6 +6,7 @@ const initialState = {
   isAuthenticated: false,
   authToken: "",
   response: {},
+  role: "logistic",
   user_id: "",
   message: "",
 };

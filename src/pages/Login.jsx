@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { userLogIn } from "../redux/authSlice";
 
 const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const selector = useSelector((state) => state.authentication.role);
   const [errorMessage, setErrorMessage] = useState("");
   const [newUser, setNewUser] = useState({
     user: {
@@ -28,6 +29,9 @@ const Login = () => {
     dispatch(userLogIn(newUser)).then((res) => {
       if (res.payload) {
         setErrorMessage("");
+        selector !== "logistic"
+          ? navigate("/sale/dashboard")
+          : navigate("/logistic");
       } else {
         setErrorMessage("Log In Failed Please Try Again !!!  ");
         setNewUser((prev) => ({
