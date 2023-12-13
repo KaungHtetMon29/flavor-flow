@@ -44,6 +44,7 @@ const DelistatusTable = () => {
           <TableHead>Truck ID</TableHead>
           <TableHead>Region</TableHead>
           <TableHead>Status</TableHead>
+          <TableHead></TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>

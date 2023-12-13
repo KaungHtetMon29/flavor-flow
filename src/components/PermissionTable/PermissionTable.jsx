@@ -21,46 +21,24 @@ import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 const PermissionTable = () => {
 	const [status, setStatus] = useState("Sending");
 	const [isArrowUp, setIsArrowUp] = useState(false);
+	const [isGrant, setIsGrant] = useState(true);
+
 	const handleDropdownOpenChange = (isOpen) => {
 		setIsArrowUp(isOpen);
 	};
+
 	const invoices = [
 		{
 			invoice: "INV001",
 			paymentStatus: "Paid",
 			totalAmount: "$250.00",
 		},
-		{
-			invoice: "INV002",
-			paymentStatus: "Pending",
-			totalAmount: "$150.00",
-		},
-		{
-			invoice: "INV003",
-			paymentStatus: "Unpaid",
-			totalAmount: "$350.00",
-		},
-		{
-			invoice: "INV004",
-			paymentStatus: "Paid",
-			totalAmount: "$450.00",
-		},
-		{
-			invoice: "INV005",
-			paymentStatus: "Paid",
-			totalAmount: "$550.00",
-		},
-		{
-			invoice: "INV006",
-			paymentStatus: "Pending",
-			totalAmount: "$200.00",
-		},
-		{
-			invoice: "INV007",
-			paymentStatus: "Unpaid",
-			totalAmount: "$300.00",
-		},
 	];
+
+	const handleClick = () => {
+		setIsGrant(!isGrant )
+	}
+	
 	return (
 		<Table>
 			<TableHeader className="sticky top-0 bg-white">
@@ -124,9 +102,21 @@ const PermissionTable = () => {
 								</DropdownMenuContent>
 							</DropdownMenu>
 						</TableCell>
-						<TableCell className="flex justify-center gap-4">
-							<Button className="text-[18px] ">Grant</Button>
-							<Button className="text-[18px] ">Deny</Button>
+						<TableCell className="flex justify-center gap-4 flex-row-reverse">
+								<Button
+									className="text-[18px]"
+									disabled={isGrant}
+									onClick={handleClick}
+								>
+									Grant
+								</Button>
+								<Button
+									className="text-[18px]"
+									disabled={!isGrant}
+									onClick={handleClick}
+								>
+									Deny
+								</Button>
 						</TableCell>
 					</TableRow>
 				))}

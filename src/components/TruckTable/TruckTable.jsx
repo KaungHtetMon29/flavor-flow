@@ -84,8 +84,8 @@ const TruckTable = () => {
         {truckInfos.map((info) => (
           <TableRow key={info.truckId}>
             <TableCell>{info.truckId}</TableCell>
-            <TableCell>{info.capacity}</TableCell>
-            <TableCell>{info.driverName}</TableCell>
+            <TableCell className="w-[100px]">{info.capacity}</TableCell>
+            <TableCell className="w-[350px]">{info.driverName}</TableCell>
             <TableCell>{info.driverPhone}</TableCell>
             <TableCell>
               {}
