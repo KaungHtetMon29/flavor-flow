@@ -15,15 +15,26 @@ import FooterFrame from "@/layout/FooterLayout";
 import MainLayout from "@/layout/MainLayout";
 import SidepageLayout from "@/layout/SidepageFrame";
 import SidepagebdyLayout from "@/layout/sidepagebdylayout";
-import React, { useEffect } from "react";
+import { filterOrderDate, searchPreOrder } from "@/redux/preOrderSlice";
+import React, { useEffect, useState } from "react";
+import { useDispatch } from 'react-redux';
 
 const SalePage = () => {
+  const dispatch = useDispatch();
+
+  const searchByClientName = (clientName) => {
+    dispatch(searchPreOrder(clientName))
+  }
+
+
+
+
   return (
     <MainLayout>
       <SidepageLayout>
-        <SearchBox />
+        <SearchBox searchByClientName={searchByClientName} />
         <SearchDropdown />
-        <CalendarComponent />
+        <CalendarComponent  />
         <Sortfunction />
       </SidepageLayout>
       <SidepagebdyLayout>

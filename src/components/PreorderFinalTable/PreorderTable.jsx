@@ -23,20 +23,15 @@ import { Button } from "@/components/ui/button";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import SaleMoodle from "../moodles/saleModle";
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchPreOrders } from "../../redux/preOrderSlice";
-const preOrders = [
-  {
-    preorderId: 1,
-    clientName: "John Doe",
-    DueDate: "20-12-2024",
-  },
-];
+import { fetchPreOrders, updatePreOrder } from "../../redux/preOrderSlice";
+import {updateStatus} from '../../redux/preOrderSlice'
+
 
 export function PreorderTable() {
-  const [status, setStatus] = React.useState("sending");
+  const [status, setStatus] = React.useState("pending");
   const [isArrowUp, setIsArrowUp] = useState(false);
   const preOrders = useSelector((state) => state.preorder.preOrders);
-  const clients = useSelector((state) => state.client.clients);
+console.log(preOrders);
   const dispatch = useDispatch();
   const handleDropdownOpenChange = (isOpen) => {
     setIsArrowUp(isOpen);
@@ -48,8 +43,12 @@ export function PreorderTable() {
 
   useEffect(() => {
     dispatch(fetchPreOrders())
-    console.log(clients)
   },[dispatch])
+
+  const updateStatus = (id, value) => {
+    dispatch(updatePreOrder(id, value))
+    dispatch(updateStatus(id, value))
+  }
 
   return (
     <>
@@ -63,7 +62,7 @@ export function PreorderTable() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {preOrders?.map((preOrder) => (
+          {preOrders.length > 0 ? (preOrders?.map((preOrder) => (
             <TableRow
               className={"w-full"}
               key={preOrder.id}
@@ -89,7 +88,7 @@ export function PreorderTable() {
                       className="flex gap-3 w-32 justify-start"
                     >
                       <div className="">
-                        <p className="text-start">{status}</p>
+                        <p className="text-start">{preOrder.order_status}</p>
                       </div>
                       <div className="justify-end flex w-full">
                         {isArrowUp ? <IoIosArrowUp /> : <IoIosArrowDown />}
@@ -99,25 +98,27 @@ export function PreorderTable() {
                   <DropdownMenuContent className="w-56">
                     <DropdownMenuLabel>Order Status</DropdownMenuLabel>
                     <DropdownMenuSeparator />
-                    <DropdownMenuRadioGroup
+                    <DropdownMenuRadioGroup 
                       value={status}
-                      onValueChange={setStatus}
+                      onValueChange={(e) => updateStatus(preOrder.id, e)}
                     >
-                      <DropdownMenuRadioItem value="processing">
+                      <DropdownMenuRadioItem value="pending">
+                        Pending
+                      </DropdownMenuRadioItem>
+                      <DropdownMenuRadioItem value="procressing">
                         Processing
                       </DropdownMenuRadioItem>
-                      <DropdownMenuRadioItem value="sending">
-                        Sending
-                      </DropdownMenuRadioItem>
-                      <DropdownMenuRadioItem value="sent">
-                        Sent
+                      <DropdownMenuRadioItem value="delivered">
+                        Delivered
                       </DropdownMenuRadioItem>
                     </DropdownMenuRadioGroup>
                   </DropdownMenuContent>
                 </DropdownMenu>
               </TableCell>
             </TableRow>
-          ))}
+          )) ) : (
+            <h2>No Data</h2>
+          )}
         </TableBody>
       </Table>
       {showDetail ? <SaleMoodle hide={() => handleShowDetail(false)} /> : null}

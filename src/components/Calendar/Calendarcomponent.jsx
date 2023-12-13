@@ -1,16 +1,39 @@
 import { useState } from "react";
 import { Calendar } from "../ui/calendar";
 import { IoIosCalendar } from "react-icons/io";
+import {useDispatch } from 'react-redux';
+import { filterByOrderDate } from "../../redux/preOrderSlice";
+
 
 export default function CalendarComponent() {
-  const [date, setdate] = useState(new Date());
   const [showdate, setshowdate] = useState(false);
+  const [date, setdate] = useState(new Date());
+  const dispatch = useDispatch();
+
+
+  const formatSingleDigit = (number) => (number < 10 ? `0${number}` : number);
+
+  const changeDateFormat = () => {
+    setshowdate(!showdate);
+    const originalDate = new Date(date);
+  
+    const day = formatSingleDigit(originalDate.getDate());
+    const month = formatSingleDigit(originalDate.getMonth() + 1); // Months are zero-based
+    const year = originalDate.getFullYear();
+  
+    const formattedDate = `${day}/${month}/${year}`;
+  
+    console.log(formattedDate);
+    dispatch(filterByOrderDate(formattedDate));
+  };
+
+
   return (
     <div className="select-none ">
       <IoIosCalendar
         className="text-[3.3rem]"
         onClick={() => {
-          setshowdate(!showdate);
+          changeDateFormat()
         }}
       />
       {showdate && (
