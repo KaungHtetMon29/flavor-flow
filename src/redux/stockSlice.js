@@ -15,6 +15,15 @@ export const fetchStocks = createAsyncThunk("list/stocks", async () => {
   return response.data;
 });
 
+export const searchStock = createAsyncThunk(
+  "search/stock",
+  async (stockName) => {
+    const response = await axios.get(`${STOCKURL}?search=${stockName}`);
+    return response.data;
+  }
+);
+
+
 export const fetchStockDetails = createAsyncThunk(
   "list/stockDetails",
   async (id) => {
@@ -44,6 +53,11 @@ const stockSlice = createSlice({
     builder.addCase(fetchStockDetails.fulfilled, (state, action) => {
       state.isLoading = false;
       state.stockDetail = action.payload;
+    });
+
+    builder.addCase(searchStock.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.stocks = action.payload;
     });
   },
 });

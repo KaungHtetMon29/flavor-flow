@@ -147,6 +147,7 @@ const preOrderSlice = createSlice({
       state.preOrders = state.preOrders.map((item) =>
         item.id === updatedData.id ? updatedData : item
       );
+      state.filterOrderStatus = [...state.preOrders]
     });
 
     builder.addCase(filterOrderDate.pending, (state) => {
@@ -171,6 +172,7 @@ const preOrderSlice = createSlice({
     builder.addCase(searchPreOrder.fulfilled, (state, action) => {
       state.isLoading = true;
       state.preOrders = action.payload;
+      state.filterOrderStatus = [...state.preOrders];
       state.error = "";
     });
   },

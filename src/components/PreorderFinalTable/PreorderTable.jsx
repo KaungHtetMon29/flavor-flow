@@ -43,7 +43,6 @@ export function PreorderTable() {
   }, [dispatch,]);
 
   const updateOrderStatus = (id, value) => {
-    console.log(id, value)
     dispatch(updateStatus({id, value}));
     dispatch(updatePreOrder({id, value}))
   };
