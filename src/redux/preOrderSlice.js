@@ -36,7 +36,10 @@ export const filterOrderStatus = createAsyncThunk('filterStatus/preOrders', asyn
 })
 
 export const filterOrderDate = createAsyncThunk('filterDate/preOrders', async (orderDate) => {
+    // console.log(orderDate)
+    // console.log(`${PREORDERURL}?order_date='${orderDate}'`)
     const response = await axios.get(`${PREORDERURL}?order_date=${orderDate}`);
+    console.log(response.data);
     return response.data;
 })
 
@@ -63,12 +66,28 @@ const preOrderSlice = createSlice({
             if(!targetDate) {
                 state.error = `No preOrder in ${targetDate}`;
             }
-            const filteredPreOrders = state.preOrders.filter((el) => el.order_date === targetDate );
-            return {
-                ...state,
-                filteredPreOrders   
-            }
-        }
+            const filteredPreOrders = state.preOrders.filter((el) => (
+                el.order_date == targetDate)
+             );
+            state.preOrders = [...filteredPreOrders]
+        },
+
+        updateStatus: (state, action) => {
+            const id = action.payload.id;
+            const status = action.payload.value;
+          
+            const newPreOrders = state.preOrders.map((el) => {
+              if (el.id === id) {
+                return {
+                  ...el,
+                  order_status: status,
+                };
+              }
+              return el;
+            });
+
+            state.preOrders = [...newPreOrders];    
+          },
     },
     extraReducers: (builder) => {
         builder.addCase(fetchPreOrders.pending,(state) => {
@@ -97,6 +116,7 @@ const preOrderSlice = createSlice({
         })
 
         builder.addCase(filterOrderDate.fulfilled, (state, action) => {
+            console.log('fulfilled')
             state.isLoading = false
             state.preOrders = action.payload
         })
@@ -120,4 +140,4 @@ const preOrderSlice = createSlice({
 });
 
 export default preOrderSlice.reducer;
-export const { filterByOrderDate, filterByOrderStatus } = preOrderSlice.actions;
+export const { filterByOrderDate, filterByOrderStatus, updateStatus } = preOrderSlice.actions;
