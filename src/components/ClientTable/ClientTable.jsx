@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/table";
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchClients } from "@/redux/clientSlice";
+import NoData from "../NoData/NoData";
 
 const ClientTable = () => {
 	const clients = useSelector((state) => state.client.clients);
@@ -40,7 +41,7 @@ const ClientTable = () => {
     </TableRow>
   ))
 ) : (
-  <h2>No Client</h2>
+  <NoData/>
 )}
 			</TableBody>
 		</Table>

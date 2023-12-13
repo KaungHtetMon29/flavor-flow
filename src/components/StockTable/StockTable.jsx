@@ -9,6 +9,7 @@ import {
 import { fetchStocks } from "@/redux/stockSlice";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import NoData from "../NoData/NoData";
 
 const invoices = [
   {
@@ -170,20 +171,24 @@ export function StockTable() {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {stocks.map((stock) => (
-          <TableRow key={stock.name}>
-            <TableCell className="font-medium text-[18px]">
-              {stock.name}
-            </TableCell>
-            <TableCell className="text-[18px]">{stock.quantity}</TableCell>
-            <TableCell className="text-[18px]">{stock.reverseStock}</TableCell>
-            <TableCell className="text-[18px]">{stock.damageStock}</TableCell>
-            <TableCell className="text-[18px]">{stock.unit_price}</TableCell>
-            <TableCell className="text-[18px]">
-              {stock.stock_details[0]?.expiry_date}
-            </TableCell>
-          </TableRow>
-        ))}
+        { stocks.length > 0 ? (
+          stocks?.map((stock) => (
+            <TableRow key={stock.name}>
+              <TableCell className="font-medium text-[18px]">
+                {stock.name}
+              </TableCell>
+              <TableCell className="text-[18px]">{stock.quantity}</TableCell>
+              <TableCell className="text-[18px]">{stock.reverseStock}</TableCell>
+              <TableCell className="text-[18px]">{stock.damageStock}</TableCell>
+              <TableCell className="text-[18px]">{stock.unit_price}</TableCell>
+              <TableCell className="text-[18px]">
+                {stock.stock_details[0]?.expiry_date}
+              </TableCell>
+            </TableRow>
+          ))
+        ) : (
+          <NoData/>
+        )}
       </TableBody>
     </Table>
   );

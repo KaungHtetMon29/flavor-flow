@@ -4,7 +4,8 @@ import ListOverflow from "./listOverflow";
 import { Button } from "../ui/button";
 import NormalMoodle from "./normalMoodle";
 
-export default function SaleMoodle({ hide }) {
+export default function SaleMoodle({ hide, preOrderItems }) {
+
   const defaultData = [
     { name: "blah", quantity: 10, price: 1000 },
     { name: "blah", quantity: 10, price: 1000 },

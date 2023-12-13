@@ -20,20 +20,24 @@ import { Button } from "@/components/ui/button";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import SaleMoodle from "../moodles/saleModle";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchPreOrders, updatePreOrder } from "../../redux/preOrderSlice";
+import { fetchPreOrderItems, fetchPreOrders, updatePreOrder } from "../../redux/preOrderSlice";
 import { updateStatus } from "../../redux/preOrderSlice";
+import NoData from "../NoData/NoData";
 
 export function PreorderTable() {
   const [status, setStatus] = React.useState("pending");
   const [isArrowUp, setIsArrowUp] = useState(false);
   const preOrders = useSelector((state) => state.preorder.preOrders);
+  const preOrderItems = useSelector((state) => state.preOrder.preOrderItems);
   console.log(preOrders);
   const dispatch = useDispatch();
   const handleDropdownOpenChange = (isOpen) => {
     setIsArrowUp(isOpen);
   };
   const [showDetail, setShowDetail] = useState(false);
-  function handleShowDetail(Boolean) {
+
+  function handleShowDetail(Boolean, id) {
+    dispatch(fetchPreOrderItems(id))
     setShowDetail(Boolean);
   }
 
@@ -63,7 +67,7 @@ export function PreorderTable() {
               <TableRow
                 className={"w-full"}
                 key={preOrder.id}
-                onClick={() => handleShowDetail(true)}
+                onClick={() => handleShowDetail(true, preOrder.id)}
               >
                 <TableCell className="font-medium text-[18px]">
                   {preOrder.id}
@@ -117,11 +121,11 @@ export function PreorderTable() {
               </TableRow>
             ))
           ) : (
-            <h2>No Data</h2>
+            <NoData/>
           )}
         </TableBody>
       </Table>
-      {showDetail ? <SaleMoodle hide={() => handleShowDetail(false)} /> : null}
+      {showDetail ? <SaleMoodle hide={() => handleShowDetail(false)} preOrderItems = {preOrderItems} /> : null}
     </>
   );
 }
