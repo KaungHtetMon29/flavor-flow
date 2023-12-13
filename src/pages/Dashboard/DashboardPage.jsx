@@ -6,10 +6,11 @@ import { Button } from "@/components/ui/button";
 import MainLayout from "@/layout/MainLayout";
 import SidepageLayout from "@/layout/SidepageFrame";
 import SidepagebdyLayout from "@/layout/sidepagebdylayout";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function DashboardPage() {
   const [mode, setmode] = useState("permission");
+  useEffect(() => {}, []);
   return (
     <MainLayout>
       <SidepageLayout>
