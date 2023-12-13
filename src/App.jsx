@@ -3,7 +3,6 @@ import { Routes, Route, useNavigate, useNavigation } from "react-router-dom";
 import ErrorPage from "./pages/ErrorPage";
 import React from "react";
 import SplashPage from "./pages/SplashPage";
-import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import Home from "./pages/Home";
 import TestMoodles from "./components/moodles/tester";
@@ -24,7 +23,6 @@ const App = () => {
   return (
     <Routes>
       <Route path="/" element={<SplashPage />}></Route>
-      <Route path="/signup" element={<Signup />}></Route>
       <Route path="/login" element={<Login />}></Route>
       <Route path="/home" element={<Home />}></Route>
       <Route

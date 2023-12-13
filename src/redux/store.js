@@ -9,7 +9,7 @@ import truckSliceReducer from "./truckSlice";
 const store = configureStore({
     reducer: {
         authentication: authSliceReducer,
-        preOrder: preOrderSliceReducer,
+        preorder: preOrderSliceReducer,
         delivery: deliverySliceReducer,
         client: clientSliceReducer,
         stock: stockSliceReducer,

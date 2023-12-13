@@ -6,6 +6,9 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { fetchStocks } from "@/redux/stockSlice";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 const invoices = [
   {
@@ -147,35 +150,38 @@ const invoices = [
 ];
 
 export function StockTable() {
+  const stocks = useSelector((state) => state.stock.stocks);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchStocks());
+  }, []);
   return (
     <Table>
       <TableHeader className="sticky top-0 bg-white">
         <TableRow>
-          <TableHead className="w-[200px] capitalize">
+          <TableHead className="w-[200px] capitalize text-[22px]">
             name
           </TableHead>
-          <TableHead className=" capitalize">available</TableHead>
-          <TableHead className=" capitalize">reserve</TableHead>
-          <TableHead className=" capitalize">damage</TableHead>
-          <TableHead className=" capitalize">price</TableHead>
-          <TableHead className=" capitalize">expire date</TableHead>
+          <TableHead className=" capitalize text-[22px]">available</TableHead>
+          <TableHead className=" capitalize text-[22px]">reserve</TableHead>
+          <TableHead className=" capitalize text-[22px]">damage</TableHead>
+          <TableHead className=" capitalize text-[22px]">unit price</TableHead>
+          <TableHead className=" capitalize text-[22px]">Expiry Date</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
-        {invoices.map((invoice) => (
-          <TableRow key={invoice.name}>
-            <TableCell className="font-medium ">
-              {invoice.name}
+        {stocks.map((stock) => (
+          <TableRow key={stock.name}>
+            <TableCell className="font-medium text-[18px]">
+              {stock.name}
             </TableCell>
-            <TableCell>
-              {invoice.availableStock}
+            <TableCell className="text-[18px]">{stock.quantity}</TableCell>
+            <TableCell className="text-[18px]">{stock.reverseStock}</TableCell>
+            <TableCell className="text-[18px]">{stock.damageStock}</TableCell>
+            <TableCell className="text-[18px]">{stock.unit_price}</TableCell>
+            <TableCell className="text-[18px]">
+              {stock.stock_details[0]?.expiry_date}
             </TableCell>
-            <TableCell>
-              {invoice.reverseStock}
-            </TableCell>
-            <TableCell>{invoice.damageStock}</TableCell>
-            <TableCell>{invoice.priceStock}</TableCell>
-            <TableCell>{invoice.expireDate}</TableCell>
           </TableRow>
         ))}
       </TableBody>

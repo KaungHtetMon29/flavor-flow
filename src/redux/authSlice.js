@@ -6,13 +6,13 @@ const initialState = {
   isAuthenticated: false,
   authToken: "",
   response: {},
-  role: "logistic",
+  role: "sale",
   user_id: "",
   message: "",
 };
 
-const LOGIN_URL = "https://flavor-wave.onrender.com/login";
-const LOGOUT_URL = "https://flavor-wave.onrender.com/logout";
+const LOGIN_URL = "https://flavor-wave-api.onrender.com/login";
+const LOGOUT_URL = "https://flavor-wave-api.onrender.com/logout";
 
 export const userLogIn = createAsyncThunk("user/login", async (newUser) => {
   const response = await axios.post(`${LOGIN_URL}`, newUser);
