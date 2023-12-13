@@ -10,10 +10,10 @@ export default function SearchBox({ searchByClientName }) {
       <Input
         ref={inputref}
         type="text"
-        className="w-72 rounded-md border-black border-opacity-50"
+        className="w-72 rounded-md border-black border-opacity-50 shadow-lg"
       />
       <Button
-        className="text-[18px]"
+        className="text-[18px] bg-secondarycolor shadow-lg"
         onClick={() => searchByClientName(inputref.current.value)}
       >
         Search

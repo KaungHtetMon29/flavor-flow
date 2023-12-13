@@ -18,7 +18,6 @@ const PermissionPage = () => {
     <MainLayout>
       <SidepageLayout>
         <SearchBox />
-        <SearchBox />
       </SidepageLayout>
       <SidepagebdyLayout>
         <PermissionTable />

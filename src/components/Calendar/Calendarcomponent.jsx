@@ -28,7 +28,7 @@ export default function CalendarComponent() {
   return (
     <div className="select-none ">
       <IoIosCalendar
-        className="text-[3.3rem] cursor-pointer"
+        className="text-[3.3rem] cursor-pointer text-secondarycolor"
         onClick={() => {
           changeDateFormat();
         }}

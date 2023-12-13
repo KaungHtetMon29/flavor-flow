@@ -48,7 +48,7 @@ export function PreorderTable() {
 
   return (
     <>
-      <Table>
+      <Table className="border-b-2 border-primarycolor">
         <TableHeader>
           <TableRow>
             <TableHead className="w-[150px] text-[22px]">Id</TableHead>
@@ -59,9 +59,11 @@ export function PreorderTable() {
         </TableHeader>
         <TableBody>
           {preOrders.length > 0 ? (
-            preOrders?.map((preOrder) => (
+            preOrders?.map((preOrder, i) => (
               <TableRow
-                className={"w-full"}
+                className={`w-full hover:bg-secondarycolor hover:text-white hover:bg-opacity-70 ${
+                  i % 2 !== 0 ? "bg-primarycolor bg-opacity-20" : "bg-none"
+                }`}
                 key={preOrder.id}
                 onClick={() => handleShowDetail(true)}
               >
@@ -84,7 +86,7 @@ export function PreorderTable() {
                     <DropdownMenuTrigger asChild>
                       <Button
                         variant="outline"
-                        className="flex gap-3 w-32 justify-start"
+                        className="flex gap-3 w-32 justify-start text-primarycolor"
                       >
                         <div className="">
                           <p className="text-start">{preOrder.order_status}</p>

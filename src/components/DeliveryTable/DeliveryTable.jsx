@@ -25,7 +25,7 @@ import { fetchDeliveries } from "@/redux/deliverySlice";
 const DeliveryTable = () => {
   const deliveries = useSelector((state) => state.delivery.deliveries);
   const dispatch = useDispatch();
-  const [status, setStatus] = React.useState("sending");
+  const [status, setStatus] = React.useState("Sending");
   const [isArrowUp, setIsArrowUp] = useState(false);
   const [showDetail, setShowDetail] = useState(false);
   const handleDropdownOpenChange = (isOpen) => {
@@ -38,20 +38,26 @@ const DeliveryTable = () => {
   }, [dispatch]);
   return (
     <>
-      <Table>
+      <Table className="border-b-2 border-primarycolor">
         <TableHeader className="sticky top-0 bg-white">
           <TableRow>
-            <TableHead className="w-[100px] text-[22px]">Driver Name</TableHead>
+            <TableHead className="w-[300px] text-[22px]">Driver Name</TableHead>
             <TableHead className="text-[22px]">Truck ID</TableHead>
             <TableHead className="text-[22px]">Town</TableHead>
             <TableHead className="text-[22px]">Order ID</TableHead>
-            <TableHead className="text-[22px]">Distance</TableHead>
+            {/* <TableHead className="text-[22px]">Distance</TableHead> */}
             <TableHead className="text-[22px]">Status</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          {deliveries?.map((delivery) => (
-            <TableRow key={delivery.id} onClick={() => setShowDetail(true)}>
+          {deliveries?.map((delivery, i) => (
+            <TableRow
+              key={delivery.id}
+              onClick={() => setShowDetail(true)}
+              className={`w-full ${
+                i % 2 !== 0 ? "bg-primarycolor bg-opacity-20" : "bg-none"
+              }`}
+            >
               <TableCell className="font-medium text-[18px]">
                 {delivery.truck.driver}
               </TableCell>
@@ -60,9 +66,9 @@ const DeliveryTable = () => {
               </TableCell>
               <TableCell className="text-[18px]">Yangon</TableCell>
               <TableCell className="text-[18px]">1234</TableCell>
-              <TableCell className="text-[18px]">
+              {/* <TableCell className="text-[18px]">
                 {delivery.distance} mile
-              </TableCell>
+              </TableCell> */}
               <TableCell
                 onClick={(e) => {
                   e.stopPropagation();
@@ -72,7 +78,7 @@ const DeliveryTable = () => {
                   <DropdownMenuTrigger asChild>
                     <Button
                       variant="outline"
-                      className="flex gap-3 w-32 justify-start"
+                      className="flex gap-3 w-32 justify-start text-primarycolor"
                     >
                       <div className="">
                         <p className="text-start">{status}</p>
@@ -89,13 +95,13 @@ const DeliveryTable = () => {
                       value={status}
                       onValueChange={setStatus}
                     >
-                      <DropdownMenuRadioItem value="processing">
+                      <DropdownMenuRadioItem value="Processing">
                         Processing
                       </DropdownMenuRadioItem>
-                      <DropdownMenuRadioItem value="sending">
+                      <DropdownMenuRadioItem value="Sending">
                         Sending
                       </DropdownMenuRadioItem>
-                      <DropdownMenuRadioItem value="sent">
+                      <DropdownMenuRadioItem value="Sent">
                         Sent
                       </DropdownMenuRadioItem>
                     </DropdownMenuRadioGroup>

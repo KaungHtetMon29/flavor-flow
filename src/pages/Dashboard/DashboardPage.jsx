@@ -18,7 +18,7 @@ export default function DashboardPage() {
           onClick={() => {
             setmode("permission");
           }}
-          className={`bg-none text-xl font-semibold py-2 px-2 border-black rounded-none ${
+          className={`text-primarycolor bg-none text-xl font-semibold py-2 px-2 border-primarycolor rounded-none ${
             mode === "permission" ? "border-b-[3px]" : "border-none"
           }`}
         >
@@ -26,7 +26,7 @@ export default function DashboardPage() {
         </button>
         <button
           onClick={() => setmode("delivery")}
-          className={`bg-none text-xl font-semibold py-2 px-2 border-black rounded-none ${
+          className={`text-primarycolor bg-none text-xl font-semibold py-2 px-2 border-primarycolor rounded-none ${
             mode === "delivery" ? "border-b-[3px]" : "border-none"
           }`}
         >

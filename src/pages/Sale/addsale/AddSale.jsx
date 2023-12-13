@@ -20,12 +20,7 @@ import React, { useEffect } from "react";
 const AddSalePage = () => {
   return (
     <MainLayout>
-      <SidepageLayout>
-        <SearchBox />
-        <SearchDropdown />
-        <CalendarComponent />
-        <Sortfunction />
-      </SidepageLayout>
+      <SidepageLayout></SidepageLayout>
       <SidepagebdyLayout>
         <AddNewOrder />
       </SidepagebdyLayout>

@@ -21,7 +21,6 @@ const DeliPage = () => {
     <MainLayout>
       <SidepageLayout>
         <SearchBox />
-        <SearchBox />
       </SidepageLayout>
       <SidepagebdyLayout>
         <DeliveryTable />

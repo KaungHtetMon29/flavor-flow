@@ -35,76 +35,86 @@ const DelistatusTable = () => {
   return (
     <>
       {showDetail && <DeliveryMoodle hide={() => setShowDetail(false)} />}
-      <Table>
-        <TableHeader className="sticky top-0 bg-white">
-          <TableRow>
-            <TableHead className="w-[200px] text-[22px]">Preorder ID</TableHead>
-            <TableHead className="text-[22px]">Truck ID</TableHead>
-            <TableHead className="text-[22px]">Region</TableHead>
-            <TableHead className="text-[22px]">Status</TableHead>
-            <TableHead></TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          <TableRow onClick={() => setShowDetail(true)}>
-            <TableCell className="font-medium">1</TableCell>
-            <TableCell className="text-[18px]">12/321</TableCell>
-            <TableCell className="text-[18px]">Yangon</TableCell>
-            <TableCell
-              onClick={(e) => {
-                e.stopPropagation();
-              }}
+      <div className="rounded-xl overflow-hidden shadow-md">
+        <Table>
+          <TableHeader className="sticky top-0 bg-white">
+            <TableRow>
+              <TableHead className="w-[200px] text-[22px]">
+                Preorder ID
+              </TableHead>
+              <TableHead className="text-[22px]">Licence No</TableHead>
+              <TableHead className="text-[22px]">Region</TableHead>
+              <TableHead className="text-[22px]">Status</TableHead>
+              <TableHead></TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {}
+            <TableRow
+              onClick={() => setShowDetail(true)}
+              // className={`w-full ${
+              //   i % 2 !== 0 ? "bg-primarycolor bg-opacity-20" : "bg-none"
+              // }`}
             >
-              {/* //dropdown// */}
-              <DropdownMenu onOpenChange={handleDropdownOpenChange}>
-                <DropdownMenuTrigger asChild>
-                  <Button
-                    variant="outline"
-                    className="flex gap-3 w-32 justify-start"
-                  >
-                    <div className="">
-                      <p className="text-start">{status}</p>
-                    </div>
-                    <div className="justify-end flex w-full">
-                      {isArrowUp ? <IoIosArrowUp /> : <IoIosArrowDown />}
-                    </div>
-                  </Button>
-                  {/* <Button variant="outline" className="flex gap-3">
+              <TableCell className="font-medium">1</TableCell>
+              <TableCell className="text-[18px]">12/321</TableCell>
+              <TableCell className="text-[18px]">Yangon</TableCell>
+              <TableCell
+                onClick={(e) => {
+                  e.stopPropagation();
+                }}
+              >
+                {/* //dropdown// */}
+                <DropdownMenu onOpenChange={handleDropdownOpenChange}>
+                  <DropdownMenuTrigger asChild>
+                    <Button
+                      variant="outline"
+                      className="flex gap-3 w-32 justify-start"
+                    >
+                      <div className="">
+                        <p className="text-start">{status}</p>
+                      </div>
+                      <div className="justify-end flex w-full">
+                        {isArrowUp ? <IoIosArrowUp /> : <IoIosArrowDown />}
+                      </div>
+                    </Button>
+                    {/* <Button variant="outline" className="flex gap-3">
                   {status}
                   {isArrowUp ? <IoIosArrowUp /> : <IoIosArrowDown />}
                 </Button> */}
-                </DropdownMenuTrigger>
-                <DropdownMenuContent className="w-56">
-                  <DropdownMenuRadioGroup
-                    value={status}
-                    onValueChange={setStatus}
-                  >
-                    <DropdownMenuRadioItem value="Sending">
-                      Sending
-                    </DropdownMenuRadioItem>
-                    <DropdownMenuRadioItem value="Pending">
-                      Pending
-                    </DropdownMenuRadioItem>
-                    <DropdownMenuRadioItem value="Cancel">
-                      Cancel
-                    </DropdownMenuRadioItem>
-                  </DropdownMenuRadioGroup>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            </TableCell>
-            <TableCell
-              onClick={(e) => {
-                e.stopPropagation();
-              }}
-            >
-              {/* Truck Moodle */}
-              <TruckMoodle>
-                <IoCar />
-              </TruckMoodle>
-            </TableCell>
-          </TableRow>
-        </TableBody>
-      </Table>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="w-56">
+                    <DropdownMenuRadioGroup
+                      value={status}
+                      onValueChange={setStatus}
+                    >
+                      <DropdownMenuRadioItem value="Sending">
+                        Sending
+                      </DropdownMenuRadioItem>
+                      <DropdownMenuRadioItem value="Pending">
+                        Pending
+                      </DropdownMenuRadioItem>
+                      <DropdownMenuRadioItem value="Cancel">
+                        Cancel
+                      </DropdownMenuRadioItem>
+                    </DropdownMenuRadioGroup>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </TableCell>
+              <TableCell
+                onClick={(e) => {
+                  e.stopPropagation();
+                }}
+              >
+                {/* Truck Moodle */}
+                <TruckMoodle>
+                  <IoCar />
+                </TruckMoodle>
+              </TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
+      </div>
     </>
   );
 };

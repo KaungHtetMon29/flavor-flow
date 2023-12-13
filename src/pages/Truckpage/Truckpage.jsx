@@ -21,7 +21,6 @@ const TruckPage = () => {
     <MainLayout>
       <SidepageLayout>
         <SearchBox />
-        <SearchBox />
       </SidepageLayout>
       <SidepagebdyLayout>
         <TruckTable />

@@ -157,29 +157,40 @@ export function StockTable() {
   }, []);
   return (
     <Table>
-      <TableHeader className="sticky top-0 bg-white">
+      <TableHeader className="sticky top-0 bg-white rounded-t-xl overflow-hidden">
         <TableRow>
-          <TableHead className="w-[200px] capitalize text-[22px]">
+          <TableHead className="w-[500px] capitalize text-[22px]">
             name
           </TableHead>
-          <TableHead className=" capitalize text-[22px]">available</TableHead>
-          <TableHead className=" capitalize text-[22px]">reserve</TableHead>
-          <TableHead className=" capitalize text-[22px]">damage</TableHead>
-          <TableHead className=" capitalize text-[22px]">unit price</TableHead>
-          <TableHead className=" capitalize text-[22px]">Expiry Date</TableHead>
+          <TableHead className=" capitalize text-[22px] w-[100px]">
+            available
+          </TableHead>
+          <TableHead className=" capitalize text-[22px] w-[300px] text-right">
+            unit price
+          </TableHead>
+          <TableHead className=" capitalize text-[22px] text-right">
+            Expiry Date
+          </TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
-        {stocks.map((stock) => (
-          <TableRow key={stock.name}>
+        {stocks.map((stock, i) => (
+          <TableRow
+            key={stock.name}
+            className={`w-full h-16  ${
+              i % 2 !== 0 ? "bg-primarycolor bg-opacity-20" : "bg-none"
+            }`}
+          >
             <TableCell className="font-medium text-[18px]">
               {stock.name}
             </TableCell>
-            <TableCell className="text-[18px]">{stock.quantity}</TableCell>
-            <TableCell className="text-[18px]">{stock.reverseStock}</TableCell>
-            <TableCell className="text-[18px]">{stock.damageStock}</TableCell>
-            <TableCell className="text-[18px]">{stock.unit_price}</TableCell>
-            <TableCell className="text-[18px]">
+            <TableCell className="text-[18px] text-right justify-end">
+              {stock.quantity}
+            </TableCell>
+            <TableCell className="text-[18px] text-right">
+              {stock.unit_price}
+            </TableCell>
+            <TableCell className="text-[18px] text-right">
               {stock.stock_details[0]?.expiry_date}
             </TableCell>
           </TableRow>

@@ -17,7 +17,6 @@ const DeliStatus = () => {
     <MainLayout>
       <SidepageLayout>
         <SearchBox />
-        <SearchBox />
       </SidepageLayout>
       <SidepagebdyLayout>
         <DelistatusTable />
