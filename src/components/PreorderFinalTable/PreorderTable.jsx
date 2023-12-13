@@ -49,9 +49,12 @@ export function PreorderTable() {
   return (
     <>
       <Table>
+        {console.log(preOrders)}
         <TableHeader>
           <TableRow>
-            <TableHead className="w-[150px] text-[22px]">Id</TableHead>
+            <TableHead className="w-[170px] text-[22px]">
+              Pre Order Id
+            </TableHead>
             <TableHead className="text-[22px]">Client Name</TableHead>
             <TableHead className="text-[22px]">Due Date</TableHead>
             <TableHead className="text-left text-[22px]">Status</TableHead>
