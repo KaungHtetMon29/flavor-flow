@@ -25,15 +25,12 @@ import { updateStatus } from "../../redux/preOrderSlice";
 import NoData from "../NoData/NoData";
 
 export function PreorderTable() {
-  const [status, setStatus] = React.useState("pending");
-  const [isArrowUp, setIsArrowUp] = useState(false);
+  // const [status, setStatus] = React.useState("pending");
   const preOrders = useSelector((state) => state.preorder.preOrders);
-  const preOrderItems = useSelector((state) => state.preOrder.preOrderItems);
-  console.log(preOrders);
+  const preOrderItems = useSelector((state) => state.preorder.preOrderItems);
+  const filterOrderStatus = useSelector((state) => state.preorder.filterOrderStatus);
   const dispatch = useDispatch();
-  const handleDropdownOpenChange = (isOpen) => {
-    setIsArrowUp(isOpen);
-  };
+
   const [showDetail, setShowDetail] = useState(false);
 
   function handleShowDetail(Boolean, id) {
@@ -43,11 +40,12 @@ export function PreorderTable() {
 
   useEffect(() => {
     dispatch(fetchPreOrders());
-  }, [dispatch]);
+  }, [dispatch,]);
 
-  const updateStatus = (id, value) => {
-    dispatch(updatePreOrder(id, value));
-    dispatch(updateStatus(id, value));
+  const updateOrderStatus = (id, value) => {
+    console.log(id, value)
+    dispatch(updateStatus({id, value}));
+    dispatch(updatePreOrder({id, value}))
   };
 
   return (
@@ -62,8 +60,8 @@ export function PreorderTable() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {preOrders.length > 0 ? (
-            preOrders?.map((preOrder) => (
+          {filterOrderStatus.length > 0 ? (
+            filterOrderStatus?.map((preOrder) => (
               <TableRow
                 className={"w-full"}
                 key={preOrder.id}
@@ -73,7 +71,7 @@ export function PreorderTable() {
                   {preOrder.id}
                 </TableCell>
                 <TableCell className="text-[18px]">
-                  {preOrder.client.name}
+                  {preOrder.client?.name}
                 </TableCell>
                 <TableCell className="text-[18px]">
                   {preOrder.order_date}
@@ -84,7 +82,7 @@ export function PreorderTable() {
                     e.stopPropagation();
                   }}
                 >
-                  <DropdownMenu onOpenChange={handleDropdownOpenChange}>
+                  <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                       <Button
                         variant="outline"
@@ -93,22 +91,19 @@ export function PreorderTable() {
                         <div className="">
                           <p className="text-start">{preOrder.order_status}</p>
                         </div>
-                        <div className="justify-end flex w-full">
-                          {isArrowUp ? <IoIosArrowUp /> : <IoIosArrowDown />}
-                        </div>
+                       
                       </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent className="w-56">
                       <DropdownMenuLabel>Order Status</DropdownMenuLabel>
                       <DropdownMenuSeparator />
                       <DropdownMenuRadioGroup
-                        value={status}
-                        onValueChange={(e) => updateStatus(preOrder.id, e)}
+                        onValueChange={(e) => updateOrderStatus(preOrder.id, e)}
                       >
                         <DropdownMenuRadioItem value="pending">
                           Pending
                         </DropdownMenuRadioItem>
-                        <DropdownMenuRadioItem value="procressing">
+                        <DropdownMenuRadioItem value="processing">
                           Processing
                         </DropdownMenuRadioItem>
                         <DropdownMenuRadioItem value="delivered">
