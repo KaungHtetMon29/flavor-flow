@@ -32,30 +32,65 @@ const TruckTable = () => {
       driverPhone: "09123456789",
       status: true, //the truck is free
     },
+    {
+      truckId: 3,
+      capacity: 200,
+      driverName: "John Doe",
+      driverPhone: "09123456789",
+      status: true, //the truck is free
+    },
+    {
+      truckId: 3,
+      capacity: 200,
+      driverName: "John Doe",
+      driverPhone: "09123456789",
+      status: true, //the truck is free
+    },
+    {
+      truckId: 3,
+      capacity: 200,
+      driverName: "John Doe",
+      driverPhone: "09123456789",
+      status: true, //the truck is free
+    },
+    {
+      truckId: 3,
+      capacity: 200,
+      driverName: "John Doe",
+      driverPhone: "09123456789",
+      status: true, //the truck is free
+    },
+    {
+      truckId: 3,
+      capacity: 200,
+      driverName: "John Doe",
+      driverPhone: "09123456789",
+      status: true, //the truck is free
+    },
   ];
 
   return (
     <Table>
       <TableHeader className="sticky top-0 bg-white">
         <TableRow>
-          <TableHead className="text-[22px] `w-[200px]">Truck ID</TableHead>
-          <TableHead className="text-[22px]">Capacity</TableHead>
-          <TableHead className="text-[22px]">Driver Name</TableHead>
-          <TableHead className="text-[22px]">Driver Ph No.</TableHead>
-          <TableHead className="text-[22px] text-center">Status</TableHead>
+          <TableHead className=" w-[200px]">Truck ID</TableHead>
+          <TableHead>Capacity</TableHead>
+          <TableHead>Driver Name</TableHead>
+          <TableHead>Driver Ph No.</TableHead>
+          <TableHead className=" text-center">Status</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
         {truckInfos.map((info) => (
           <TableRow key={info.truckId}>
-            <TableCell className="text-[18px]">{info.truckId}</TableCell>
-            <TableCell className="text-[18px]">{info.capacity}</TableCell>
-            <TableCell className="text-[18px]">{info.driverName}</TableCell>
-            <TableCell className="text-[18px]">{info.driverPhone}</TableCell>
-            <TableCell className="">
+            <TableCell>{info.truckId}</TableCell>
+            <TableCell>{info.capacity}</TableCell>
+            <TableCell>{info.driverName}</TableCell>
+            <TableCell>{info.driverPhone}</TableCell>
+            <TableCell>
               {}
               <div
-                className={`m-auto w-5 h-5 border rounded-full ${
+                className={`m-auto w-6 h-6 border rounded-full ${
                   info.status === true ? "bg-green-500" : "bg-red-500"
                 }`}
               ></div>

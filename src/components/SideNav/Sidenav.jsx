@@ -10,8 +10,9 @@ export default function Sidenav({ navs, mainroute }) {
         {console.log(location.pathname.split("/")[2])}
         <div
           className={`bg-white w-20 h-20 ${
-            location.pathname.split("/")[2] !== "deliverystatus" &&
-            "cursor - pointer"
+            location.pathname.split("/")[2] !== "dashboard"
+              ? "cursor-pointer"
+              : "cursor-default"
           }`}
           onClick={() => {
             location.pathname.split("/")[2] !== "deliverystatus" &&
@@ -39,7 +40,7 @@ export default function Sidenav({ navs, mainroute }) {
               )
           )}
       </div>
-      <div className="flex flex-col items-center gap-8">
+      <div className="flex flex-col items-center gap-8 cursor-pointer">
         <div className="hover:text-gray-50 flex items-center gap-2">
           Logout
           <IoIosLogOut className="text-3xl" />

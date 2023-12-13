@@ -1,3 +1,4 @@
+import PermissionTable from "@/components/PermissionTable/PermissionTable";
 import { PreorderTable } from "@/components/PreorderFinalTable/PreorderTable";
 import TruckTable from "@/components/TruckTable/TruckTable";
 import SearchBox from "@/components/searchbox/Searchbox";
@@ -32,7 +33,7 @@ export default function DashboardPage() {
         </button>
       </SidepageLayout>
       <SidepagebdyLayout>
-        {mode === "permission" ? <TruckTable /> : <PreorderTable />}
+        {mode === "permission" ? <PermissionTable /> : <PreorderTable />}
       </SidepagebdyLayout>
     </MainLayout>
   );

@@ -151,31 +151,31 @@ export function StockTable() {
     <Table>
       <TableHeader className="sticky top-0 bg-white">
         <TableRow>
-          <TableHead className="w-[200px] capitalize text-[22px]">
+          <TableHead className="w-[200px] capitalize">
             name
           </TableHead>
-          <TableHead className=" capitalize text-[22px]">available</TableHead>
-          <TableHead className=" capitalize text-[22px]">reserve</TableHead>
-          <TableHead className=" capitalize text-[22px]">damage</TableHead>
-          <TableHead className=" capitalize text-[22px]">price</TableHead>
-          <TableHead className=" capitalize text-[22px]">expire date</TableHead>
+          <TableHead className=" capitalize">available</TableHead>
+          <TableHead className=" capitalize">reserve</TableHead>
+          <TableHead className=" capitalize">damage</TableHead>
+          <TableHead className=" capitalize">price</TableHead>
+          <TableHead className=" capitalize">expire date</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
         {invoices.map((invoice) => (
           <TableRow key={invoice.name}>
-            <TableCell className="font-medium text-[18px]">
+            <TableCell className="font-medium ">
               {invoice.name}
             </TableCell>
-            <TableCell className="text-[18px]">
+            <TableCell>
               {invoice.availableStock}
             </TableCell>
-            <TableCell className="text-[18px]">
+            <TableCell>
               {invoice.reverseStock}
             </TableCell>
-            <TableCell className="text-[18px]">{invoice.damageStock}</TableCell>
-            <TableCell className="text-[18px]">{invoice.priceStock}</TableCell>
-            <TableCell className="text-[18px]">{invoice.expireDate}</TableCell>
+            <TableCell>{invoice.damageStock}</TableCell>
+            <TableCell>{invoice.priceStock}</TableCell>
+            <TableCell>{invoice.expireDate}</TableCell>
           </TableRow>
         ))}
       </TableBody>

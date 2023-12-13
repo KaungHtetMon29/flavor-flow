@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Calendar } from "../ui/calendar";
 import { IoIosCalendar } from "react-icons/io";
-
 export default function CalendarComponent() {
   const [date, setdate] = useState(new Date());
   const [showdate, setshowdate] = useState(false);
