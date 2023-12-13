@@ -15,6 +15,12 @@ export const fetchDeliveries = createAsyncThunk("list/deliveries", async () => {
   return response.data;
 });
 
+export const getDeliPreOrderItems = createAsyncThunk("list/preOrder Items", async (id) => {
+  const response = await axios.get(`${DELIVERYURL}/${id}/preorder`);
+  console.log(response.data);
+  return response.data;
+});
+
 export const createDelivery = createAsyncThunk(
   "create/delivery",
   async (newDelivery) => {
