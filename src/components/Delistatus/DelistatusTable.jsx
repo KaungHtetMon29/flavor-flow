@@ -23,7 +23,7 @@ import { IoCar } from "react-icons/io5";
 import DeliveryMoodle from "../moodles/deliveryModle";
 
 const DelistatusTable = () => {
-  const [status, setStatus] = React.useState("sending");
+  const [status, setStatus] = React.useState("Sending");
   const [isArrowUp, setIsArrowUp] = useState(false);
   const [showDetail, setShowDetail] = useState(false);
   const handleDropdownOpenChange = (isOpen) => {
@@ -42,6 +42,7 @@ const DelistatusTable = () => {
             <TableHead className="text-[22px]">Truck ID</TableHead>
             <TableHead className="text-[22px]">Region</TableHead>
             <TableHead className="text-[22px]">Status</TableHead>
+            <TableHead></TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -74,19 +75,17 @@ const DelistatusTable = () => {
                 </Button> */}
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="w-56">
-                  <DropdownMenuLabel>Order Status</DropdownMenuLabel>
-                  <DropdownMenuSeparator />
                   <DropdownMenuRadioGroup
                     value={status}
                     onValueChange={setStatus}
                   >
-                    <DropdownMenuRadioItem value="sending">
+                    <DropdownMenuRadioItem value="Sending">
                       Sending
                     </DropdownMenuRadioItem>
-                    <DropdownMenuRadioItem value="pending">
+                    <DropdownMenuRadioItem value="Pending">
                       Pending
                     </DropdownMenuRadioItem>
-                    <DropdownMenuRadioItem value="cancel">
+                    <DropdownMenuRadioItem value="Cancel">
                       Cancel
                     </DropdownMenuRadioItem>
                   </DropdownMenuRadioGroup>
