@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import ListOverflow from "./listOverflow";
 import { Button } from "../ui/button";
 import NormalMoodle from "./normalMoodle";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function DeliveryMoodle({
   hide,
@@ -20,6 +21,9 @@ export default function DeliveryMoodle({
     { name: "blah", quantity: 10, price: 1000 },
     { name: "blah", quantity: 10, price: 1000 },
   ];
+  // const deliveryInfo = useSelector((state)=>state.delivery.)
+  const dispatch = useDispatch();
+
   const [orderItems, setOrderItems] = useState([]);
   const total = useMemo(() => {
     let total = 0;
