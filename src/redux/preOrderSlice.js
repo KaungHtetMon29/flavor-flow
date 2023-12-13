@@ -4,6 +4,7 @@ import axios from "axios";
 const initialState = {
   isLoading: true,
   error: "",
+  filterOrderStatus: [],
   preOrders: [],
   unPermitOrders: [],
   preOrderItems: [],
@@ -33,7 +34,10 @@ export const createPreOrder = createAsyncThunk(
 
 export const updatePreOrder = createAsyncThunk(
   "update/preOrders",
-  async (id, updateData) => {
+  async ({id, value}) => {
+    const updateData = {
+      order_status: value
+    }
     const response = await axios.patch(`${PREORDERURL}/${id}`, updateData);
     return response.data;
   }
@@ -72,19 +76,18 @@ const preOrderSlice = createSlice({
   initialState,
   reducers: {
     filterByOrderStatus: (state, action) => {
-      const targetStatus = action.payload;
-      if (targetStatus != "0") {
-        // '0' is the default or all status value
-        const filteredPreOrders = state.preOrders.filter(
-          (el) => el.order_status === targetStatus
-        );
-        return {
-          ...state,
-          filteredPreOrders,
-        };
+      const targetStatus = action.payload
+
+      if(targetStatus === 'all') {
+        state.filterOrderStatus = [...state.preOrders]
+        console.log(state.filterOrderStatus)
+      } else {
+        
+      const filterOrders = state.preOrders.filter( (el) => el.order_status === targetStatus );
+      state.filterOrderStatus = [...filterOrders];
+      console.log(state.filterOrderStatus)
       }
-      // If targetStatus is not present or equal to '0', return the original state
-      return state;
+
     },
 
     filterByOrderDate: (state, action) => {
@@ -99,21 +102,16 @@ const preOrderSlice = createSlice({
     },
 
     updateStatus: (state, action) => {
-      const id = action.payload.id;
-      const status = action.payload.value;
-
-      const newPreOrders = state.preOrders.map((el) => {
-        if (el.id === id) {
-          return {
-            ...el,
-            order_status: status,
-          };
-        }
-        return el;
-      });
-
-      state.preOrders = [...newPreOrders];
-    },
+      const { id, value } = action.payload;
+      const updatedOrders = state.preOrders.map((preOrder) =>
+        preOrder.id === id ? { ...preOrder, order_status: value } : preOrder
+      );
+    
+      return {
+        ...state,
+        preOrders: updatedOrders,
+      };
+    }
   },
   extraReducers: (builder) => {
     builder.addCase(fetchPreOrders.pending, (state) => {
@@ -121,9 +119,10 @@ const preOrderSlice = createSlice({
     });
 
     builder.addCase(fetchPreOrders.fulfilled, (state, action) => {
-      state.preOrders = action.payload;
+      // const sortedData = data.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+      state.filterOrderStatus = action.payload.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+      state.preOrders = action.payload.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
       state.unPermitOrders = state.preOrders.filter((order) => !order.permission);
-      console.log(state.unPermitOrders);
       state.isLoading = false;
       state.error = "";
     });
@@ -144,6 +143,7 @@ const preOrderSlice = createSlice({
 
     builder.addCase(updatePreOrder.fulfilled, (state, action) => {
       const updatedData = action.payload;
+      console.log(updatedData);
       state.preOrders = state.preOrders.map((item) =>
         item.id === updatedData.id ? updatedData : item
       );
