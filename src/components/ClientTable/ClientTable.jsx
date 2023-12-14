@@ -10,6 +10,8 @@ import {
 } from "@/components/ui/table";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchClients } from "@/redux/clientSlice";
+import LoadingComp from "../loading/Loading";
+import NoData from "../NoData/NoData";
 
 const ClientTable = () => {
   const invoices = [
@@ -100,37 +102,46 @@ const ClientTable = () => {
   ];
   const dispatch = useDispatch();
   const selector = useSelector((state) => state.client.clients);
+  const isLoading = useSelector((state) => state.client.isLoading);
   useEffect(() => {
     console.log("ran");
     dispatch(fetchClients());
   }, []);
   return (
-    <Table>
-      <TableHeader className="sticky top-0 bg-white">
-        <TableRow>
-          {console.log(selector)}
-          <TableHead className="w-[300px]">Name</TableHead>
-          <TableHead>Phone No</TableHead>
-          <TableHead>Address</TableHead>
-          <TableHead>Region</TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        {selector.map((invoice, i) => (
-          <TableRow
-            key={invoice.id}
-            className={`w-full h-[60px] ${
-              i % 2 !== 0 ? "bg-primarycolor bg-opacity-20" : "bg-none"
-            }`}
-          >
-            <TableCell className="font-medium">{invoice.name}</TableCell>
-            <TableCell>{invoice.phone}</TableCell>
-            <TableCell className="w-[500px]">{invoice.address}</TableCell>
-            <TableCell>{invoice.region}</TableCell>
-          </TableRow>
-        ))}
-      </TableBody>
-    </Table>
+    <>
+      {isLoading ? (
+        <LoadingComp />
+      ) : selector.length === 0 ? (
+        <NoData />
+      ) : (
+        <Table>
+          <TableHeader className="sticky top-0 bg-white">
+            <TableRow>
+              {console.log(selector)}
+              <TableHead className="w-[300px]">Name</TableHead>
+              <TableHead>Phone No</TableHead>
+              <TableHead>Address</TableHead>
+              <TableHead>Region</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {selector.map((invoice, i) => (
+              <TableRow
+                key={invoice.id}
+                className={`w-full h-[60px] ${
+                  i % 2 !== 0 ? "bg-primarycolor bg-opacity-20" : "bg-none"
+                }`}
+              >
+                <TableCell className="font-medium">{invoice.name}</TableCell>
+                <TableCell>{invoice.phone}</TableCell>
+                <TableCell className="w-[500px]">{invoice.address}</TableCell>
+                <TableCell>{invoice.region}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      )}
+    </>
   );
 };
 

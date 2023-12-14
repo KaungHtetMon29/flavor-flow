@@ -22,8 +22,8 @@ const App = () => {
   const navi = useNavigate();
   return (
     <Routes>
-      <Route path="/" element={<SplashPage />}></Route>
-      <Route path="/login" element={<Login />}></Route>
+      <Route path="/" element={<Login />}></Route>
+      {/* <Route path="/login" element={<Login />}></Route> */}
       <Route path="/home" element={<Home />}></Route>
       <Route
         path="/sale"

@@ -1,7 +1,10 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { IoIosLogOut } from "react-icons/io";
 import logo from "@/assets/logo.png";
+import { useDispatch } from "react-redux";
+import { Authactions } from "@/redux/authSlice";
 export default function Sidenav({ navs, mainroute }) {
+  const dispatch = useDispatch();
   const navi = useNavigate();
   const location = useLocation();
   return (
@@ -54,7 +57,10 @@ export default function Sidenav({ navs, mainroute }) {
           )}
       </div>
       <div className="flex flex-col items-center gap-8 cursor-pointer">
-        <div className=" hover:text-2xl flex items-center bg-secondarycolor py-4 px-6 rounded-md gap-2">
+        <div
+          className=" hover:text-2xl flex items-center bg-secondarycolor py-4 px-6 rounded-md gap-2"
+          onClick={() => dispatch(Authactions.Logout(), navi("/"))}
+        >
           Logout
           <IoIosLogOut className="text-3xl" />
         </div>
