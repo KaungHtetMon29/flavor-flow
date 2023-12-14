@@ -4,7 +4,13 @@ import axios from "axios";
 const initialState = {
   isLoading: true,
   error: "",
+  filterOrderStatus: [],
   preOrders: [],
+  unPermitOrders: [],
+  urgentOrders: [],
+  loadingPreOrderItem: true,
+  preOrderItems: [],
+  loadingPreOrderItem: true,
 };
 
 const PREORDERURL = "https://flavor-wave-api.onrender.com/api/v1/preorders";
@@ -14,6 +20,14 @@ export const fetchPreOrders = createAsyncThunk("index/preOrders", async () => {
   const data = response.data;
   return data;
 });
+
+export const fetchPreOrderItems = createAsyncThunk(
+  "all/preOrderItems",
+  async (id) => {
+    const response = await axios.get(`${PREORDERURL}/${id}/preorder_items`);
+    return response.data;
+  }
+);
 
 export const createPreOrder = createAsyncThunk(
   "create/preorders",
@@ -25,7 +39,24 @@ export const createPreOrder = createAsyncThunk(
 
 export const updatePreOrder = createAsyncThunk(
   "update/preOrders",
-  async (id, updateData) => {
+  async ({ id, value }) => {
+    const updateData = {
+      order_status: value,
+    };
+
+    const response = await axios.patch(`${PREORDERURL}/${id}`, updateData);
+    return response.data;
+  }
+);
+
+export const updatePermission = createAsyncThunk(
+  "update/preOrders",
+  async ({ id, value }) => {
+    console.log(value);
+    const updateData = {
+      permission: value,
+    };
+    // console.log(updateData);
     const response = await axios.patch(`${PREORDERURL}/${id}`, updateData);
     return response.data;
   }
@@ -55,7 +86,6 @@ export const filterOrderDate = createAsyncThunk(
     // console.log(orderDate)
     // console.log(`${PREORDERURL}?order_date='${orderDate}'`)
     const response = await axios.get(`${PREORDERURL}?order_date=${orderDate}`);
-    console.log(response.data);
     return response.data;
   }
 );
@@ -66,18 +96,65 @@ const preOrderSlice = createSlice({
   reducers: {
     filterByOrderStatus: (state, action) => {
       const targetStatus = action.payload;
-      if (targetStatus != "0") {
-        // '0' is the default or all status value
-        const filteredPreOrders = state.preOrders.filter(
+
+      if (targetStatus === "all") {
+        state.filterOrderStatus = [...state.preOrders];
+        console.log(state.filterOrderStatus);
+      } else {
+        const filterOrders = state.preOrders.filter(
           (el) => el.order_status === targetStatus
         );
-        return {
-          ...state,
-          filteredPreOrders,
-        };
+        state.filterOrderStatus = [...filterOrders];
       }
-      // If targetStatus is not present or equal to '0', return the original state
-      return state;
+    },
+
+    changePermissionFalse: (state, action) => {
+      const { id } = action.payload;
+
+      // Updating preOrders array
+      state.urgentOrders = state.urgentOrders.map((order) => {
+        if (order.id === id) {
+          // If the ID matches, update the permission
+          return {
+            ...order,
+            permission: false,
+          };
+        }
+        // If the ID doesn't match, return the order as it is
+        return order;
+      });
+
+      // Also update unPermitOrders if needed
+      state.unPermitOrders = state.urgentOrders;
+      state.preOrders = state.urgentOrders;
+      console.log(state.unPermitOrders.map((order) => order.permission));
+      console.log(state.preOrders.map((order) => order.permission));
+
+      console.log("Permission set to false");
+    },
+
+    changePermissionTrue: (state, action) => {
+      console.log("change permission true");
+      const { id } = action.payload;
+      state.urgentOrders = state.urgentOrders.map((order) => {
+        if (order.id === id) {
+          // If the ID matches, update the permission
+          return {
+            ...order,
+            permission: true,
+          };
+        }
+        // If the ID doesn't match, return the order as it is
+        return order;
+      });
+
+      // Also update unPermitOrders if needed
+      state.unPermitOrders = state.urgentOrders;
+      state.preOrders = state.urgentOrders;
+
+      console.log("Permission set to true");
+      console.log(state.unPermitOrders.map((order) => order.permission));
+      console.log(state.preOrders.map((order) => order.permission));
     },
 
     filterByOrderDate: (state, action) => {
@@ -92,20 +169,17 @@ const preOrderSlice = createSlice({
     },
 
     updateStatus: (state, action) => {
-      const id = action.payload.id;
-      const status = action.payload.value;
+      const { id, value } = action.payload;
+      const updatedOrders = state.preOrders.map((preOrder) =>
+        preOrder.id === id ? { ...preOrder, order_status: value } : preOrder
+      );
 
-      const newPreOrders = state.preOrders.map((el) => {
-        if (el.id === id) {
-          return {
-            ...el,
-            order_status: status,
-          };
-        }
-        return el;
-      });
-
-      state.preOrders = [...newPreOrders];
+      // const urgentOrders = updatedOrders.filter((order) => order.urgent && !order.pemermission)
+      // state.urgentOrders = [...urgentOrders];
+      return {
+        ...state,
+        preOrders: updatedOrders,
+      };
     },
   },
   extraReducers: (builder) => {
@@ -114,9 +188,29 @@ const preOrderSlice = createSlice({
     });
 
     builder.addCase(fetchPreOrders.fulfilled, (state, action) => {
-      state.preOrders = action.payload;
+      // const sortedData = data.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+      state.filterOrderStatus = action.payload.sort(
+        (a, b) => new Date(b.created_at) - new Date(a.created_at)
+      );
+      state.preOrders = action.payload.sort(
+        (a, b) => new Date(b.created_at) - new Date(a.created_at)
+      );
+      state.unPermitOrders = state.preOrders.filter(
+        (order) => order.permission
+      );
+      const orderIsGrant = [...state.preOrders];
+      state.urgentOrders = orderIsGrant.filter((order) => order.urgent);
       state.isLoading = false;
       state.error = "";
+    });
+
+    builder.addCase(fetchPreOrderItems.pending, (state) => {
+      state.loadingPreOrderItem = true;
+    });
+
+    builder.addCase(fetchPreOrderItems.fulfilled, (state, action) => {
+      state.loadingPreOrderItem = false;
+      state.preOrderItems = action.payload;
     });
 
     builder.addCase(createPreOrder.fulfilled, (state, action) => {
@@ -129,6 +223,9 @@ const preOrderSlice = createSlice({
       state.preOrders = state.preOrders.map((item) =>
         item.id === updatedData.id ? updatedData : item
       );
+      state.filterOrderStatus = [...state.preOrders];
+      state.urgentOrders = [...state.preOrders];
+      state.unPermitOrders = [...state.preOrders];
     });
 
     builder.addCase(filterOrderDate.pending, (state) => {
@@ -151,13 +248,19 @@ const preOrderSlice = createSlice({
     });
 
     builder.addCase(searchPreOrder.fulfilled, (state, action) => {
-      state.isLoading = true;
+      state.isLoading = false;
       state.preOrders = action.payload;
+      state.filterOrderStatus = [...state.preOrders];
       state.error = "";
     });
   },
 });
 
 export default preOrderSlice.reducer;
-export const { filterByOrderDate, filterByOrderStatus, updateStatus } =
-  preOrderSlice.actions;
+export const {
+  filterByOrderDate,
+  filterByOrderStatus,
+  updateStatus,
+  changePermissionFalse,
+  changePermissionTrue,
+} = preOrderSlice.actions;

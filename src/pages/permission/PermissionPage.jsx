@@ -20,7 +20,7 @@ const PermissionPage = () => {
         <SearchBox />
       </SidepageLayout>
       <SidepagebdyLayout>
-        <PermissionTable />
+        <PermissionTable dashboard={false}/>
       </SidepagebdyLayout>
     </MainLayout>
   );

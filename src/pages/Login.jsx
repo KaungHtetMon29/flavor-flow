@@ -77,26 +77,26 @@ const Login = () => {
         <input
           type="email"
           name="email"
-          placeholder="email"
-          className="border rounded-md p-2"
+          placeholder="Email"
+          className="border rounded-md p-2 text-lg"
           value={newUser.user.email}
           onChange={(e) => handleChange("email", e.target.value)}
         />
         <input
           type="password"
           name="password"
-          placeholder="password"
+          placeholder="Password"
           value={newUser.user.password}
-          className="border rounded-md p-2"
+          className="border rounded-md p-2 text-lg"
           onChange={(e) => handleChange("password", e.target.value)}
         />
-        <small className="italic lowercase text-yellow-500 ">
+        <small className="lowercase text-[1.05rem] text-yellow-500 ">
           {errorMessage}
         </small>{" "}
         <button
           type="submit"
           onClick={handleSubmit}
-          className="px-3 py-3 bg-secondarycolor/80 text-white hover:bg-secondarycolor/100 rounded-lg"
+          className="text-xl px-3 py-3 bg-secondarycolor/80 text-white hover:bg-secondarycolor/100 rounded-lg"
         >
           Login
         </button>

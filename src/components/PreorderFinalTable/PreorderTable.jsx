@@ -20,25 +20,31 @@ import { Button } from "@/components/ui/button";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import SaleMoodle from "../moodles/saleModle";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchPreOrders, updatePreOrder } from "../../redux/preOrderSlice";
+import {
+  fetchPreOrderItems,
+  fetchPreOrders,
+  updatePreOrder,
+} from "../../redux/preOrderSlice";
 import { updateStatus } from "../../redux/preOrderSlice";
 import NoData from "../NoData/NoData";
-import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import LoadingComp from "../loading/Loading";
 
 export function PreorderTable() {
-  const [status, setStatus] = React.useState("pending");
-  const [isArrowUp, setIsArrowUp] = useState(false);
-  const isLoading = useSelector((state) => state.preorder);
+  // const [status, setStatus] = React.useState("pending");
+  const [selectedPreOrder, setSelectedPreOrder] = useState({});
+
   const preOrders = useSelector((state) => state.preorder.preOrders);
-  // const preOrders = [];
-  console.log(preOrders);
+  const preOrderItems = useSelector((state) => state.preorder.preOrderItems);
+  const isLoading = useSelector((state) => state.preorder);
+  const filterOrderStatus = useSelector(
+    (state) => state.preorder.filterOrderStatus
+  );
   const dispatch = useDispatch();
-  const handleDropdownOpenChange = (isOpen) => {
-    setIsArrowUp(isOpen);
-  };
+
   const [showDetail, setShowDetail] = useState(false);
-  function handleShowDetail(Boolean) {
+
+  function handleShowDetail(Boolean, id) {
+    dispatch(fetchPreOrderItems(id));
     setShowDetail(Boolean);
   }
 
@@ -46,16 +52,16 @@ export function PreorderTable() {
     dispatch(fetchPreOrders());
   }, [dispatch]);
 
-  const updateStatus = (id, value) => {
-    dispatch(updatePreOrder(id, value));
-    dispatch(updateStatus(id, value));
+  const updateOrderStatus = (id, value) => {
+    dispatch(updateStatus({ id, value }));
+    dispatch(updatePreOrder({ id, value }));
   };
-
+  console.log("selected:", selectedPreOrder);
   return (
     <>
       {console.log(isLoading.isLoading)}
       {!isLoading.isLoading ? (
-        preOrders.length > 0 ? (
+        filterOrderStatus.length > 0 ? (
           <Table className="border-b-2 border-primarycolor w-full">
             <TableHeader>
               <TableRow>
@@ -66,13 +72,16 @@ export function PreorderTable() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {preOrders.map((preOrder, i) => (
+              {filterOrderStatus?.map((preOrder, i) => (
                 <TableRow
                   className={`w-full hover:bg-secondarycolor hover:text-white hover:bg-opacity-70 ${
                     i % 2 !== 0 ? "bg-primarycolor bg-opacity-20" : "bg-none"
                   }`}
                   key={preOrder.id}
-                  onClick={() => handleShowDetail(true)}
+                  onClick={() => {
+                    handleShowDetail(true);
+                    setSelectedPreOrder(preOrder);
+                  }}
                 >
                   <TableCell className="font-medium text-[18px]">
                     {preOrder.id}
@@ -89,7 +98,7 @@ export function PreorderTable() {
                       e.stopPropagation();
                     }}
                   >
-                    <DropdownMenu onOpenChange={handleDropdownOpenChange}>
+                    <DropdownMenu>
                       <DropdownMenuTrigger asChild>
                         <Button
                           variant="outline"
@@ -100,22 +109,20 @@ export function PreorderTable() {
                               {preOrder.order_status}
                             </p>
                           </div>
-                          <div className="justify-end flex w-full">
-                            {isArrowUp ? <IoIosArrowUp /> : <IoIosArrowDown />}
-                          </div>
                         </Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent className="w-56">
                         <DropdownMenuLabel>Order Status</DropdownMenuLabel>
                         <DropdownMenuSeparator />
                         <DropdownMenuRadioGroup
-                          value={status}
-                          onValueChange={(e) => updateStatus(preOrder.id, e)}
+                          onValueChange={(e) =>
+                            updateOrderStatus(preOrder.id, e)
+                          }
                         >
                           <DropdownMenuRadioItem value="pending">
                             Pending
                           </DropdownMenuRadioItem>
-                          <DropdownMenuRadioItem value="procressing">
+                          <DropdownMenuRadioItem value="processing">
                             Processing
                           </DropdownMenuRadioItem>
                           <DropdownMenuRadioItem value="delivered">
@@ -135,7 +142,9 @@ export function PreorderTable() {
       ) : (
         <LoadingComp />
       )}
-      {showDetail ? <SaleMoodle hide={() => handleShowDetail(false)} /> : null}
+      {showDetail ? (
+        <SaleMoodle hide={() => setShowDetail(false)} data={selectedPreOrder} />
+      ) : null}
     </>
   );
 }

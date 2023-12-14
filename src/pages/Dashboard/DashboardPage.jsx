@@ -22,7 +22,7 @@ export default function DashboardPage() {
             mode === "permission" ? "border-b-[3px]" : "border-none"
           }`}
         >
-          Urgent Permission
+          Urgent PreOrders
         </button>
         <button
           onClick={() => setmode("delivery")}
@@ -34,7 +34,7 @@ export default function DashboardPage() {
         </button>
       </SidepageLayout>
       <SidepagebdyLayout>
-        {mode === "permission" ? <PermissionTable /> : <PreorderTable />}
+        {mode === "permission" ? <PermissionTable dashboard={true}/> : <PreorderTable />}
       </SidepagebdyLayout>
     </MainLayout>
   );

@@ -22,15 +22,20 @@ import { Button } from "@/components/ui/button";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import DeliveryMoodle from "../moodles/deliveryModle";
 import { fetchDeliveries } from "@/redux/deliverySlice";
+
 import LoadingComp from "../loading/Loading";
+
 import NoData from "../NoData/NoData";
 const DeliveryTable = () => {
   const deliveries = useSelector((state) => state.delivery.deliveries);
+  const loading = useSelector((state) => state.delivery.isLoading);
   const dispatch = useDispatch();
   const [status, setStatus] = React.useState("Sending");
   const [isArrowUp, setIsArrowUp] = useState(false);
   const [showDetail, setShowDetail] = useState(false);
+
   const deliverystates = useSelector((state) => state.delivery);
+  const [selectedDeliData, setSelectedDeliData] = useState({});
 
   const handleDropdownOpenChange = (isOpen) => {
     setIsArrowUp(isOpen);
@@ -38,8 +43,8 @@ const DeliveryTable = () => {
 
   useEffect(() => {
     dispatch(fetchDeliveries());
-    console.log("hell");
   }, [dispatch]);
+  console.log(selectedDeliData, "selectled data");
   return (
     <>
       {console.log(deliverystates)}
@@ -51,8 +56,8 @@ const DeliveryTable = () => {
                 <TableHead className="w-[300px] text-[22px]">
                   Driver Name
                 </TableHead>
-                <TableHead className="text-[22px]">Truck ID</TableHead>
-                <TableHead className="text-[22px]">Town</TableHead>
+                <TableHead className="text-[22px]">Licence</TableHead>
+                <TableHead className="text-[22px]">Client Address</TableHead>
                 <TableHead className="text-[22px]">Order ID</TableHead>
                 {/* <TableHead className="text-[22px]">Distance</TableHead> */}
                 <TableHead className="text-[22px]">Status</TableHead>
@@ -62,19 +67,24 @@ const DeliveryTable = () => {
               {deliveries?.map((delivery, i) => (
                 <TableRow
                   key={delivery.id}
-                  onClick={() => setShowDetail(true)}
+                  onClick={() => {
+                    setShowDetail(true);
+                    setSelectedDeliData(delivery);
+                  }}
                   className={`w-full hover:bg-secondarycolor hover:text-white hover:bg-opacity-70 ${
                     i % 2 !== 0 ? "bg-primarycolor bg-opacity-20" : "bg-none"
                   }`}
                 >
                   <TableCell className="font-medium text-[18px]">
-                    {delivery.truck.driver}
-                  </TableCell>
-                  <TableCell className="text-[18px]">
                     {delivery.truck.license}
                   </TableCell>
-                  <TableCell className="text-[18px]">Yangon</TableCell>
-                  <TableCell className="text-[18px]">1234</TableCell>
+                  <TableCell className="text-[18px]">
+                    {delivery.preorder.client.address}
+                  </TableCell>
+                  <TableCell className="text-[18px]">
+                    {delivery.preorder_id}
+                  </TableCell>
+                  <TableCell className="text-[18px]">status</TableCell>
                   {/* <TableCell className="text-[18px]">
                 {delivery.distance} mile
               </TableCell> */}
@@ -128,7 +138,12 @@ const DeliveryTable = () => {
         <LoadingComp />
       )}
 
-      {showDetail && <DeliveryMoodle hide={() => setShowDetail(false)} />}
+      {showDetail && (
+        <DeliveryMoodle
+          hide={() => setShowDetail(false)}
+          data={selectedDeliData}
+        />
+      )}
     </>
   );
 };

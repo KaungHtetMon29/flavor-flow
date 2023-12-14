@@ -9,7 +9,9 @@ import {
 import { fetchStocks } from "@/redux/stockSlice";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+
 import LoadingComp from "../loading/Loading";
+
 import NoData from "../NoData/NoData";
 
 const invoices = [

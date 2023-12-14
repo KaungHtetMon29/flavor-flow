@@ -14,13 +14,21 @@ import FooterFrame from "@/layout/FooterLayout";
 import MainLayout from "@/layout/MainLayout";
 import SidepageLayout from "@/layout/SidepageFrame";
 import SidepagebdyLayout from "@/layout/sidepagebdylayout";
+import { searchStock } from "@/redux/stockSlice";
 import React, { useEffect } from "react";
-
+import {useDispatch} from 'react-redux'
 const Stockpage = () => {
+  const dispatch = useDispatch();
+
+  const searchByClientName = (clientName) => {
+    dispatch(searchStock(clientName))
+  }
+
+
   return (
     <MainLayout>
       <SidepageLayout>
-        <SearchBox />
+        <SearchBox searchByClientName={searchByClientName} />
       </SidepageLayout>
       <SidepagebdyLayout>
         <StockTable />

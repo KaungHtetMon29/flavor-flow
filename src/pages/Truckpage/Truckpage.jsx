@@ -19,9 +19,7 @@ import React, { useEffect } from "react";
 const TruckPage = () => {
   return (
     <MainLayout>
-      <SidepageLayout>
-        <SearchBox />
-      </SidepageLayout>
+      <SidepageLayout></SidepageLayout>
       <SidepagebdyLayout>
         <TruckTable />
       </SidepagebdyLayout>
