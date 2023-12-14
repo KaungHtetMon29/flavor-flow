@@ -152,7 +152,7 @@ const invoices = [
 ];
 
 export function StockTable() {
-  const stocks = [];
+  const stocks = useSelector((state) => state.stock.stocks);
   const isLoading = useSelector((state) => state.stock.isLoading);
   const dispatch = useDispatch();
   useEffect(() => {
