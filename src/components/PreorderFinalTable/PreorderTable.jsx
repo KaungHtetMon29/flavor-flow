@@ -53,13 +53,15 @@ export function PreorderTable() {
   }, [dispatch]);
 
   const updateOrderStatus = (id, value) => {
+    const updateData = {
+      order_status: value
+    }
     dispatch(updateStatus({ id, value }));
-    dispatch(updatePreOrder({ id, value }));
+    dispatch(updatePreOrder({ id, updateData }));
   };
-  console.log("selected:", selectedPreOrder);
+  
   return (
     <>
-      {console.log(isLoading.isLoading)}
       {!isLoading.isLoading ? (
         filterOrderStatus.length > 0 ? (
           <Table className="border-b-2 border-primarycolor w-full">
@@ -98,7 +100,7 @@ export function PreorderTable() {
                       e.stopPropagation();
                     }}
                   >
-                    <DropdownMenu>
+                    <DropdownMenu>  
                       <DropdownMenuTrigger asChild>
                         <Button
                           variant="outline"

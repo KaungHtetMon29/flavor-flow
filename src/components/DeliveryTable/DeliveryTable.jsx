@@ -47,7 +47,6 @@ const DeliveryTable = () => {
   console.log(selectedDeliData, "selectled data");
   return (
     <>
-      {console.log(deliverystates)}
       {!deliverystates.isLoading ? (
         deliveries.length !== 0 ? (
           <Table className="border-b-2 border-primarycolor">

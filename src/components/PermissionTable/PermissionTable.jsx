@@ -36,10 +36,15 @@ const PermissionTable = ({ dashboard }) => {
   const urgentOrders = useSelector((state) => state.preorder.urgentOrders);
   console.log(unPermitOrders);
   const handleClick = (id, grant) => {
+	const updateData = {
+		permission: !grant
+	}
     if (grant) {
       dispatch(changePermissionFalse({ id }));
+	  dispatch(updatePreOrder({id, updateData}))
     } else {
-      dispatch(changePermissionTrue({ id }));
+		dispatch(changePermissionTrue({ id }));
+		dispatch(updatePreOrder({id, updateData}))
     }
   };
 
@@ -145,48 +150,59 @@ const PermissionTable = ({ dashboard }) => {
               <TableCell className="font-medium">{unPermitOrder.id}</TableCell>
               <TableCell>{unPermitOrder.client.name}</TableCell>
               <TableCell>{unPermitOrder.order_date}</TableCell>
-              <TableCell className="">
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button
-                      variant="outline"
-                      className="flex gap-3 w-40 justify-between"
-                    >
-                      <div>
-                        <p className="text-start text-[18px]">
-                          {unPermitOrder.order_status}
-                        </p>
-                      </div>
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent className="w-56">
-                    <DropdownMenuSeparator />
-                    <DropdownMenuRadioGroup
-                      onValueChange={(e) =>
-                        updateOrderStatus(unPermitOrder.id, e)
-                      }
-                      disabled
-                    >
-                      <DropdownMenuRadioItem value="pending" disabled>
-                        Pending
-                      </DropdownMenuRadioItem>
-                      <DropdownMenuRadioItem value="processing" disabled>
-                        Processing
-                      </DropdownMenuRadioItem>
-                      <DropdownMenuRadioItem value="delivered" disabled>
-                        Delivered
-                      </DropdownMenuRadioItem>
-                    </DropdownMenuRadioGroup>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </TableCell>
+			  <TableCell className="">
+                  <p
+                    className={clsx(" capitalize font-semibold ", {
+                      "text-yellow-500": unPermitOrder.order_status === "pending",
+                      "text-green-500":
+                        unPermitOrder.order_status === "delivered",
+                      "text-blue-500":
+                        unPermitOrder.order_status === "processing",
+                    })}
+                  >
+                    {unPermitOrder.order_status}
+                  </p>
+                  {/* <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button
+                        variant="outline"
+                        className="flex gap-3 w-40 justify-between"
+                      >
+                        <div>
+                          <p className="text-start text-[18px]">
+                            {urgentOrder.order_status}
+                          </p>
+                        </div>
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent className="w-56">
+                      <DropdownMenuSeparator />
+                      <DropdownMenuRadioGroup
+                        onValueChange={(e) =>
+                          updateOrderStatus(urgentOrder.id, e)
+                        }
+                        disabled
+                      >
+                        <DropdownMenuRadioItem value="pending" disabled>
+                          Pending
+                        </DropdownMenuRadioItem>
+                        <DropdownMenuRadioItem value="processing" disabled>
+                          Processing
+                        </DropdownMenuRadioItem>
+                        <DropdownMenuRadioItem value="delivered" disabled>
+                          Delivered
+                        </DropdownMenuRadioItem>
+                      </DropdownMenuRadioGroup>
+                    </DropdownMenuContent>
+                  </DropdownMenu> */}
+                </TableCell>
               <TableCell className="flex justify-center gap-4 flex-row-reverse">
                 <Button
                   className={`text-[18px]`}
                   onClick={() =>
                     handleClick(unPermitOrder.id, unPermitOrder.permission)
                   }
-                  disabled={!unPermitOrder.permission}
+                //   disabled={!unPermitOrder.permission}
                 >
                   {!unPermitOrder.permission ? "Granted" : "Need Permission"}
                 </Button>

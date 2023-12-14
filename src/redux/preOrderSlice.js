@@ -10,7 +10,6 @@ const initialState = {
   urgentOrders: [],
   loadingPreOrderItem: true,
   preOrderItems: [],
-  loadingPreOrderItem: true,
 };
 
 const PREORDERURL = "https://flavor-wave-api.onrender.com/api/v1/preorders";
@@ -39,12 +38,10 @@ export const createPreOrder = createAsyncThunk(
 
 export const updatePreOrder = createAsyncThunk(
   "update/preOrders",
-  async ({ id, value }) => {
-    const updateData = {
-      order_status: value,
-    };
+  async ({ id, updateData }) => {
 
     const response = await axios.patch(`${PREORDERURL}/${id}`, updateData);
+    console.log(response.data)
     return response.data;
   }
 );
