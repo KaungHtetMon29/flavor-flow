@@ -110,6 +110,7 @@ const ClientTable = () => {
   }, []);
   return (
     <>
+      {console.log(selector)}
       {isLoading ? (
         <LoadingComp />
       ) : selector.length === 0 ? (
@@ -119,6 +120,7 @@ const ClientTable = () => {
           <TableHeader className="sticky top-0 bg-white">
             <TableRow>
               {console.log(selector)}
+              <TableHead className="w-64">Client Id</TableHead>
               <TableHead className="w-[300px]">Name</TableHead>
               <TableHead>Phone No</TableHead>
               <TableHead>Address</TableHead>
@@ -133,6 +135,7 @@ const ClientTable = () => {
                   i % 2 !== 0 ? "bg-primarycolor bg-opacity-20" : "bg-none"
                 }`}
               >
+                <TableCell>{invoice.id}</TableCell>
                 <TableCell className="font-medium">{invoice.name}</TableCell>
                 <TableCell>{invoice.phone}</TableCell>
                 <TableCell className="w-[500px]">{invoice.address}</TableCell>
