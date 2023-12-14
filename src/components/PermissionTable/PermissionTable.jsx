@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Table,
   TableBody,
@@ -28,23 +28,36 @@ import NoData from "../NoData/NoData";
 import { updateStatus } from "../../redux/preOrderSlice";
 import { updatePreOrder } from "../../redux/preOrderSlice";
 import clsx from "clsx";
+import { ConfirmAlert } from "../moodles/alertMoodle";
+import { AlertDialogAction } from "@radix-ui/react-alert-dialog";
+import SaleMoodle from "../moodles/saleModle";
 const PermissionTable = ({ dashboard }) => {
   const [status, setStatus] = useState("pending");
   const dispatch = useDispatch();
   const unPermitOrders = useSelector((state) => state.preorder.unPermitOrders);
+  //show detail
+  const [showDetail, setShowDetail] = useState(false);
+  const [selectedPreOrder, setSelectedPreOrder] = useState({});
+  //show detail
   // const preOrders = useSelector((state) => state.preorder.preOrders);
   const urgentOrders = useSelector((state) => state.preorder.urgentOrders);
+  ///for alert
+  const [alertData, setAlertData] = useState({});
+  const [dataToSubmit, setDataToSubmit] = useState({ id: 0, grant: false });
+  const alert_ref = useRef(0);
+  //alert end
+
   console.log(unPermitOrders);
   const handleClick = (id, grant) => {
-	const updateData = {
-		permission: !grant
-	}
+    const updateData = {
+      permission: !grant,
+    };
     if (grant) {
       dispatch(changePermissionFalse({ id }));
-	  dispatch(updatePreOrder({id, updateData}))
+      dispatch(updatePreOrder({ id, updateData }));
     } else {
-		dispatch(changePermissionTrue({ id }));
-		dispatch(updatePreOrder({id, updateData}))
+      dispatch(changePermissionTrue({ id }));
+      dispatch(updatePreOrder({ id, updateData }));
     }
   };
 
@@ -57,6 +70,13 @@ const PermissionTable = ({ dashboard }) => {
   useEffect(() => {
     dispatch(fetchPreOrders());
   }, []);
+  //for alert
+  useEffect(() => {
+    if (alertData) {
+      handleClick(alertData.id, alertData.grant);
+    }
+  }, [alertData]);
+  //alert end
 
   return (
     <Table>
@@ -74,6 +94,10 @@ const PermissionTable = ({ dashboard }) => {
           urgentOrders.length > 0 ? (
             urgentOrders.map((urgentOrder, i) => (
               <TableRow
+                onClick={() => {
+                  setShowDetail(true);
+                  setSelectedPreOrder(urgentOrder);
+                }}
                 key={urgentOrder.id}
                 className={`w-full  ${
                   i % 2 !== 0 ? "bg-primarycolor bg-opacity-20" : "bg-none"
@@ -131,9 +155,14 @@ const PermissionTable = ({ dashboard }) => {
                 <TableCell className="flex justify-center gap-4 flex-row-reverse">
                   <Button
                     className={`text-[18px]`}
-                    onClick={() =>
-                      handleClick(urgentOrder.id, urgentOrder.permission)
-                    }
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setDataToSubmit({
+                        id: urgentOrder.id,
+                        grant: urgentOrder.permission,
+                      });
+                      alert_ref.current.click();
+                    }}
                     // disabled={!urgentOrder.permission}
                   >
                     {!urgentOrder.permission ? "Granted" : "Need Permission"}
@@ -146,23 +175,29 @@ const PermissionTable = ({ dashboard }) => {
           )
         ) : unPermitOrders.length > 0 ? (
           unPermitOrders.map((unPermitOrder) => (
-            <TableRow key={unPermitOrder.id}>
+            <TableRow
+              key={unPermitOrder.id}
+              onClick={() => {
+                setShowDetail(true);
+                setSelectedPreOrder(unPermitOrder);
+              }}
+            >
               <TableCell className="font-medium">{unPermitOrder.id}</TableCell>
               <TableCell>{unPermitOrder.client.name}</TableCell>
               <TableCell>{unPermitOrder.order_date}</TableCell>
-			  <TableCell className="">
-                  <p
-                    className={clsx(" capitalize font-semibold ", {
-                      "text-yellow-500": unPermitOrder.order_status === "pending",
-                      "text-green-500":
-                        unPermitOrder.order_status === "delivered",
-                      "text-blue-500":
-                        unPermitOrder.order_status === "processing",
-                    })}
-                  >
-                    {unPermitOrder.order_status}
-                  </p>
-                  {/* <DropdownMenu>
+              <TableCell className="">
+                <p
+                  className={clsx(" capitalize font-semibold ", {
+                    "text-yellow-500": unPermitOrder.order_status === "pending",
+                    "text-green-500":
+                      unPermitOrder.order_status === "delivered",
+                    "text-blue-500":
+                      unPermitOrder.order_status === "processing",
+                  })}
+                >
+                  {unPermitOrder.order_status}
+                </p>
+                {/* <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                       <Button
                         variant="outline"
@@ -195,14 +230,19 @@ const PermissionTable = ({ dashboard }) => {
                       </DropdownMenuRadioGroup>
                     </DropdownMenuContent>
                   </DropdownMenu> */}
-                </TableCell>
+              </TableCell>
               <TableCell className="flex justify-center gap-4 flex-row-reverse">
                 <Button
                   className={`text-[18px]`}
-                  onClick={() =>
-                    handleClick(unPermitOrder.id, unPermitOrder.permission)
-                  }
-                //   disabled={!unPermitOrder.permission}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setDataToSubmit({
+                      id: unPermitOrder.id,
+                      grant: unPermitOrder.permission,
+                    });
+                    alert_ref.current.click();
+                  }}
+                  //   disabled={!unPermitOrder.permission}
                 >
                   {!unPermitOrder.permission ? "Granted" : "Need Permission"}
                 </Button>
@@ -213,6 +253,26 @@ const PermissionTable = ({ dashboard }) => {
           <NoData />
         )}
       </TableBody>
+      <ConfirmAlert
+        dialogText={` are u sure to give permission to ${
+          dataToSubmit.grant ? "need permision" : "granted"
+        }`}
+        alertRef={alert_ref}
+      >
+        <AlertDialogAction
+          onClick={() =>
+            setAlertData({
+              orderId: dataToSubmit.orderId,
+              value: dataToSubmit.value,
+            })
+          }
+        >
+          Continue
+        </AlertDialogAction>
+      </ConfirmAlert>
+      {showDetail && (
+        <SaleMoodle hide={() => setShowDetail(false)} data={selectedPreOrder} />
+      )}
     </Table>
   );
 };
