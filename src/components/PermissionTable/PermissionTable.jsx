@@ -27,6 +27,7 @@ import {
 import NoData from "../NoData/NoData";
 import { updateStatus } from "../../redux/preOrderSlice";
 import { updatePreOrder } from "../../redux/preOrderSlice";
+import clsx from "clsx";
 const PermissionTable = ({ dashboard }) => {
   const [status, setStatus] = useState("pending");
   const dispatch = useDispatch();
@@ -77,7 +78,18 @@ const PermissionTable = ({ dashboard }) => {
                 <TableCell>{urgentOrder.client.name}</TableCell>
                 <TableCell>{urgentOrder.order_date}</TableCell>
                 <TableCell className="">
-                  <DropdownMenu>
+                  <p
+                    className={clsx(" capitalize font-semibold ", {
+                      "text-yellow-500": urgentOrder.order_status === "pending",
+                      "text-green-500":
+                        urgentOrder.order_status === "delivered",
+                      "text-blue-500":
+                        urgentOrder.order_status === "processing",
+                    })}
+                  >
+                    {urgentOrder.order_status}
+                  </p>
+                  {/* <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                       <Button
                         variant="outline"
@@ -109,7 +121,7 @@ const PermissionTable = ({ dashboard }) => {
                         </DropdownMenuRadioItem>
                       </DropdownMenuRadioGroup>
                     </DropdownMenuContent>
-                  </DropdownMenu>
+                  </DropdownMenu> */}
                 </TableCell>
                 <TableCell className="flex justify-center gap-4 flex-row-reverse">
                   <Button

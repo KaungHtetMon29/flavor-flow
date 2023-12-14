@@ -60,7 +60,6 @@ const DeliveryTable = () => {
                 <TableHead className="text-[22px]">Client Address</TableHead>
                 <TableHead className="text-[22px]">Order ID</TableHead>
                 {/* <TableHead className="text-[22px]">Distance</TableHead> */}
-                <TableHead className="text-[22px]">Status</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -76,6 +75,9 @@ const DeliveryTable = () => {
                   }`}
                 >
                   <TableCell className="font-medium text-[18px]">
+                    {delivery.preorder.client.name}
+                  </TableCell>
+                  <TableCell className="text-[18px]">
                     {delivery.truck.license}
                   </TableCell>
                   <TableCell className="text-[18px]">
@@ -84,49 +86,9 @@ const DeliveryTable = () => {
                   <TableCell className="text-[18px]">
                     {delivery.preorder_id}
                   </TableCell>
-                  <TableCell className="text-[18px]">status</TableCell>
                   {/* <TableCell className="text-[18px]">
                 {delivery.distance} mile
               </TableCell> */}
-                  <TableCell
-                    onClick={(e) => {
-                      e.stopPropagation();
-                    }}
-                  >
-                    <DropdownMenu onOpenChange={handleDropdownOpenChange}>
-                      <DropdownMenuTrigger asChild>
-                        <Button
-                          variant="outline"
-                          className="flex gap-3 w-32 justify-start text-primarycolor"
-                        >
-                          <div className="">
-                            <p className="text-start">{status}</p>
-                          </div>
-                          <div className="justify-end flex w-full">
-                            {isArrowUp ? <IoIosArrowUp /> : <IoIosArrowDown />}
-                          </div>
-                        </Button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent className="w-56">
-                        <DropdownMenuLabel>Order Status</DropdownMenuLabel>
-                        <DropdownMenuSeparator />
-                        <DropdownMenuRadioGroup
-                          value={status}
-                          onValueChange={setStatus}
-                        >
-                          <DropdownMenuRadioItem value="Processing">
-                            Processing
-                          </DropdownMenuRadioItem>
-                          <DropdownMenuRadioItem value="Sending">
-                            Sending
-                          </DropdownMenuRadioItem>
-                          <DropdownMenuRadioItem value="Sent">
-                            Sent
-                          </DropdownMenuRadioItem>
-                        </DropdownMenuRadioGroup>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
-                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>
