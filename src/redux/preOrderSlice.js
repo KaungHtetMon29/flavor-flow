@@ -5,6 +5,9 @@ const initialState = {
   isLoading: true,
   error: "",
   preOrders: [],
+  unPermitOrders: [],
+  preOrderItems: [],
+  loadingPreOrderItem: true,
 };
 
 const PREORDERURL = "https://flavor-wave-api.onrender.com/api/v1/preorders";
@@ -14,6 +17,11 @@ export const fetchPreOrders = createAsyncThunk("index/preOrders", async () => {
   const data = response.data;
   return data;
 });
+
+export const fetchPreOrderItems = createAsyncThunk('all/preOrderItems', async (id) => {
+    const response = await axios.get(`${PREORDERURL}/${id}/preorder_items`);
+    return response.data;
+})
 
 export const createPreOrder = createAsyncThunk(
   "create/preorders",
@@ -55,7 +63,6 @@ export const filterOrderDate = createAsyncThunk(
     // console.log(orderDate)
     // console.log(`${PREORDERURL}?order_date='${orderDate}'`)
     const response = await axios.get(`${PREORDERURL}?order_date=${orderDate}`);
-    console.log(response.data);
     return response.data;
   }
 );
@@ -115,9 +122,20 @@ const preOrderSlice = createSlice({
 
     builder.addCase(fetchPreOrders.fulfilled, (state, action) => {
       state.preOrders = action.payload;
+      state.unPermitOrders = state.preOrders.filter((order) => !order.permission);
+      console.log(state.unPermitOrders);
       state.isLoading = false;
       state.error = "";
     });
+
+    builder.addCase(fetchPreOrderItems.pending, (state) => {
+        state.loadingPreOrderItem = true
+    })
+
+    builder.addCase(fetchPreOrderItems.fulfilled, (state, action) => {
+        state.loadingPreOrderItem = false
+        state.preOrderItems = action.payload;
+    })
 
     builder.addCase(createPreOrder.fulfilled, (state, action) => {
       const createdData = action.payload;

@@ -28,6 +28,7 @@ const DeliveryTable = () => {
   const [status, setStatus] = React.useState("sending");
   const [isArrowUp, setIsArrowUp] = useState(false);
   const [showDetail, setShowDetail] = useState(false);
+  const [selectedDeliData, setSelectedDeliData] = useState({});
   const handleDropdownOpenChange = (isOpen) => {
     setIsArrowUp(isOpen);
   };
@@ -36,6 +37,7 @@ const DeliveryTable = () => {
     dispatch(fetchDeliveries());
     console.log("hell");
   }, [dispatch]);
+  console.log(selectedDeliData, "selectled data");
   return (
     <>
       <Table>
@@ -51,7 +53,13 @@ const DeliveryTable = () => {
         </TableHeader>
         <TableBody>
           {deliveries?.map((delivery) => (
-            <TableRow key={delivery.id} onClick={() => setShowDetail(true)}>
+            <TableRow
+              key={delivery.id}
+              onClick={() => {
+                setShowDetail(true);
+                setSelectedDeliData(delivery);
+              }}
+            >
               <TableCell className="font-medium text-[18px]">
                 {delivery.truck.driver}
               </TableCell>
@@ -106,7 +114,12 @@ const DeliveryTable = () => {
           ))}
         </TableBody>
       </Table>
-      {showDetail && <DeliveryMoodle hide={() => setShowDetail(false)} />}
+      {showDetail && (
+        <DeliveryMoodle
+          hide={() => setShowDetail(false)}
+          data={selectedDeliData}
+        />
+      )}
     </>
   );
 };

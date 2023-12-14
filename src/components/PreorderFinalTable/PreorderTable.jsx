@@ -26,6 +26,7 @@ import { updateStatus } from "../../redux/preOrderSlice";
 export function PreorderTable() {
   const [status, setStatus] = React.useState("pending");
   const [isArrowUp, setIsArrowUp] = useState(false);
+  const [selectedPreOrder, setSelectedPreOrder] = useState({});
   const preOrders = useSelector((state) => state.preorder.preOrders);
   console.log(preOrders);
   const dispatch = useDispatch();
@@ -45,7 +46,7 @@ export function PreorderTable() {
     dispatch(updatePreOrder(id, value));
     dispatch(updateStatus(id, value));
   };
-
+  console.log("selected:", selectedPreOrder);
   return (
     <>
       <Table>
@@ -66,7 +67,10 @@ export function PreorderTable() {
               <TableRow
                 className={"w-full"}
                 key={preOrder.id}
-                onClick={() => handleShowDetail(true)}
+                onClick={() => {
+                  handleShowDetail(true);
+                  setSelectedPreOrder(preOrder);
+                }}
               >
                 <TableCell className="font-medium text-[18px]">
                   {preOrder.id}
@@ -124,7 +128,12 @@ export function PreorderTable() {
           )}
         </TableBody>
       </Table>
-      {showDetail ? <SaleMoodle hide={() => handleShowDetail(false)} /> : null}
+      {showDetail ? (
+        <SaleMoodle
+          hide={() => handleShowDetail(false)}
+          data={selectedPreOrder}
+        />
+      ) : null}
     </>
   );
 }
