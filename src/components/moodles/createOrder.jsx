@@ -16,6 +16,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { fetchStocks } from "@/redux/stockSlice";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 var currentId = 1;
 var defaultItemsInfo = [
   {
@@ -28,6 +29,7 @@ var defaultItemsInfo = [
   },
 ];
 export default function AddNewOrder() {
+  const navi = useNavigate();
   const [itemData, setItemData] = useState(defaultItemsInfo);
 
   const [currentSearching, setCurrentSearching] = useState(false);
@@ -244,7 +246,12 @@ export default function AddNewOrder() {
 
         <div className="flex gap-16 items-center w-full  mx-2">
           <div className="flex gap-2">
-            <Button className={"w-fit text-[18px]"}>Cancel</Button>
+            <Button
+              className={"w-fit text-[18px]"}
+              onClick={() => navi("/sale/preorder")}
+            >
+              Cancel
+            </Button>
             <Button
               className={`w-fit ftext-[18px] bg-primary text-primary-foreground hover:bg-primary/90 ${
                 !isValidToSubmit() && "bg-slate-500 hover:bg-slate-500"

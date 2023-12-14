@@ -196,7 +196,7 @@ export function StockTable() {
                     {stock.quantity}
                   </TableCell>
                   <TableCell className="text-[18px] text-right">
-                    {stock.unit_price}
+                    {stock.unit_price.toString()} Ks
                   </TableCell>
                   <TableCell className="text-[18px] text-right">
                     {stock.stock_details[0]?.expiry_date}
