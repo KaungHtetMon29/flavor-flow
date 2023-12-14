@@ -26,6 +26,8 @@ import NoData from "../NoData/NoData";
 
 export function PreorderTable() {
   // const [status, setStatus] = React.useState("pending");
+  const [selectedPreOrder, setSelectedPreOrder] = useState({});
+
   const preOrders = useSelector((state) => state.preorder.preOrders);
   const preOrderItems = useSelector((state) => state.preorder.preOrderItems);
   const filterOrderStatus = useSelector((state) => state.preorder.filterOrderStatus);
@@ -46,13 +48,16 @@ export function PreorderTable() {
     dispatch(updateStatus({id, value}));
     dispatch(updatePreOrder({id, value}))
   };
-
+  console.log("selected:", selectedPreOrder);
   return (
     <>
       <Table>
+        {console.log(preOrders)}
         <TableHeader>
           <TableRow>
-            <TableHead className="w-[150px] text-[22px]">Id</TableHead>
+            <TableHead className="w-[170px] text-[22px]">
+              Pre Order Id
+            </TableHead>
             <TableHead className="text-[22px]">Client Name</TableHead>
             <TableHead className="text-[22px]">Due Date</TableHead>
             <TableHead className="text-left text-[22px]">Status</TableHead>
@@ -64,7 +69,7 @@ export function PreorderTable() {
               <TableRow
                 className={"w-full"}
                 key={preOrder.id}
-                onClick={() => handleShowDetail(true, preOrder.id)}
+                onClick={() => {handleShowDetail(true, preOrder.id); setSelectedPreOrder(preOrder);}}
               >
                 <TableCell className="font-medium text-[18px]">
                   {preOrder.id}
@@ -119,7 +124,14 @@ export function PreorderTable() {
           )}
         </TableBody>
       </Table>
-      {showDetail ? <SaleMoodle hide={() => handleShowDetail(false)} preOrderItems = {preOrderItems} /> : null}
+
+      {showDetail ? (
+        <SaleMoodle
+          hide={() => setShowDetail(false)}
+          data={selectedPreOrder}
+        />
+      ) : null}
+
     </>
   );
 }

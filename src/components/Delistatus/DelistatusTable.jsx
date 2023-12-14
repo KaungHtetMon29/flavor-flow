@@ -26,6 +26,7 @@ const DelistatusTable = () => {
   const [status, setStatus] = React.useState("Sending");
   const [isArrowUp, setIsArrowUp] = useState(false);
   const [showDetail, setShowDetail] = useState(false);
+  const [selectedDeli, setSelectedDeli] = useState({});
   const handleDropdownOpenChange = (isOpen) => {
     setIsArrowUp(isOpen);
   };
@@ -46,7 +47,12 @@ const DelistatusTable = () => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          <TableRow onClick={() => setShowDetail(true)}>
+          <TableRow
+            onClick={() => {
+              setShowDetail(true);
+              setSelectedDeli({});
+            }}
+          >
             <TableCell className="font-medium">1</TableCell>
             <TableCell className="text-[18px]">12/321</TableCell>
             <TableCell className="text-[18px]">Yangon</TableCell>

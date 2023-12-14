@@ -1,69 +1,69 @@
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import ListOverflow from "./listOverflow";
 import { Button } from "../ui/button";
 import NormalMoodle from "./normalMoodle";
+import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
 
-export default function DeliveryMoodle({ hide }) {
-  const defaultData = [
-    { name: "blah", quantity: 10, price: 1000 },
-    { name: "blah", quantity: 10, price: 1000 },
-    { name: "blah", quantity: 10, price: 1000 },
-    { name: "blah", quantity: 10, price: 1000 },
-    { name: "blah", quantity: 10, price: 1000 },
-    { name: "blah", quantity: 10, price: 1000 },
-    { name: "blah", quantity: 10, price: 1000 },
-    { name: "blah", quantity: 10, price: 1000 },
-  ];
-  const total = useMemo(() => {
-    let total = 0;
-    defaultData.forEach((data) => (total += data.price));
-    return total;
-  }, [defaultData]);
-  console.log("been here");
+export default function DeliveryMoodle({ hide, data }) {
+  console.log("my data deli", data);
   return (
     <NormalMoodle hide={hide}>
-      <div className="flex justify-start flex-col my-2 border-b-2">
-        <ul className="flex flex-col min-w-[29vw] max-w-[60vw]">
-          <li className="w-full justify-start">
-            <div className="flex justify-between w-full">
-              <span>Delivery Name:</span>
-              <span>blah</span>
-            </div>
-          </li>
-          <li className="w-full justify-start">
-            <div className="flex justify-between w-full">
-              <span>TruckId:</span>
-              <span>blah</span>
-            </div>
-          </li>
-          <li className="w-full justify-start">
-            <div className="flex justify-between w-full">
-              <span>capacity:</span>
-              <span>20</span>
-            </div>
-          </li>
+      <section className="flex justify-start flex-col my-2 border-b-4">
+        <ul className="flex flex-col w-full ">
+          {data ? (
+            <>
+              <li className="w-full justify-start my-1">
+                <div className="flex justify-between w-full">
+                  <span>Order Id:</span>
+                  <span>{data.preorder_id}</span>
+                </div>
+              </li>
+              <li className="w-full justify-start my-1">
+                <div className="flex justify-between w-full">
+                  <span>Driver Name:</span>
+                  <span>{data.truck.driver}</span>
+                </div>
+              </li>
+              <li className="w-full justify-start my-1">
+                <div className="flex justify-between w-full">
+                  <span> Truck Id:</span>
+                  <span>{data.truck.license}</span>
+                </div>
+              </li>
+              <li className="w-full justify-start my-1">
+                <div className="flex justify-between w-full">
+                  <span>Capacity:</span>
+                  <span>{data.truck.capacity}</span>
+                </div>
+              </li>
+            </>
+          ) : null}
         </ul>
-      </div>
+      </section>
       {/* user detail */}
-      <div className="flex justify-start flex-col my-2">
+      <section className="flex justify-start flex-col my-2">
         <ul className="flex flex-col w-full">
-          <li className="w-full justify-start">
+          <li className=" w-full justify-start my-1">
             <div className="flex justify-between w-full">
-              <span>Client Name:</span>
-              <span>blah</span>
+              <span>Client name:</span>
+              <span>{data.preorder.client.name}</span>
             </div>
-            <div className="flex justify-between w-full">
-              <span>Town:</span>
-              <span>blah</span>
+          </li>
+          <li className=" w-full justify-start my-1">
+            <div className=" flex justify-between w-full">
+              <span>client's Phone No:</span>
+              <span>{data.preorder.client.phone}</span>
+            </div>
+          </li>
+          <li className=" w-full justify-start my-1">
+            <div className=" flex justify-between w-full">
+              <span>Address:</span>
+              <span>{data.preorder.client.address}</span>
             </div>
           </li>
         </ul>
-      </div>
-      <ListOverflow
-        data={defaultData}
-        header={"order items"}
-        totalPrice={total}
-      ></ListOverflow>
+      </section>
     </NormalMoodle>
   );
 }
