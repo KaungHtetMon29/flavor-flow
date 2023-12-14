@@ -117,7 +117,7 @@ export function PreorderTable() {
               </TableRow>
             ))
           ) : (
-            <h2>No Data</h2>
+            <div>No Data</div>
           )}
         </TableBody>
       </Table>

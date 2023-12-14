@@ -18,19 +18,14 @@ import SidepagebdyLayout from "@/layout/sidepagebdylayout";
 import React, { useEffect } from "react";
 
 const AddSalePage = () => {
-  return (
-    <MainLayout>
-      <SidepageLayout>
-        <SearchBox />
-        <SearchDropdown />
-        <CalendarComponent />
-        <Sortfunction />
-      </SidepageLayout>
-      <SidepagebdyLayout>
-        <AddNewOrder />
-      </SidepagebdyLayout>
-    </MainLayout>
-  );
+	return (
+		<MainLayout>
+			<SidepageLayout></SidepageLayout>
+			<SidepagebdyLayout>
+				<AddNewOrder />
+			</SidepagebdyLayout>
+		</MainLayout>
+	);
 };
 
 export default AddSalePage;
