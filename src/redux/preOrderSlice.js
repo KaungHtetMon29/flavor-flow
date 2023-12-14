@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { json } from "stream/consumers";
 
 const initialState = {
   isLoading: true,
@@ -90,27 +91,39 @@ const preOrderSlice = createSlice({
 
     },
 
-    acceptGrant: (state, action) => {
-      const id = action.payload;
-      const updatedOrders = state.urgentOrders.map((order) =>
-        order.id === id ? { ...order, permission: true, isGrant: false, urgent: true } : order
-      );
-      return {
-        ...state,
-        urgentOrders: updatedOrders,
-      };
+    changePermissionFalse: (state, action) => {
+      console.log('change permission false');
+      const {id} = action.payload;
+     console.log(id);
+      // Updating preOrders array
+      const newOrders = state.urgentOrders.filter((order) => {
+        if (order.id === id) {
+          return {
+            ...order,
+            permission: false
+          };
+        }
+        
+      });
+
+      state.urgentOrders = [...newOrders]
+      
     },
     
-    removeGrant: (state, action) => {
-      const id = action.payload;
-      const updatedOrders = state.urgentOrders.map((order) =>
-        order.id === id ? { ...order, permission: false, isGrant: true, urgent: false } : order
-      );
+    changePermissionTrue: (state, action) => {
+      console.log('change permission true');
+      const {id} = action.payload;
+      const newOrders = state.urgentOrders.filter((order) => {
+        if (order.id === id) {
+          return {
+            ...order,
+            permission: false
+          };
+        }
+        
+      });
 
-      return {
-        ...state,
-        urgentOrders: updatedOrders,
-      };
+      state.unPermitOrders = [...newOrders]
     },
     
 
@@ -148,12 +161,9 @@ const preOrderSlice = createSlice({
       // const sortedData = data.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
       state.filterOrderStatus = action.payload.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
       state.preOrders = action.payload.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
-      state.unPermitOrders = state.preOrders.filter((order) => !order.permission);
-      const orderIsGrant = state.preOrders.map((order) => ({
-        ...order,
-        isGrant: false,
-        }));	
-        state.urgentOrders = orderIsGrant.filter((order) => order.urgent && !order.pemermission);
+      state.unPermitOrders = state.preOrders.filter((order) => order.permission);
+      const orderIsGrant = [...state.preOrders]
+        state.urgentOrders = orderIsGrant.filter((order) => order.urgent);
       state.isLoading = false;
       state.error = "";
     });
@@ -210,5 +220,5 @@ const preOrderSlice = createSlice({
 });
 
 export default preOrderSlice.reducer;
-export const { filterByOrderDate, filterByOrderStatus, updateStatus, acceptGrant, removeGrant } =
+export const { filterByOrderDate, filterByOrderStatus, updateStatus, changePermissionFalse, changePermissionTrue   } =
   preOrderSlice.actions;
