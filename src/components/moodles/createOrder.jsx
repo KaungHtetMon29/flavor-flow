@@ -17,13 +17,22 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchStocks } from "@/redux/stockSlice";
 import axios from "axios";
 var currentId = 1;
-var defaultItemsInfo = [{ itemInfo: "", quantity: 0, price: 1000, id: 0 }];
+var defaultItemsInfo = [
+  {
+    itemInfo: "",
+    quantity: 0,
+    price: 1000,
+    id: 0,
+    unit_price: 0,
+    availableQuantity: 10,
+  },
+];
 export default function AddNewOrder() {
   const [itemData, setItemData] = useState(defaultItemsInfo);
 
   const [currentSearching, setCurrentSearching] = useState(false);
 
-  const [selectedItemInfo, setSelectedItemInfo] = useState([]);
+  const [selectedItemInfo, setSelectedItemInfo] = useState({});
 
   const [clientNameCheck, setClientNameCheck] = useState("");
 
@@ -49,7 +58,14 @@ export default function AddNewOrder() {
       currentId += 1;
       setItemData((items) => [
         ...items,
-        { itemInfo: "", quantity: 0, price: 1000, id: currentId },
+        {
+          itemInfo: "",
+          quantity: 0,
+          price: 0,
+          id: currentId,
+          unit_price: 0,
+          availableQuantity: 10,
+        },
       ]);
     }
   };
@@ -68,9 +84,14 @@ export default function AddNewOrder() {
     setItemData((itemData) =>
       itemData.map((item) => {
         if (item.id === id) {
+          const validQuantity =
+            quantity <= item.availableQuantity
+              ? quantity
+              : item.availableQuantity;
           return {
             ...item,
-            quantity: quantity,
+            quantity: validQuantity,
+            price: validQuantity * item.unit_price,
           };
         }
         return item;
@@ -78,22 +99,17 @@ export default function AddNewOrder() {
     );
   };
 
-  const handleChangeItemInfo = () => {
+  const handleChangeItemInfo = (incomingItem) => {
     setCurrentSearching(false);
+    console.log(incomingItem, "is incoming item");
     setItemData((itemData) =>
       itemData.map((item) => {
-        if (item.id === selectedItemInfo.id) {
-          return {
-            ...item,
-            itemInfo: selectedItemInfo.itemInfo,
-            quantity: selectedItemInfo.quantity,
-            price: selectedItemInfo.price,
-          };
+        if (item.id === incomingItem.id) {
+          return incomingItem;
         }
         return item;
       })
     );
-    console.log(itemData);
   };
 
   //Client info and Due Date info Validation// line 117 and line 127
@@ -174,11 +190,16 @@ export default function AddNewOrder() {
                   </div>
                   <div className="flex justify-between items-center">
                     <label className="mr-2">Quantity:</label>
-                    <Input
+                    <input
                       type="number"
-                      className={clsx(" block outline-none  ", {
-                        " outline-1 outline-red-500": item.quantity <= 0,
-                      })}
+                      min={"0"}
+                      max={JSON.stringify(item.availableQuantity)}
+                      className={clsx(
+                        " block outline-none p-2 min-w-[100px] border rounded-md  ",
+                        {
+                          " outline-1 outline-red-500": item.quantity <= 0,
+                        }
+                      )}
                       value={item.quantity}
                       onChange={(e) =>
                         handleChangeQuantity(e.target.value, item.id)
@@ -281,7 +302,7 @@ export default function AddNewOrder() {
                 <IoMdArrowRoundBack />
               </Button>
               <ItemName
-                onSelectInfo={setSelectedItemInfo}
+                onSelectInfo={handleChangeItemInfo}
                 data={selectedItemInfo}
               />
               {console.log(selectedItemInfo)}
@@ -312,7 +333,20 @@ export function ItemName({ onSelectInfo, data, selectedCommandItem }) {
   const truckLists = stockselector.stocks;
   const [allTruck, setAllTruck] = useState(truckLists);
   const [commandText, setCommandText] = useState("");
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState({});
+  //   const [finalItem, setFinalItem] = useState({});
+
+  console.log(allTruck, "is trucklsit");
+  const handleChangeItemInfo = (item) => {
+    onSelectInfo({
+      ...data,
+      itemId: item.id,
+      availableQuantity: item.quantity,
+      price: data.quantity * item.unit_price,
+      unit_price: item.unit_price,
+      itemInfo: item.name,
+    });
+  };
 
   useEffect(() => {
     if (!commandText) {
@@ -366,12 +400,10 @@ export function ItemName({ onSelectInfo, data, selectedCommandItem }) {
                 key={truck.id}
                 value={truck.name}
                 onSelect={(currentValue) => {
-                  setValue(currentValue === value ? "" : currentValue);
+                  console.log(truck, "is truck on slec");
+                  setValue(truck);
                   setCommandText(currentValue);
-                  onSelectInfo({
-                    ...data,
-                    itemInfo: currentValue,
-                  });
+                  handleChangeItemInfo(truck);
                 }}
               >
                 {truck.name}
