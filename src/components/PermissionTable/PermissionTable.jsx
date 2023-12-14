@@ -39,20 +39,20 @@ const PermissionTable = ({ dashboard }) => {
 	const updateData = {
 		permission: !grant
 	}
-    if (grant) {
+  if (grant) {
       dispatch(changePermissionFalse({ id }));
-	  dispatch(updatePreOrder({id, updateData}))
+      dispatch(updatePreOrder({id, updateData}))
     } else {
 		dispatch(changePermissionTrue({ id }));
-		dispatch(updatePreOrder({id, updateData}))
+    dispatch(updatePreOrder({id, updateData}))
     }
   };
 
-  const updateOrderStatus = (id, value) => {
-    dispatch(updateStatus({ id, value }));
-    dispatch(updatePreOrder({ id, value }));
-    setStatus(value);
-  };
+  // const updateOrderStatus = (id, value) => {
+  //   dispatch(updateStatus({ id, value }));
+  //   dispatch(updatePreOrder({ id, value }));
+  //   setStatus(value);
+  // };
 
   useEffect(() => {
     dispatch(fetchPreOrders());

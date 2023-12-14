@@ -30,11 +30,7 @@ const DelistatusTable = () => {
   const [selectedDeli, setSelectedDeli] = useState({});
   const deliveries = useSelector((state) => state.delivery.deliveries);
   const dispatch = useDispatch();
-
-  // const handlerClick = () => {
-  //   //click functionality
-  // };
-
+  
   useEffect(() => {
     dispatch(fetchDeliveries());
     console.log("fetch deliveries  ");
@@ -84,7 +80,7 @@ const DelistatusTable = () => {
                   }}
                 >
                   {/* Truck Moodle */}
-                  <TruckMoodle>
+                  <TruckMoodle delivery={delivery}>
                     <IoCar />
                   </TruckMoodle>
                 </TableCell>
