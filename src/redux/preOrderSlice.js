@@ -7,10 +7,8 @@ const initialState = {
   filterOrderStatus: [],
   preOrders: [],
   unPermitOrders: [],
-<<<<<<< HEAD
   urgentOrders: [],
-=======
->>>>>>> moodlefetch
+  loadingPreOrderItem: true,
   preOrderItems: [],
   loadingPreOrderItem: true,
 };
