@@ -20,7 +20,7 @@ const DeliPage = () => {
   return (
     <MainLayout>
       <SidepageLayout>
-        <SearchBox />
+        <SearchBox placeholder={"Enter Pre-Order ID"} />
       </SidepageLayout>
       <SidepagebdyLayout>
         <DeliveryTable />

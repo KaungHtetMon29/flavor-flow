@@ -30,7 +30,10 @@ const SalePage = () => {
   return (
     <MainLayout>
       <SidepageLayout>
-        <SearchBox searchByClientName={searchByClientName} />
+        <SearchBox
+          searchByClientName={searchByClientName}
+          placeholder={"Enter Client Name"}
+        />
         <SearchDropdown />
       </SidepageLayout>
       <SidepagebdyLayout>

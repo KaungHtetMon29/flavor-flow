@@ -57,7 +57,7 @@ const DeliveryTable = () => {
                 </TableHead>
                 <TableHead className="text-[22px]">Licence</TableHead>
                 <TableHead className="text-[22px]">Client Address</TableHead>
-                <TableHead className="text-[22px]">Order ID</TableHead>
+                <TableHead className="text-[22px]">Pre-Order ID</TableHead>
                 {/* <TableHead className="text-[22px]">Distance</TableHead> */}
               </TableRow>
             </TableHeader>
@@ -69,8 +69,8 @@ const DeliveryTable = () => {
                     setShowDetail(true);
                     setSelectedDeliData(delivery);
                   }}
-                  className={`w-full hover:bg-secondarycolor hover:text-white hover:bg-opacity-70 ${
-                    i % 2 !== 0 ? "bg-primarycolor bg-opacity-20" : "bg-none"
+                  className={`w-full hover:bg-secondarycolor h-[72px] hover:text-white hover:bg-opacity-70 ${
+                    i % 2 !== 0 ? "bg-primarycolor bg-opacity-10" : "bg-none"
                   }`}
                 >
                   <TableCell className="font-medium text-[18px]">

@@ -99,7 +99,7 @@ const TruckTable = () => {
               <TableRow
                 key={info.truckId}
                 className={`w-full h-16 ${
-                  i % 2 !== 0 ? "bg-primarycolor bg-opacity-20" : "bg-none"
+                  i % 2 !== 0 ? "bg-primarycolor bg-opacity-10" : "bg-none"
                 }`}
               >
                 <TableCell className=" border-primarycolor border-opacity-40">

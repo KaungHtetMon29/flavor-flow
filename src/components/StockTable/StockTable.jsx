@@ -186,7 +186,7 @@ export function StockTable() {
                 <TableRow
                   key={stock.name}
                   className={`w-full h-16  ${
-                    i % 2 !== 0 ? "bg-primarycolor bg-opacity-20" : "bg-none"
+                    i % 2 !== 0 ? "bg-primarycolor bg-opacity-10" : "bg-none"
                   }`}
                 >
                   <TableCell className="font-medium text-[18px]">

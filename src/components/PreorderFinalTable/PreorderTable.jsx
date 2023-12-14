@@ -54,12 +54,12 @@ export function PreorderTable() {
 
   const updateOrderStatus = (id, value) => {
     const updateData = {
-      order_status: value
-    }
+      order_status: value,
+    };
     dispatch(updateStatus({ id, value }));
     dispatch(updatePreOrder({ id, updateData }));
   };
-  
+
   return (
     <>
       {!isLoading.isLoading ? (
@@ -68,7 +68,9 @@ export function PreorderTable() {
             <TableHeader>
               <TableRow>
                 <TableHead className="w-[150px] text-[22px]">Id</TableHead>
-                <TableHead className="text-[22px]">Client Name</TableHead>
+                <TableHead className="text-[22px] w-[400px]">
+                  Client Name
+                </TableHead>
                 <TableHead className="text-[22px]">Due Date</TableHead>
                 <TableHead className="text-left text-[22px]">Status</TableHead>
               </TableRow>
@@ -77,7 +79,7 @@ export function PreorderTable() {
               {filterOrderStatus?.map((preOrder, i) => (
                 <TableRow
                   className={`w-full hover:bg-secondarycolor hover:text-white hover:bg-opacity-70 ${
-                    i % 2 !== 0 ? "bg-primarycolor bg-opacity-20" : "bg-none"
+                    i % 2 !== 0 ? "bg-primarycolor bg-opacity-10" : "bg-none"
                   }`}
                   key={preOrder.id}
                   onClick={() => {
@@ -100,11 +102,11 @@ export function PreorderTable() {
                       e.stopPropagation();
                     }}
                   >
-                    <DropdownMenu>  
+                    <DropdownMenu>
                       <DropdownMenuTrigger asChild>
                         <Button
                           variant="outline"
-                          className="flex gap-3 w-32 justify-start text-primarycolor"
+                          className="flex gap-3 w-32 justify-start text-primarycolor capitalize"
                         >
                           <div className="">
                             <p className="text-start">

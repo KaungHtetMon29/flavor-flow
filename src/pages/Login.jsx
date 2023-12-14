@@ -90,9 +90,9 @@ const Login = () => {
           className="border rounded-md p-2 text-lg"
           onChange={(e) => handleChange("password", e.target.value)}
         />
-        <small className="lowercase text-[1.05rem] text-yellow-500 ">
+        <small className="lowercase text-[1.05rem] text-yellow-500">
           {errorMessage}
-        </small>{" "}
+        </small>
         <button
           type="submit"
           onClick={handleSubmit}

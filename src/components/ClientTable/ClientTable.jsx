@@ -132,7 +132,7 @@ const ClientTable = () => {
               <TableRow
                 key={invoice.id}
                 className={`w-full h-[60px] ${
-                  i % 2 !== 0 ? "bg-primarycolor bg-opacity-20" : "bg-none"
+                  i % 2 !== 0 ? "bg-primarycolor bg-opacity-10" : "bg-none"
                 }`}
               >
                 <TableCell>{invoice.id}</TableCell>

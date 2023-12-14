@@ -28,6 +28,7 @@ import NoData from "../NoData/NoData";
 import { updateStatus } from "../../redux/preOrderSlice";
 import { updatePreOrder } from "../../redux/preOrderSlice";
 import clsx from "clsx";
+import LoadingComp from "../loading/Loading";
 const PermissionTable = ({ dashboard }) => {
   const [status, setStatus] = useState("pending");
   const dispatch = useDispatch();
@@ -36,15 +37,15 @@ const PermissionTable = ({ dashboard }) => {
   const urgentOrders = useSelector((state) => state.preorder.urgentOrders);
   console.log(unPermitOrders);
   const handleClick = (id, grant) => {
-	const updateData = {
-		permission: !grant
-	}
+    const updateData = {
+      permission: !grant,
+    };
     if (grant) {
       dispatch(changePermissionFalse({ id }));
-	  dispatch(updatePreOrder({id, updateData}))
+      dispatch(updatePreOrder({ id, updateData }));
     } else {
-		dispatch(changePermissionTrue({ id }));
-		dispatch(updatePreOrder({id, updateData}))
+      dispatch(changePermissionTrue({ id }));
+      dispatch(updatePreOrder({ id, updateData }));
     }
   };
 
@@ -53,167 +54,138 @@ const PermissionTable = ({ dashboard }) => {
     dispatch(updatePreOrder({ id, value }));
     setStatus(value);
   };
-
+  const loading = useSelector((state) => state.preorder.isLoading);
   useEffect(() => {
     dispatch(fetchPreOrders());
   }, []);
 
   return (
-    <Table>
-      <TableHeader className="sticky top-0 bg-white">
-        <TableRow>
-          <TableHead className="w-[100px]">ID</TableHead>
-          <TableHead>Client Name</TableHead>
-          <TableHead>Date</TableHead>
-          <TableHead>Status</TableHead>
-          <TableHead className="text-center">Permission Grant</TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        {dashboard ? (
-          urgentOrders.length > 0 ? (
-            urgentOrders.map((urgentOrder, i) => (
-              <TableRow
-                key={urgentOrder.id}
-                className={`w-full  ${
-                  i % 2 !== 0 ? "bg-primarycolor bg-opacity-20" : "bg-none"
-                }`}
-              >
-                <TableCell className="font-medium">{urgentOrder.id}</TableCell>
-                <TableCell>{urgentOrder.client.name}</TableCell>
-                <TableCell>{urgentOrder.order_date}</TableCell>
-                <TableCell className="">
-                  <p
-                    className={clsx(" capitalize font-semibold ", {
-                      "text-yellow-500": urgentOrder.order_status === "pending",
-                      "text-green-500":
-                        urgentOrder.order_status === "delivered",
-                      "text-blue-500":
-                        urgentOrder.order_status === "processing",
-                    })}
+    <>
+      {console.log(unPermitOrders)}
+      {dashboard ? (
+        !loading ? (
+          urgentOrders.length ? (
+            <Table>
+              <TableHeader className="sticky top-0 bg-white">
+                <TableRow>
+                  <TableHead className="w-[100px]">Id</TableHead>
+                  <TableHead>Client Name</TableHead>
+                  <TableHead>Date</TableHead>
+                  <TableHead>Status</TableHead>
+                  <TableHead className="text-center">
+                    Permission Grant
+                  </TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {urgentOrders.map((urgentOrder, i) => (
+                  <TableRow
+                    key={urgentOrder.id}
+                    className={`w-full  ${
+                      i % 2 !== 0 ? "bg-primarycolor bg-opacity-20" : "bg-none"
+                    }`}
                   >
-                    {urgentOrder.order_status}
-                  </p>
-                  {/* <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
+                    <TableCell className="font-medium">
+                      {urgentOrder.id}
+                    </TableCell>
+                    <TableCell>{urgentOrder.client.name}</TableCell>
+                    <TableCell>{urgentOrder.order_date}</TableCell>
+                    <TableCell className="">
+                      <p
+                        className={clsx(" capitalize font-semibold ", {
+                          "text-yellow-500":
+                            urgentOrder.order_status === "pending",
+                          "text-green-500":
+                            urgentOrder.order_status === "delivered",
+                          "text-blue-500":
+                            urgentOrder.order_status === "processing",
+                        })}
+                      >
+                        {urgentOrder.order_status}
+                      </p>
+                    </TableCell>
+                    <TableCell className="flex justify-center gap-4 flex-row-reverse">
                       <Button
-                        variant="outline"
-                        className="flex gap-3 w-40 justify-between"
-                      >
-                        <div>
-                          <p className="text-start text-[18px]">
-                            {urgentOrder.order_status}
-                          </p>
-                        </div>
-                      </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent className="w-56">
-                      <DropdownMenuSeparator />
-                      <DropdownMenuRadioGroup
-                        onValueChange={(e) =>
-                          updateOrderStatus(urgentOrder.id, e)
+                        className={`text-[18px]`}
+                        onClick={() =>
+                          handleClick(urgentOrder.id, urgentOrder.permission)
                         }
-                        disabled
+                        // disabled={!urgentOrder.permission}
                       >
-                        <DropdownMenuRadioItem value="pending" disabled>
-                          Pending
-                        </DropdownMenuRadioItem>
-                        <DropdownMenuRadioItem value="processing" disabled>
-                          Processing
-                        </DropdownMenuRadioItem>
-                        <DropdownMenuRadioItem value="delivered" disabled>
-                          Delivered
-                        </DropdownMenuRadioItem>
-                      </DropdownMenuRadioGroup>
-                    </DropdownMenuContent>
-                  </DropdownMenu> */}
-                </TableCell>
-                <TableCell className="flex justify-center gap-4 flex-row-reverse">
-                  <Button
-                    className={`text-[18px]`}
-                    onClick={() =>
-                      handleClick(urgentOrder.id, urgentOrder.permission)
-                    }
-                    // disabled={!urgentOrder.permission}
-                  >
-                    {!urgentOrder.permission ? "Granted" : "Need Permission"}
-                  </Button>
-                </TableCell>
-              </TableRow>
-            ))
+                        {!urgentOrder.permission
+                          ? "Granted"
+                          : "Need Permission"}
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
           ) : (
             <NoData />
           )
-        ) : unPermitOrders.length > 0 ? (
-          unPermitOrders.map((unPermitOrder) => (
-            <TableRow key={unPermitOrder.id}>
-              <TableCell className="font-medium">{unPermitOrder.id}</TableCell>
-              <TableCell>{unPermitOrder.client.name}</TableCell>
-              <TableCell>{unPermitOrder.order_date}</TableCell>
-			  <TableCell className="">
-                  <p
-                    className={clsx(" capitalize font-semibold ", {
-                      "text-yellow-500": unPermitOrder.order_status === "pending",
-                      "text-green-500":
-                        unPermitOrder.order_status === "delivered",
-                      "text-blue-500":
-                        unPermitOrder.order_status === "processing",
-                    })}
-                  >
-                    {unPermitOrder.order_status}
-                  </p>
-                  {/* <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <Button
-                        variant="outline"
-                        className="flex gap-3 w-40 justify-between"
-                      >
-                        <div>
-                          <p className="text-start text-[18px]">
-                            {urgentOrder.order_status}
-                          </p>
-                        </div>
-                      </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent className="w-56">
-                      <DropdownMenuSeparator />
-                      <DropdownMenuRadioGroup
-                        onValueChange={(e) =>
-                          updateOrderStatus(urgentOrder.id, e)
-                        }
-                        disabled
-                      >
-                        <DropdownMenuRadioItem value="pending" disabled>
-                          Pending
-                        </DropdownMenuRadioItem>
-                        <DropdownMenuRadioItem value="processing" disabled>
-                          Processing
-                        </DropdownMenuRadioItem>
-                        <DropdownMenuRadioItem value="delivered" disabled>
-                          Delivered
-                        </DropdownMenuRadioItem>
-                      </DropdownMenuRadioGroup>
-                    </DropdownMenuContent>
-                  </DropdownMenu> */}
-                </TableCell>
-              <TableCell className="flex justify-center gap-4 flex-row-reverse">
-                <Button
-                  className={`text-[18px]`}
-                  onClick={() =>
-                    handleClick(unPermitOrder.id, unPermitOrder.permission)
-                  }
-                //   disabled={!unPermitOrder.permission}
-                >
-                  {!unPermitOrder.permission ? "Granted" : "Need Permission"}
-                </Button>
-              </TableCell>
-            </TableRow>
-          ))
+        ) : (
+          <LoadingComp />
+        )
+      ) : !loading ? (
+        unPermitOrders.length > 0 ? (
+          <Table>
+            <TableHeader className="sticky top-0 bg-white">
+              <TableRow>
+                <TableHead className="w-[100px]">Id</TableHead>
+                <TableHead>Client Name</TableHead>
+                <TableHead>Date</TableHead>
+                <TableHead>Status</TableHead>
+                <TableHead className="text-center">Permission Grant</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {console.log(unPermitOrders)}
+              {unPermitOrders.map((unPermitOrder) => (
+                <TableRow key={unPermitOrder.id}>
+                  <TableCell className="font-medium">
+                    {unPermitOrder.id}
+                  </TableCell>
+                  <TableCell>{unPermitOrder.client.name}</TableCell>
+                  <TableCell>{unPermitOrder.order_date}</TableCell>
+                  <TableCell className="">
+                    <p
+                      className={clsx(" capitalize font-semibold ", {
+                        "text-yellow-500":
+                          unPermitOrder.order_status === "pending",
+                        "text-green-500":
+                          unPermitOrder.order_status === "delivered",
+                        "text-blue-500":
+                          unPermitOrder.order_status === "processing",
+                      })}
+                    >
+                      {unPermitOrder.order_status}
+                    </p>
+                  </TableCell>
+                  <TableCell className="flex justify-center gap-4 flex-row-reverse">
+                    <Button
+                      className={`text-[18px]`}
+                      onClick={() =>
+                        handleClick(unPermitOrder.id, unPermitOrder.permission)
+                      }
+                      //   disabled={!unPermitOrder.permission}
+                    >
+                      {!unPermitOrder.permission
+                        ? "Granted"
+                        : "Need Permission"}
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
         ) : (
           <NoData />
-        )}
-      </TableBody>
-    </Table>
+        )
+      ) : (
+        <LoadingComp />
+      )}
+    </>
   );
 };
 
