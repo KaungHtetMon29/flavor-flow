@@ -31,7 +31,7 @@ export default function AddNewOrder() {
   const [itemData, setItemData] = useState(defaultItemsInfo);
 
   const [currentSearching, setCurrentSearching] = useState(false);
-
+  const [totalprice, settotalprice] = useState(0);
   const [selectedItemInfo, setSelectedItemInfo] = useState({});
 
   const [clientNameCheck, setClientNameCheck] = useState("");
@@ -76,9 +76,11 @@ export default function AddNewOrder() {
 
   const total = useMemo(() => {
     let total = 0;
-    defaultItemsInfo.forEach((item) => (total += item.price));
+    console.log("ran memo");
+    itemData.forEach((item) => (total += item.price));
+    settotalprice(total);
     return total;
-  }, [defaultItemsInfo]);
+  }, [itemData]);
 
   const handleChangeQuantity = (quantity, id) => {
     setItemData((itemData) =>
@@ -192,8 +194,8 @@ export default function AddNewOrder() {
                     <label className="mr-2">Quantity:</label>
                     <input
                       type="number"
-                      min={"0"}
-                      max={JSON.stringify(item.availableQuantity)}
+                      min={0}
+                      max={item.availableQuantity}
                       className={clsx(
                         " block outline-none p-2 min-w-[100px] border rounded-md  ",
                         {
@@ -255,7 +257,14 @@ export default function AddNewOrder() {
               }`}
               onClick={() => {
                 if (isValidToSubmit()) {
-                  Formupload(clientNameCheck, dueDate, itemData, urgent, note);
+                  Formupload(
+                    clientNameCheck,
+                    dueDate,
+                    itemData,
+                    urgent,
+                    note,
+                    totalprice
+                  );
                 } else {
                   console.log("hi");
                 }
@@ -317,13 +326,14 @@ export default function AddNewOrder() {
   );
 }
 
-export const Formupload = (client, date, items, urgent, note) => {
+export const Formupload = (client, date, items, urgent, note, totalprice) => {
   console.log({
     client: client,
     date: date,
     items: items,
     urgent: urgent,
     note: note,
+    total: totalprice,
   });
 };
 

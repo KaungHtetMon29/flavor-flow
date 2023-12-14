@@ -36,15 +36,15 @@ const PermissionTable = ({ dashboard }) => {
   const urgentOrders = useSelector((state) => state.preorder.urgentOrders);
   console.log(unPermitOrders);
   const handleClick = (id, grant) => {
-	const updateData = {
-		permission: !grant
-	}
+    const updateData = {
+      permission: !grant,
+    };
     if (grant) {
       dispatch(changePermissionFalse({ id }));
-	  dispatch(updatePreOrder({id, updateData}))
+      dispatch(updatePreOrder({ id, updateData }));
     } else {
-		dispatch(changePermissionTrue({ id }));
-		dispatch(updatePreOrder({id, updateData}))
+      dispatch(changePermissionTrue({ id }));
+      dispatch(updatePreOrder({ id, updateData }));
     }
   };
 
@@ -150,19 +150,19 @@ const PermissionTable = ({ dashboard }) => {
               <TableCell className="font-medium">{unPermitOrder.id}</TableCell>
               <TableCell>{unPermitOrder.client.name}</TableCell>
               <TableCell>{unPermitOrder.order_date}</TableCell>
-			  <TableCell className="">
-                  <p
-                    className={clsx(" capitalize font-semibold ", {
-                      "text-yellow-500": unPermitOrder.order_status === "pending",
-                      "text-green-500":
-                        unPermitOrder.order_status === "delivered",
-                      "text-blue-500":
-                        unPermitOrder.order_status === "processing",
-                    })}
-                  >
-                    {unPermitOrder.order_status}
-                  </p>
-                  {/* <DropdownMenu>
+              <TableCell className="">
+                <p
+                  className={clsx(" capitalize font-semibold ", {
+                    "text-yellow-500": unPermitOrder.order_status === "pending",
+                    "text-green-500":
+                      unPermitOrder.order_status === "delivered",
+                    "text-blue-500":
+                      unPermitOrder.order_status === "processing",
+                  })}
+                >
+                  {unPermitOrder.order_status}
+                </p>
+                {/* <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                       <Button
                         variant="outline"
@@ -195,14 +195,14 @@ const PermissionTable = ({ dashboard }) => {
                       </DropdownMenuRadioGroup>
                     </DropdownMenuContent>
                   </DropdownMenu> */}
-                </TableCell>
+              </TableCell>
               <TableCell className="flex justify-center gap-4 flex-row-reverse">
                 <Button
                   className={`text-[18px]`}
                   onClick={() =>
                     handleClick(unPermitOrder.id, unPermitOrder.permission)
                   }
-                //   disabled={!unPermitOrder.permission}
+                  //   disabled={!unPermitOrder.permission}
                 >
                   {!unPermitOrder.permission ? "Granted" : "Need Permission"}
                 </Button>
