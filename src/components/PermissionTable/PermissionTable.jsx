@@ -18,7 +18,7 @@ import {
 import { Button } from "../ui/button";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { useDispatch, useSelector } from 'react-redux';
-import { changePermissionFalse, fetchPreOrders, changePermissionTrue } from "../../redux/preOrderSlice";
+import { changePermissionFalse, fetchPreOrders, changePermissionTrue, updatePermission } from "../../redux/preOrderSlice";
 import NoData from "../NoData/NoData";
 import { updateStatus } from "../../redux/preOrderSlice";
 import { updatePreOrder } from "../../redux/preOrderSlice";
@@ -30,13 +30,12 @@ const PermissionTable = ({dashboard}) => {
 	const urgentOrders = useSelector((state) => state.preorder.urgentOrders);
 	console.log(unPermitOrders)
 	  const handleClick = (id, grant) => {
-		console.log(grant)
 			if(grant) {
 			dispatch(changePermissionFalse({id}));
 
+
 		} else {
 			dispatch(changePermissionTrue({id}));
-
 		}
 	  }
 
@@ -113,7 +112,7 @@ const PermissionTable = ({dashboard}) => {
 										
 										className={`text-[18px]`}
 										onClick={() => handleClick(urgentOrder.id, urgentOrder.permission)}
-										disabled={!urgentOrder.permission}
+										// disabled={!urgentOrder.permission}
 
 									>
 										{!urgentOrder.permission ? 'Granted' : 'Need Permission'}
