@@ -15,25 +15,32 @@ export const fetchDeliveries = createAsyncThunk("list/deliveries", async () => {
   return response.data;
 });
 
-export const searchDeliveriesByClientName = createAsyncThunk('search/delivers', async (clientName) => {
-  try {
-    const response = await axios.get(`${DELIVERYURL}?search=${clientName}`);
-    return response.data
-  } catch (error) {
-    console.error('Error fetching data:', error);
+export const searchDeliveriesByClientName = createAsyncThunk(
+  "search/delivers",
+  async (clientName) => {
+    try {
+      console.log(clientName);
+      const response = await axios.get(`${DELIVERYURL}?search=${clientName}`);
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
   }
-});
+);
 
-export const getDeliPreOrderItems = createAsyncThunk("list/preOrder Items", async (id) => {
-  const response = await axios.get(`${DELIVERYURL}/${id}/preorder`);
-  console.log(response.data);
-  return response.data;
-});
+export const getDeliPreOrderItems = createAsyncThunk(
+  "list/preOrder Items",
+  async (id) => {
+    const response = await axios.get(`${DELIVERYURL}/${id}/preorder`);
+    console.log(response.data);
+    return response.data;
+  }
+);
 
 export const createDelivery = createAsyncThunk(
   "create/delivery",
   async (newDelivery) => {
-    console.log(newDelivery)
+    console.log(newDelivery);
     const response = await axios.post(`${DELIVERYURL}`, newDelivery);
     return response.data;
   }
@@ -55,7 +62,7 @@ const deliverySlice = createSlice({
 
     builder.addCase(searchDeliveriesByClientName.fulfilled, (state, action) => {
       state.deliveries = action.payload;
-    })
+    });
 
     builder.addCase(createDelivery.fulfilled, (state, action) => {
       const createdDelivery = action.payload;
