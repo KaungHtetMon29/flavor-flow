@@ -15,7 +15,7 @@ import {
 import { Check } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { fetchTrucks } from "@/redux/truckSlice";
-import { createDelivery } from "@/redux/deliverySlice";
+import { createDelivery, removeDelivery } from "@/redux/deliverySlice";
 import { useNavigate } from 'react-router-dom';
 import { DialogClose } from "@radix-ui/react-dialog";
 
@@ -31,8 +31,8 @@ export default function TruckMoodle({delivery}) {
 	}
 	
     if(selectedTruck) {
-      dispatch(createDelivery(newDelivery));
-	 
+		dispatch(removeDelivery(id));
+    //   dispatch(createDelivery(newDelivery));
     }else {
       setValidateError(true)
     }

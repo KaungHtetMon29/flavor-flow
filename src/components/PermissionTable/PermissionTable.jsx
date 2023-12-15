@@ -36,7 +36,6 @@ const PermissionTable = ({ dashboard }) => {
   const unPermitOrders = useSelector((state) =>
     state.preorder.preOrders.filter((order) => order.permission)
   );
-  console.log(unPermitOrders);
   const loading = useSelector((state) => state.preorder.isLoading);
   // const preOrders = useSelector((state) => state.preorder.preOrders);
   const urgentOrders = useSelector((state) => state.preorder.urgentOrders);
@@ -45,7 +44,6 @@ const PermissionTable = ({ dashboard }) => {
   const alert_ref = useRef(0);
   //alert end
 
-  console.log(unPermitOrders);
   const handleClick = (id, grant) => {
     const updateData = {
       permission: !grant,
@@ -66,7 +64,6 @@ const PermissionTable = ({ dashboard }) => {
   // };
 
   useEffect(() => {
-    console.log();
     dispatch(fetchPreOrders());
   }, []);
   //for alert
@@ -153,7 +150,6 @@ const PermissionTable = ({ dashboard }) => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {console.log(unPermitOrders)}
               {unPermitOrders.map((unPermitOrder) => (
                 <TableRow key={unPermitOrder.id}>
                   <TableCell className="font-medium">

@@ -73,7 +73,6 @@ export function PreorderTable() {
     }
   }, [alertData]);
 
-  console.log("selected:", selectedPreOrder);
 
   useEffect(() => {
     dispatch(fetchPreOrders());

@@ -10,7 +10,6 @@ export default function Sidenav({ navs, mainroute }) {
   return (
     <div className="text-white sticky shadow-lg w-[300px] py-12 min-h-[100vh] max-h-full bg-primarycolor text-xl font-semibold items-center flex flex-col gap-6">
       <div className="">
-        {console.log(location.pathname.split("/")[2])}
         <img
           src={logo}
           className={`w-36 h-36 ${

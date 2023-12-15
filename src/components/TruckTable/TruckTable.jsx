@@ -86,7 +86,6 @@ const TruckTable = () => {
         <Table>
           <TableHeader className="sticky top-0 bg-white">
             <TableRow>
-              {console.log(selector)}
               <TableHead className=" w-[200px]">Licence No</TableHead>
               <TableHead>Driver Name</TableHead>
               <TableHead className="w-[70px] text-right">Capacity</TableHead>
