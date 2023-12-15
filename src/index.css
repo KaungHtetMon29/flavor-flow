@@ -81,3 +81,25 @@ input::-webkit-inner-spin-button {
     @apply bg-background text-foreground;
   }
 }
+
+/* Define the styles for the scrollbar track */
+::-webkit-scrollbar {
+  width: 10px; /* Width of the entire scrollbar */
+}
+
+/* Define the styles for the scrollbar thumb */
+::-webkit-scrollbar-thumb {
+  background-color: #252336; /* Color of the thumb */
+  border-radius: 6px; /* Rounded corners of the thumb */
+  border: 3px solid #ffffff; /* Border around the thumb */
+}
+
+/* Define the styles for the scrollbar track */
+::-webkit-scrollbar-track {
+  background-color: #f0f0f0; /* Color of the track */
+}
+
+/* Define the styles for the scrollbar corner */
+::-webkit-scrollbar-corner {
+  background-color: #ffffff; /* Color of the corner */
+}

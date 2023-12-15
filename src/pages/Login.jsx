@@ -65,7 +65,7 @@ const Login = () => {
       <div className="w-64 h-64 absolute -left-24 -bottom-10 bg-opacity-80 bg-primarycolor rounded-full"></div>
       <form
         action=""
-        className="overflow-hidden relative gap-4 flex w-96 justify-center  bg-primarycolor flex-col rounded-lg border-slate-600 p-10"
+        className=" relative gap-4 flex w-96 justify-center  bg-primarycolor flex-col rounded-lg border-slate-600 p-10"
       >
         <div className="w-28 h-28 bg-secondarycolor rounded-full absolute -top-12 -right-12"></div>
         <div className="w-full flex items-center justify-center">

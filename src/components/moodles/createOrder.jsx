@@ -17,6 +17,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchStocks } from "@/redux/stockSlice";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { TbLoader } from "react-icons/tb";
 var currentId = 1;
 var defaultItemsInfo = [
   {
@@ -32,7 +33,7 @@ export default function AddNewOrder() {
   const userId = useSelector((state) => state.authentication.user_id);
   const navi = useNavigate();
   const [itemData, setItemData] = useState(defaultItemsInfo);
-
+  const [subsuccess, setsubsuccess] = useState(false);
   const [currentSearching, setCurrentSearching] = useState(false);
   const [totalprice, settotalprice] = useState(0);
   const [selectedItemInfo, setSelectedItemInfo] = useState({});
@@ -44,7 +45,7 @@ export default function AddNewOrder() {
   const [hasTouched, sethasTouched] = useState(false);
 
   const [hasTouchedDate, sethasTouchedDate] = useState(false);
-
+  const [loading, setloading] = useState(false);
   const [hasTouchedQty, sethasTouchedQty] = useState(false);
   const [urgent, seturgent] = useState(false);
   const [note, setnote] = useState("");
@@ -131,7 +132,10 @@ export default function AddNewOrder() {
     sethasTouchedDate(true);
   };
   const dispatch = useDispatch();
-
+  useEffect(() => {
+    subsuccess && navi("/sale/preorder");
+    console.log(subsuccess);
+  }, [subsuccess]);
   return (
     <>
       <div className=" w-full h-full flex flex-col text-[20px] gap-2 overflow-hidden">
@@ -250,7 +254,7 @@ export default function AddNewOrder() {
         </div>
 
         <div className="flex gap-16 items-center w-full  mx-2">
-          <div className="flex gap-2">
+          <div className="flex gap-2 w-52">
             <Button
               className={"w-fit text-[18px]"}
               onClick={() => navi("/sale/preorder")}
@@ -268,6 +272,7 @@ export default function AddNewOrder() {
                   : "bg-slate-500 hover:bg-slate-500"
               }`}
               onClick={() => {
+                setloading(true);
                 if (isValidToSubmit()) {
                   Formupload(
                     clientNameCheck,
@@ -276,7 +281,9 @@ export default function AddNewOrder() {
                     urgent,
                     note,
                     totalprice,
-                    userId
+                    userId,
+                    setsubsuccess,
+                    setloading
                   );
                 } else {
                   console.log("hi");
@@ -284,6 +291,13 @@ export default function AddNewOrder() {
               }}
             >
               Confirm
+              <TbLoader
+                className={`${
+                  loading
+                    ? "ml-2 text-xl animate-spin flex text-white"
+                    : "hidden"
+                }`}
+              />
             </Button>
           </div>
 
@@ -346,9 +360,10 @@ export const Formupload = (
   urgent,
   note,
   totalprice,
-  userId
+  userId,
+  setsubsuccess,
+  setloading
 ) => {
-  console.log(items);
   const totalquantity = () => {
     let total = 0;
     for (let i of items) {
@@ -374,7 +389,10 @@ export const Formupload = (
   axios
     .post("https://flavor-wave-api.onrender.com/api/v1/preorders", data)
     .then(function (response) {
-      console.log(data);
+      if (response.status === 201) {
+        setsubsuccess(true);
+        setloading(true);
+      }
     })
     .catch(function (error) {
       console.log(error);
