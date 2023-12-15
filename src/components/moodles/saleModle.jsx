@@ -20,6 +20,7 @@ export default function SaleMoodle({ hide, data }) {
   console.log("fetched data:", orderItems);
   return (
     <NormalMoodle hide={hide}>
+      {console.log(data)}
       <div className="flex justify-start my-2">
         <h3 className="w-3/12">Permission:</h3>
         <span>{data.permission ? "Need permission" : "Granted"}</span>
@@ -40,6 +41,7 @@ export default function SaleMoodle({ hide, data }) {
       ></ListOverflow>
       <div className="flex justify-start text-lg my-2">
         <h3 className="w-3/12 font-bold">Urgent:</h3>
+        {console.log(data.urgent)}
         <span className=" italic">{data.urgent ? "Yes" : "No"}</span>
       </div>
       <footer className="flex p-1 justify-start items-start w-full">

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Table,
   TableBody,
@@ -38,6 +38,12 @@ const PermissionTable = ({ dashboard }) => {
   const loading = useSelector((state) => state.preorder.isLoading);
   // const preOrders = useSelector((state) => state.preorder.preOrders);
   const urgentOrders = useSelector((state) => state.preorder.urgentOrders);
+  ///for alert
+  const [alertData, setAlertData] = useState({});
+  const [dataToSubmit, setDataToSubmit] = useState({ id: 0, grant: false });
+  const alert_ref = useRef(0);
+  //alert end
+
   console.log(unPermitOrders);
   const handleClick = (id, grant) => {
     const updateData = {
@@ -62,6 +68,13 @@ const PermissionTable = ({ dashboard }) => {
     console.log();
     dispatch(fetchPreOrders());
   }, []);
+  //for alert
+  useEffect(() => {
+    if (alertData) {
+      handleClick(alertData.id, alertData.grant);
+    }
+  }, [alertData]);
+  //alert end
 
   return (
     <>
