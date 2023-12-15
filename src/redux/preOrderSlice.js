@@ -45,18 +45,18 @@ export const updatePreOrder = createAsyncThunk(
   }
 );
 
-export const updatePermission = createAsyncThunk(
-  "update/preOrders",
-  async ({ id, value }) => {
-    console.log(value);
-    const updateData = {
-      permission: value,
-    };
-    // console.log(updateData);
-    const response = await axios.patch(`${PREORDERURL}/${id}`, updateData);
-    return response.data;
-  }
-);
+// export const updatePermission = createAsyncThunk(
+//   "update/preOrders",
+//   async ({ id, value }) => {
+//     console.log(value);
+//     const updateData = {
+//       permission: value,
+//     };
+//     // console.log(updateData);
+//     const response = await axios.patch(`${PREORDERURL}/${id}`, updateData);
+//     return response.data;
+//   }
+// );
 
 export const searchPreOrder = createAsyncThunk(
   "search/preOrders",
@@ -108,7 +108,7 @@ const preOrderSlice = createSlice({
       const { id } = action.payload;
 
       // Updating preOrders array
-      state.urgentOrders = state.urgentOrders.map((order) => {
+      state.preOrders = state.preOrders.map((order) => {
         if (order.id === id) {
           // If the ID matches, update the permission
           return {
@@ -121,10 +121,13 @@ const preOrderSlice = createSlice({
       });
 
       // Also update unPermitOrders if needed
-      state.unPermitOrders = state.urgentOrders;
-      state.preOrders = state.urgentOrders;
-      console.log(state.unPermitOrders.map((order) => order.permission));
-      console.log(state.preOrders.map((order) => order.permission));
+      state.unPermitOrders = state.preOrders.filter(
+        (order) => order.permission === true
+      );
+      console.log("change permission false");
+      // state.preOrders = state.urgentOrders;
+      // console.log(state.unPermitOrders.map((order) => order.permission));
+      // console.log(state.preOrders.map((order) => order.permission));
 
       console.log("Permission set to false");
     },
@@ -132,7 +135,7 @@ const preOrderSlice = createSlice({
     changePermissionTrue: (state, action) => {
       console.log("change permission true");
       const { id } = action.payload;
-      state.urgentOrders = state.urgentOrders.map((order) => {
+      state.preOrders = state.preOrders.map((order) => {
         if (order.id === id) {
           // If the ID matches, update the permission
           return {
@@ -145,12 +148,13 @@ const preOrderSlice = createSlice({
       });
 
       // Also update unPermitOrders if needed
-      state.unPermitOrders = state.urgentOrders;
-      state.preOrders = state.urgentOrders;
+      state.unPermitOrders = state.preOrders;
+      console.log(state.unPermitOrders);
+      // state.preOrders = state.urgentOrders;
 
-      console.log("Permission set to true");
-      console.log(state.unPermitOrders.map((order) => order.permission));
-      console.log(state.preOrders.map((order) => order.permission));
+      // console.log("Permission set to true");
+      // console.log(state.unPermitOrders.map((order) => order.permission));
+      // console.log(state.preOrders.map((order) => order.permission));
     },
 
     filterByOrderDate: (state, action) => {
@@ -192,8 +196,9 @@ const preOrderSlice = createSlice({
         (a, b) => new Date(b.created_at) - new Date(a.created_at)
       );
       state.unPermitOrders = state.preOrders.filter(
-        (order) => order.permission
+        (order) => order.permission === true
       );
+      console.log("unpermitorder", state.unPermitOrders);
       const orderIsGrant = [...state.preOrders];
       state.urgentOrders = orderIsGrant.filter((order) => order.urgent);
       state.isLoading = false;
@@ -216,12 +221,18 @@ const preOrderSlice = createSlice({
 
     builder.addCase(updatePreOrder.fulfilled, (state, action) => {
       const updatedData = action.payload;
+      console.log(updatedData.id, "id");
+      console.log(updatedData, "updateData");
       state.preOrders = state.preOrders.map((item) =>
         item.id === updatedData.id ? updatedData : item
       );
       state.filterOrderStatus = [...state.preOrders];
       state.urgentOrders = [...state.preOrders];
-      state.unPermitOrders = [...state.preOrders];
+      state.unPermitOrders = state.preOrders.filter(
+        (order) => order.permission === true
+      );
+      console.log(state.preOrders.filter((order) => !order.permission));
+      console.log("fulfilled");
     });
 
     builder.addCase(filterOrderDate.pending, (state) => {

@@ -22,7 +22,6 @@ import {
   changePermissionFalse,
   fetchPreOrders,
   changePermissionTrue,
-  updatePermission,
 } from "../../redux/preOrderSlice";
 import NoData from "../NoData/NoData";
 import { updateStatus } from "../../redux/preOrderSlice";
@@ -32,7 +31,11 @@ import LoadingComp from "../loading/Loading";
 const PermissionTable = ({ dashboard }) => {
   const [status, setStatus] = useState("pending");
   const dispatch = useDispatch();
-  const unPermitOrders = useSelector((state) => state.preorder.unPermitOrders);
+  const unPermitOrders = useSelector((state) =>
+    state.preorder.preOrders.filter((order) => order.permission)
+  );
+  console.log(unPermitOrders);
+
   // const preOrders = useSelector((state) => state.preorder.preOrders);
   const urgentOrders = useSelector((state) => state.preorder.urgentOrders);
   console.log(unPermitOrders);
@@ -43,6 +46,7 @@ const PermissionTable = ({ dashboard }) => {
     if (grant) {
       dispatch(changePermissionFalse({ id }));
       dispatch(updatePreOrder({ id, updateData }));
+      dispatch(fetchPreOrders());
     } else {
       dispatch(changePermissionTrue({ id }));
       dispatch(updatePreOrder({ id, updateData }));
@@ -62,7 +66,6 @@ const PermissionTable = ({ dashboard }) => {
 
   return (
     <>
-      {console.log(unPermitOrders)}
       {dashboard ? (
         !loading ? (
           urgentOrders.length ? (
