@@ -63,7 +63,7 @@ export const salepaths = [
 export const logisticpaths = [
   {
     path: "deliverystatus",
-    pathname: "Delivery Status",
+    pathname: "Delivery",
     icon: <IoCheckmarkDoneCircle className="text-3xl" />,
   },
   { path: "truck", pathname: "Truck", icon: <FaCar className="text-3xl" /> },
