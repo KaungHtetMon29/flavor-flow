@@ -126,18 +126,21 @@ const PermissionTable = ({ dashboard }) => {
                       </p>
                     </TableCell>
                     <TableCell className="flex justify-center gap-4 flex-row-reverse">
-                      <Button
-                        variant="custom"
-                        className={`text-[18px] w-48  `}
-                        onClick={() =>
-                          handleClick(urgentOrder.id, urgentOrder.permission)
-                        }
-                        // disabled={!urgentOrder.permission}
+                      <p
+                        className={clsx(" capitalize font-semibold ", {
+                          "text-yellow-500":
+                            urgentOrder.order_status.toLowerCase() ===
+                            "pending",
+                          "text-green-700":
+                            urgentOrder.order_status.toLowerCase() ===
+                            "delivered",
+                          "text-blue-500":
+                            urgentOrder.order_status.toLowerCase() ===
+                            "processing",
+                        })}
                       >
-                        {!urgentOrder.permission
-                          ? "Granted"
-                          : "Need Permission"}
-                      </Button>
+                        {urgentOrder.permission ? "NEED PERMISSION" : "GRANTED"}
+                      </p>
                     </TableCell>
                   </TableRow>
                 ))}

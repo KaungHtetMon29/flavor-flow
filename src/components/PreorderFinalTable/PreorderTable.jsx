@@ -62,6 +62,7 @@ export function PreorderTable() {
     dispatch(updateStatus({ id, value }));
     dispatch(updatePreOrder({ id, updateData }));
   };
+
   const handleAlert = () => {
     return alert_ref.current.click();
   };
