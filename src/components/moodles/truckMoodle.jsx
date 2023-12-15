@@ -16,23 +16,24 @@ import { Check } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { fetchTrucks } from "@/redux/truckSlice";
 import { createDelivery } from "@/redux/deliverySlice";
+import { useNavigate } from 'react-router-dom';
 
 export default function TruckMoodle({delivery}) {
   const [selectedTruck, setSelectedTruck] = useState(null);
   const [validateError, setValidateError] = useState(false);
   const [truckId, settruckId] = useState('');
   const dispatch = useDispatch();
-
-  const handleSumbit  = (id) => {
+  const navigate = useNavigate();
+  const handleSumbit  = async (id) => {
 	const newDelivery = {
 		preorder_id: id,
 		truck_id: truckId
 	}
 	
     if(selectedTruck) {
-     dispatch(createDelivery(newDelivery))
+     await dispatch(createDelivery(newDelivery));
+	 navigate('/logistic/deliveryStatus');
     }else {
-      console.log("can't submit");
       setValidateError(true)
     }
   }

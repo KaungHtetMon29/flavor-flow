@@ -33,7 +33,6 @@ const DelistatusTable = () => {
   
   useEffect(() => {
     dispatch(fetchDeliveries());
-    console.log("fetch deliveries  ");
   }, [dispatch]);
   return (
     <>
@@ -68,10 +67,10 @@ const DelistatusTable = () => {
                   {delivery.preorder_id}
                 </TableCell>
                 <TableCell className="text-[18px]">
-                  {delivery.preorder.client.name}
+                  {delivery.preorder?.client.name}
                 </TableCell>
                 <TableCell className="text-[18px]">
-                  {delivery.preorder.client.address}
+                  {delivery.preorder?.client.address}
                 </TableCell>
 
                 <TableCell
