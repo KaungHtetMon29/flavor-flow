@@ -10,17 +10,14 @@ export default function SaleMoodle({ hide, data }) {
     const response = await axios.get(
       `https://flavor-wave-api.onrender.com/api/v1/preorders/${data.id}/preorder_items`
     );
-    console.log("fetched datassss:", response.data);
     return setOrderItems(response.data);
   };
 
   useEffect(() => {
     fetchOrderItems();
   }, [data.id]);
-  console.log("fetched data:", orderItems);
   return (
     <NormalMoodle hide={hide}>
-      {console.log(data)}
       <div className="flex justify-start my-2">
         <h3 className="w-3/12">Permission:</h3>
         <span>{data.permission ? "Need permission" : "Granted"}</span>
@@ -33,7 +30,6 @@ export default function SaleMoodle({ hide, data }) {
         <h3 className="w-3/12">Region:</h3>
         <span>{data.client.region}</span>
       </div>
-      {console.log(orderItems)}
       <ListOverflow
         total={data}
         data={orderItems}
@@ -41,14 +37,12 @@ export default function SaleMoodle({ hide, data }) {
       ></ListOverflow>
       <div className="flex justify-start text-lg my-2">
         <h3 className="w-3/12 font-bold">Urgent:</h3>
-        {console.log(data.urgent)}
         <span className=" italic">{data.urgent ? "Yes" : "No"}</span>
       </div>
       <footer className="flex p-1 justify-start items-start w-full">
         <span className="mr-2 font-bold">Note: </span>
         <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos
-          veniam suscipit volupt
+          ----------------
         </p>
       </footer>
     </NormalMoodle>
