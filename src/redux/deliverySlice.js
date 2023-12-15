@@ -33,8 +33,8 @@ export const getDeliPreOrderItems = createAsyncThunk("list/preOrder Items", asyn
 export const createDelivery = createAsyncThunk(
   "create/delivery",
   async (newDelivery) => {
+    console.log(newDelivery)
     const response = await axios.post(`${DELIVERYURL}`, newDelivery);
-    console.log(response.data); 
     return response.data;
   }
 );

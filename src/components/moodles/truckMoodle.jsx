@@ -17,22 +17,22 @@ import { cn } from "@/lib/utils";
 import { fetchTrucks } from "@/redux/truckSlice";
 import { createDelivery } from "@/redux/deliverySlice";
 import { useNavigate } from 'react-router-dom';
+import { DialogClose } from "@radix-ui/react-dialog";
 
 export default function TruckMoodle({delivery}) {
   const [selectedTruck, setSelectedTruck] = useState(null);
   const [validateError, setValidateError] = useState(false);
   const [truckId, settruckId] = useState('');
   const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const handleSumbit  = async (id) => {
+  const handleSumbit  =  (id) => {
 	const newDelivery = {
 		preorder_id: id,
 		truck_id: truckId
 	}
 	
     if(selectedTruck) {
-     await dispatch(createDelivery(newDelivery));
-	 navigate('/logistic/deliveryStatus');
+      dispatch(createDelivery(newDelivery));
+	 
     }else {
       setValidateError(true)
     }
@@ -54,7 +54,7 @@ export default function TruckMoodle({delivery}) {
           </Truck_Command> */}
  <Blah onSelectInfo={(selectedTruck) => setSelectedTruck(selectedTruck)} settruckId={settruckId} />
           {validateError && <p className="text-red-500">Please select a truck no.</p>}
-          <Button className={`w-fit my-2`} onClick={() => handleSumbit(delivery.preorder_id)}>Submit</Button>
+          <DialogClose className="w-fit px-2 rounded-md bg-slate-900 text-white p-1 my-2"   onClick={() => handleSumbit(delivery.preorder_id)}>Submit</DialogClose>
 				</section>
 			</div>
 		</Moodle>

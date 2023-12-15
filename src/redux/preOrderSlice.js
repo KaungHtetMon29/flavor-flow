@@ -41,7 +41,6 @@ export const updatePreOrder = createAsyncThunk(
   async ({ id, updateData }) => {
 
     const response = await axios.patch(`${PREORDERURL}/${id}`, updateData);
-    console.log(response.data)
     return response.data;
   }
 );
