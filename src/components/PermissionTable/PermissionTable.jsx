@@ -35,7 +35,7 @@ const PermissionTable = ({ dashboard }) => {
     state.preorder.preOrders.filter((order) => order.permission)
   );
   console.log(unPermitOrders);
-
+  const loading = useSelector((state) => state.preorder.isLoading);
   // const preOrders = useSelector((state) => state.preorder.preOrders);
   const urgentOrders = useSelector((state) => state.preorder.urgentOrders);
   console.log(unPermitOrders);
@@ -46,19 +46,18 @@ const PermissionTable = ({ dashboard }) => {
     if (grant) {
       dispatch(changePermissionFalse({ id }));
       dispatch(updatePreOrder({ id, updateData }));
-      dispatch(fetchPreOrders());
     } else {
       dispatch(changePermissionTrue({ id }));
       dispatch(updatePreOrder({ id, updateData }));
     }
   };
 
-  const updateOrderStatus = (id, value) => {
-    dispatch(updateStatus({ id, value }));
-    dispatch(updatePreOrder({ id, value }));
-    setStatus(value);
-  };
-  const loading = useSelector((state) => state.preorder.isLoading);
+  // const updateOrderStatus = (id, value) => {
+  //   dispatch(updateStatus({ id, value }));
+  //   dispatch(updatePreOrder({ id, value }));
+  //   setStatus(value);
+  // };
+
   useEffect(() => {
     console.log();
     dispatch(fetchPreOrders());

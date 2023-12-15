@@ -16,19 +16,19 @@ export default function DeliveryMoodle({ hide, data }) {
               <li className="w-full justify-start my-1">
                 <div className="flex justify-between w-full">
                   <span>Order Id:</span>
-                  <span>{data.preorder_id}</span>
+                  <span>{data?.preorder_id}</span>
                 </div>
               </li>
               <li className="w-full justify-start my-1">
                 <div className="flex justify-between w-full">
                   <span>Driver Name:</span>
-                  <span>{data.truck.driver}</span>
+                  <span>{data?.truck.driver}</span>
                 </div>
               </li>
               <li className="w-full justify-start my-1">
                 <div className="flex justify-between w-full">
                   <span> Truck Id:</span>
-                  <span>{data.truck.license}</span>
+                  <span>{data?.truck.license}</span>
                 </div>
               </li>
               <li className="w-full justify-start my-1">

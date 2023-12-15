@@ -15,6 +15,15 @@ export const fetchDeliveries = createAsyncThunk("list/deliveries", async () => {
   return response.data;
 });
 
+export const searchDeliveriesByClientName = createAsyncThunk('search/delivers', async (clientName) => {
+  try {
+    const response = await axios.get(`${DELIVERYURL}?search=${clientName}`);
+    return response.data
+  } catch (error) {
+    console.error('Error fetching data:', error);
+  }
+});
+
 export const getDeliPreOrderItems = createAsyncThunk("list/preOrder Items", async (id) => {
   const response = await axios.get(`${DELIVERYURL}/${id}/preorder`);
   console.log(response.data);
@@ -24,6 +33,7 @@ export const getDeliPreOrderItems = createAsyncThunk("list/preOrder Items", asyn
 export const createDelivery = createAsyncThunk(
   "create/delivery",
   async (newDelivery) => {
+    console.log(newDelivery)
     const response = await axios.post(`${DELIVERYURL}`, newDelivery);
     return response.data;
   }
@@ -43,9 +53,14 @@ const deliverySlice = createSlice({
       state.deliveries = action.payload;
     });
 
+    builder.addCase(searchDeliveriesByClientName.fulfilled, (state, action) => {
+      state.deliveries = action.payload;
+    })
+
     builder.addCase(createDelivery.fulfilled, (state, action) => {
       const createdDelivery = action.payload;
       state.deliveries = [...state.deliveries, createdDelivery];
+      console.log(state.deliveries);
     });
 
     builder.addCase(createDelivery.rejected, (state) => {

@@ -30,14 +30,9 @@ const DelistatusTable = () => {
   const [selectedDeli, setSelectedDeli] = useState({});
   const deliveries = useSelector((state) => state.delivery.deliveries);
   const dispatch = useDispatch();
-
-  // const handlerClick = () => {
-  //   //click functionality
-  // };
-
+  
   useEffect(() => {
     dispatch(fetchDeliveries());
-    console.log("fetch deliveries  ");
   }, [dispatch]);
   return (
     <>
@@ -72,10 +67,10 @@ const DelistatusTable = () => {
                   {delivery.preorder_id}
                 </TableCell>
                 <TableCell className="text-[18px]">
-                  {delivery.preorder.client.name}
+                  {delivery.preorder?.client.name}
                 </TableCell>
                 <TableCell className="text-[18px]">
-                  {delivery.preorder.client.address}
+                  {delivery.preorder?.client.address}
                 </TableCell>
 
                 <TableCell
@@ -84,7 +79,7 @@ const DelistatusTable = () => {
                   }}
                 >
                   {/* Truck Moodle */}
-                  <TruckMoodle>
+                  <TruckMoodle delivery={delivery}>
                     <IoCar />
                   </TruckMoodle>
                 </TableCell>
