@@ -260,6 +260,7 @@ const PermissionTable = ({ dashboard }) => {
         alertRef={alert_ref}
       >
         <AlertDialogAction
+          className=" bg-black text-white hover:bg-slate-800 rounded-md border w-fit px-2"
           onClick={() =>
             setAlertData({
               orderId: dataToSubmit.orderId,
