@@ -16,9 +16,7 @@ import React, { useEffect } from "react";
 const PermissionPage = () => {
   return (
     <MainLayout>
-      <SidepageLayout>
-        <SearchBox />
-      </SidepageLayout>
+      <SidepageLayout>{/* <SearchBox /> */}</SidepageLayout>
       <SidepagebdyLayout>
         <PermissionTable dashboard={false} />
       </SidepagebdyLayout>

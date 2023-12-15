@@ -18,7 +18,7 @@ export function ConfirmAlert({ dialogText, alertRef, children }) {
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+          <AlertDialogTitle>Are you sure?</AlertDialogTitle>
           <AlertDialogDescription>{dialogText}</AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>

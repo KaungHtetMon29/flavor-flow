@@ -31,6 +31,7 @@ export const fetchPreOrderItems = createAsyncThunk(
 export const createPreOrder = createAsyncThunk(
   "create/preorders",
   async (newPreorder) => {
+    console.log(newPreorder, "new pre order from slice");
     const response = await axios.post(`${PREORDERURL}`, newPreorder);
     return response.data;
   }
@@ -39,9 +40,7 @@ export const createPreOrder = createAsyncThunk(
 export const updatePreOrder = createAsyncThunk(
   "update/preOrders",
   async ({ id, updateData }) => {
-    console.log("this is updateData", updateData);
     const response = await axios.patch(`${PREORDERURL}/${id}`, updateData);
-    console.log(response.data, "response data from api ");
     return response.data;
   }
 );
@@ -229,7 +228,6 @@ const preOrderSlice = createSlice({
       );
 
       state.filterOrderStatus = [...state.preOrders];
-      console.log(filterOrderStatus, "filter order status");
       state.urgentOrders = [...state.preOrders];
       state.unPermitOrders = state.preOrders.filter(
         (order) => order.permission === true

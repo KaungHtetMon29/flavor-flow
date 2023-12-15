@@ -28,6 +28,8 @@ import { updateStatus } from "../../redux/preOrderSlice";
 import { updatePreOrder } from "../../redux/preOrderSlice";
 import clsx from "clsx";
 import LoadingComp from "../loading/Loading";
+import { ConfirmAlert } from "../moodles/alertMoodle";
+import { AlertDialogAction } from "../ui/alert-dialog";
 const PermissionTable = ({ dashboard }) => {
   const [status, setStatus] = useState("pending");
   const dispatch = useDispatch();
@@ -39,7 +41,6 @@ const PermissionTable = ({ dashboard }) => {
   // const preOrders = useSelector((state) => state.preorder.preOrders);
   const urgentOrders = useSelector((state) => state.preorder.urgentOrders);
   ///for alert
-  const [alertData, setAlertData] = useState({});
   const [dataToSubmit, setDataToSubmit] = useState({ id: 0, grant: false });
   const alert_ref = useRef(0);
   //alert end
@@ -69,12 +70,6 @@ const PermissionTable = ({ dashboard }) => {
     dispatch(fetchPreOrders());
   }, []);
   //for alert
-  useEffect(() => {
-    if (alertData) {
-      handleClick(alertData.id, alertData.grant);
-    }
-  }, [alertData]);
-  //alert end
 
   return (
     <>
@@ -128,15 +123,8 @@ const PermissionTable = ({ dashboard }) => {
                     <TableCell className="flex justify-center gap-4 flex-row-reverse">
                       <p
                         className={clsx(" capitalize font-semibold ", {
-                          "text-yellow-500":
-                            urgentOrder.order_status.toLowerCase() ===
-                            "pending",
-                          "text-green-700":
-                            urgentOrder.order_status.toLowerCase() ===
-                            "delivered",
-                          "text-blue-500":
-                            urgentOrder.order_status.toLowerCase() ===
-                            "processing",
+                          "text-yellow-500": urgentOrder.permission,
+                          "text-green-700": !urgentOrder.permission,
                         })}
                       >
                         {urgentOrder.permission ? "NEED PERMISSION" : "GRANTED"}
@@ -194,9 +182,13 @@ const PermissionTable = ({ dashboard }) => {
                     <Button
                       variant="custom"
                       className={`text-[18px] w-48`}
-                      onClick={() =>
-                        handleClick(unPermitOrder.id, unPermitOrder.permission)
-                      }
+                      onClick={() => {
+                        setDataToSubmit({
+                          id: unPermitOrder.id,
+                          grant: unPermitOrder.permission,
+                        });
+                        alert_ref.current.click();
+                      }}
                       //   disabled={!unPermitOrder.permission}
                     >
                       {!unPermitOrder.permission
@@ -214,6 +206,16 @@ const PermissionTable = ({ dashboard }) => {
       ) : (
         <LoadingComp />
       )}
+      <ConfirmAlert
+        dialogText={`Are you sure to grant the permission`}
+        alertRef={alert_ref}
+      >
+        <AlertDialogAction
+          onClick={() => handleClick(dataToSubmit.id, dataToSubmit.grant)}
+        >
+          Continue
+        </AlertDialogAction>
+      </ConfirmAlert>
     </>
   );
 };
