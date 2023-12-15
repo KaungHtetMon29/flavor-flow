@@ -23,7 +23,7 @@ const DeliStatus = () => {
   return (
     <MainLayout>
       <SidepageLayout>
-        <SearchBox searchByClientName={searchByClientName} />
+        <SearchBox searchByClientName={searchByClientName} placeholder={'Search By Client Name'} />
       </SidepageLayout>
       <SidepagebdyLayout>
         <DelistatusTable />
