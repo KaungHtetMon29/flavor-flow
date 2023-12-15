@@ -167,6 +167,9 @@ export function StockTable() {
           <Table>
             <TableHeader className="sticky top-0 bg-white rounded-t-xl overflow-hidden">
               <TableRow>
+                <TableHead className="w-[200px] capitalize text-[22px]">
+                  Id
+                </TableHead>
                 <TableHead className="w-[500px] capitalize text-[22px]">
                   name
                 </TableHead>
@@ -176,7 +179,7 @@ export function StockTable() {
                 <TableHead className=" capitalize text-[22px] w-[300px] text-right">
                   unit price
                 </TableHead>
-                <TableHead className=" capitalize text-[22px] text-right">
+                <TableHead className=" capitalize text-[22px] text-right w-[400px]">
                   Expiry Date
                 </TableHead>
               </TableRow>
@@ -186,9 +189,12 @@ export function StockTable() {
                 <TableRow
                   key={stock.name}
                   className={`w-full h-16  ${
-                    i % 2 !== 0 ? "bg-primarycolor bg-opacity-10" : "bg-none"
+                    i % 2 !== 0 ? "bg-primarycolor bg-opacity-[.05]" : "bg-none"
                   }`}
                 >
+                  <TableCell className="font-medium text-[18px]">
+                    {stock.id}
+                  </TableCell>
                   <TableCell className="font-medium text-[18px]">
                     {stock.name}
                   </TableCell>
@@ -196,7 +202,7 @@ export function StockTable() {
                     {stock.quantity}
                   </TableCell>
                   <TableCell className="text-[18px] text-right">
-                    {stock.unit_price}
+                    {stock.unit_price.toString()} Ks
                   </TableCell>
                   <TableCell className="text-[18px] text-right">
                     {stock.stock_details[0]?.expiry_date}

@@ -32,9 +32,9 @@ export default function SaleMoodle({ hide, data }) {
         <h3 className="w-3/12">Region:</h3>
         <span>{data.client.region}</span>
       </div>
-
+      {console.log(orderItems)}
       <ListOverflow
-        total={data.total}
+        total={data}
         data={orderItems}
         header={"Ordere items"}
       ></ListOverflow>

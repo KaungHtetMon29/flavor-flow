@@ -70,7 +70,7 @@ const DeliveryTable = () => {
                     setSelectedDeliData(delivery);
                   }}
                   className={`w-full hover:bg-secondarycolor h-[72px] hover:text-white hover:bg-opacity-70 ${
-                    i % 2 !== 0 ? "bg-primarycolor bg-opacity-10" : "bg-none"
+                    i % 2 !== 0 ? "bg-primarycolor bg-opacity-[.05]" : "bg-none"
                   }`}
                 >
                   <TableCell className="font-medium text-[18px]">

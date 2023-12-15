@@ -59,13 +59,17 @@ export function PreorderTable() {
     dispatch(updateStatus({ id, value }));
     dispatch(updatePreOrder({ id, updateData }));
   };
-
+  // useEffect(() => {
+  //   setInterval(() => {
+  //     dispatch(fetchPreOrders());
+  //   }, 1000);
+  // }, []);
   return (
     <>
       {!isLoading.isLoading ? (
         filterOrderStatus.length > 0 ? (
           <Table className="border-b-2 border-primarycolor w-full">
-            <TableHeader>
+            <TableHeader className="sticky top-0 bg-white">
               <TableRow>
                 <TableHead className="w-[150px] text-[22px]">Id</TableHead>
                 <TableHead className="text-[22px] w-[400px]">

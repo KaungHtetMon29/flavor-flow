@@ -34,7 +34,11 @@ export default function DashboardPage() {
         </button>
       </SidepageLayout>
       <SidepagebdyLayout>
-        {mode === "permission" ? <PermissionTable dashboard={true}/> : <PreorderTable />}
+        {mode === "permission" ? (
+          <PermissionTable dashboard={true} />
+        ) : (
+          <PreorderTable />
+        )}
       </SidepagebdyLayout>
     </MainLayout>
   );

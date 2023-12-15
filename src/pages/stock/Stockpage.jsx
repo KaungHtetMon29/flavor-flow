@@ -16,19 +16,21 @@ import SidepageLayout from "@/layout/SidepageFrame";
 import SidepagebdyLayout from "@/layout/sidepagebdylayout";
 import { searchStock } from "@/redux/stockSlice";
 import React, { useEffect } from "react";
-import {useDispatch} from 'react-redux'
+import { useDispatch } from "react-redux";
 const Stockpage = () => {
   const dispatch = useDispatch();
 
   const searchByClientName = (clientName) => {
-    dispatch(searchStock(clientName))
-  }
-
+    dispatch(searchStock(clientName));
+  };
 
   return (
     <MainLayout>
       <SidepageLayout>
-        <SearchBox searchByClientName={searchByClientName} />
+        <SearchBox
+          searchByClientName={searchByClientName}
+          placeholder={"Enter Item Name"}
+        />
       </SidepageLayout>
       <SidepagebdyLayout>
         <StockTable />

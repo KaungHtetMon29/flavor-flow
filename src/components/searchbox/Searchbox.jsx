@@ -11,7 +11,7 @@ export default function SearchBox({ searchByClientName, placeholder }) {
         placeholder={placeholder}
         ref={inputref}
         type="text"
-        className="w-72 rounded-md border-black border-opacity-30 shadow-lg"
+        className="w-72 rounded-md border-black border-opacity-30 shadow-lg text-lg"
       />
       <Button
         className="text-[18px] bg-secondarycolor shadow-lg"

@@ -56,6 +56,7 @@ const PermissionTable = ({ dashboard }) => {
   };
   const loading = useSelector((state) => state.preorder.isLoading);
   useEffect(() => {
+    console.log();
     dispatch(fetchPreOrders());
   }, []);
 
@@ -82,7 +83,9 @@ const PermissionTable = ({ dashboard }) => {
                   <TableRow
                     key={urgentOrder.id}
                     className={`w-full  ${
-                      i % 2 !== 0 ? "bg-primarycolor bg-opacity-20" : "bg-none"
+                      i % 2 !== 0
+                        ? "bg-primarycolor bg-opacity-[.05]"
+                        : "bg-none"
                     }`}
                   >
                     <TableCell className="font-medium">
@@ -94,11 +97,14 @@ const PermissionTable = ({ dashboard }) => {
                       <p
                         className={clsx(" capitalize font-semibold ", {
                           "text-yellow-500":
-                            urgentOrder.order_status === "pending",
-                          "text-green-500":
-                            urgentOrder.order_status === "delivered",
+                            urgentOrder.order_status.toLowerCase() ===
+                            "pending",
+                          "text-green-700":
+                            urgentOrder.order_status.toLowerCase() ===
+                            "delivered",
                           "text-blue-500":
-                            urgentOrder.order_status === "processing",
+                            urgentOrder.order_status.toLowerCase() ===
+                            "processing",
                         })}
                       >
                         {urgentOrder.order_status}
@@ -106,7 +112,8 @@ const PermissionTable = ({ dashboard }) => {
                     </TableCell>
                     <TableCell className="flex justify-center gap-4 flex-row-reverse">
                       <Button
-                        className={`text-[18px]`}
+                        variant="custom"
+                        className={`text-[18px] w-48  `}
                         onClick={() =>
                           handleClick(urgentOrder.id, urgentOrder.permission)
                         }
@@ -152,11 +159,14 @@ const PermissionTable = ({ dashboard }) => {
                     <p
                       className={clsx(" capitalize font-semibold ", {
                         "text-yellow-500":
-                          unPermitOrder.order_status === "pending",
+                          unPermitOrder.order_status.toLowerCase() ===
+                          "pending",
                         "text-green-500":
-                          unPermitOrder.order_status === "delivered",
+                          unPermitOrder.order_status.toLowerCase() ===
+                          "delivered",
                         "text-blue-500":
-                          unPermitOrder.order_status === "processing",
+                          unPermitOrder.order_status.toLowerCase() ===
+                          "processing",
                       })}
                     >
                       {unPermitOrder.order_status}
@@ -164,7 +174,8 @@ const PermissionTable = ({ dashboard }) => {
                   </TableCell>
                   <TableCell className="flex justify-center gap-4 flex-row-reverse">
                     <Button
-                      className={`text-[18px]`}
+                      variant="custom"
+                      className={`text-[18px] w-48`}
                       onClick={() =>
                         handleClick(unPermitOrder.id, unPermitOrder.permission)
                       }

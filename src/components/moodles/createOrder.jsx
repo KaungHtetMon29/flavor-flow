@@ -16,14 +16,26 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { fetchStocks } from "@/redux/stockSlice";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 var currentId = 1;
-var defaultItemsInfo = [{ itemInfo: "", quantity: 0, price: 1000, id: 0 }];
+var defaultItemsInfo = [
+  {
+    itemInfo: "",
+    quantity: 0,
+    price: 0,
+    id: 0,
+    unit_price: 0,
+    availableQuantity: 10,
+  },
+];
 export default function AddNewOrder() {
+  const userId = useSelector((state) => state.authentication.user_id);
+  const navi = useNavigate();
   const [itemData, setItemData] = useState(defaultItemsInfo);
 
   const [currentSearching, setCurrentSearching] = useState(false);
-
-  const [selectedItemInfo, setSelectedItemInfo] = useState([]);
+  const [totalprice, settotalprice] = useState(0);
+  const [selectedItemInfo, setSelectedItemInfo] = useState({});
 
   const [clientNameCheck, setClientNameCheck] = useState("");
 
@@ -49,7 +61,14 @@ export default function AddNewOrder() {
       currentId += 1;
       setItemData((items) => [
         ...items,
-        { itemInfo: "", quantity: 0, price: 1000, id: currentId },
+        {
+          itemInfo: "",
+          quantity: 0,
+          price: 0,
+          id: currentId,
+          unit_price: 0,
+          availableQuantity: 10,
+        },
       ]);
     }
   };
@@ -60,17 +79,24 @@ export default function AddNewOrder() {
 
   const total = useMemo(() => {
     let total = 0;
-    defaultItemsInfo.forEach((item) => (total += item.price));
+    console.log("ran memo");
+    itemData.forEach((item) => (total += item.price));
+    settotalprice(total);
     return total;
-  }, [defaultItemsInfo]);
+  }, [itemData]);
 
   const handleChangeQuantity = (quantity, id) => {
     setItemData((itemData) =>
       itemData.map((item) => {
         if (item.id === id) {
+          const validQuantity =
+            quantity <= item.availableQuantity
+              ? quantity
+              : item.availableQuantity;
           return {
             ...item,
-            quantity: quantity,
+            quantity: validQuantity,
+            price: validQuantity * item.unit_price,
           };
         }
         return item;
@@ -78,22 +104,17 @@ export default function AddNewOrder() {
     );
   };
 
-  const handleChangeItemInfo = () => {
+  const handleChangeItemInfo = (incomingItem) => {
     setCurrentSearching(false);
+    console.log(incomingItem, "is incoming item");
     setItemData((itemData) =>
       itemData.map((item) => {
-        if (item.id === selectedItemInfo.id) {
-          return {
-            ...item,
-            itemInfo: selectedItemInfo.itemInfo,
-            quantity: selectedItemInfo.quantity,
-            price: selectedItemInfo.price,
-          };
+        if (item.id === incomingItem.id) {
+          return incomingItem;
         }
         return item;
       })
     );
-    console.log(itemData);
   };
 
   //Client info and Due Date info Validation// line 117 and line 127
@@ -110,6 +131,7 @@ export default function AddNewOrder() {
     sethasTouchedDate(true);
   };
   const dispatch = useDispatch();
+
   return (
     <>
       <div className=" w-full h-full flex flex-col text-[20px] gap-2 overflow-hidden">
@@ -120,6 +142,7 @@ export default function AddNewOrder() {
               {/* <Blah
 							/> */}
               <input
+                placeholder="Enter Client ID"
                 type="text"
                 className={`border-primary p-2 rounded-md min-w-[200px] border outline-primary h-10 ${
                   hasTouched && clientNameCheck.length === 0
@@ -169,16 +192,23 @@ export default function AddNewOrder() {
                         setSelectedItemInfo(item);
                       }}
                     >
-                      {item.itemInfo}
+                      {item.itemInfo.length === 0
+                        ? "Click Here To Select"
+                        : item.itemInfo}
                     </Button>
                   </div>
                   <div className="flex justify-between items-center">
                     <label className="mr-2">Quantity:</label>
-                    <Input
+                    <input
                       type="number"
-                      className={clsx(" block outline-none  ", {
-                        " outline-1 outline-red-500": item.quantity <= 0,
-                      })}
+                      min={0}
+                      max={item.availableQuantity}
+                      className={clsx(
+                        " block outline-none p-2 min-w-[100px] border rounded-md  ",
+                        {
+                          " outline-1 outline-red-500": item.quantity <= 0,
+                        }
+                      )}
                       value={item.quantity}
                       onChange={(e) =>
                         handleChangeQuantity(e.target.value, item.id)
@@ -221,7 +251,12 @@ export default function AddNewOrder() {
 
         <div className="flex gap-16 items-center w-full  mx-2">
           <div className="flex gap-2">
-            <Button className={"w-fit text-[18px]"}>Cancel</Button>
+            <Button
+              className={"w-fit text-[18px]"}
+              onClick={() => navi("/sale/preorder")}
+            >
+              Cancel
+            </Button>
             <Button
               className={`w-fit ftext-[18px] bg-primary text-primary-foreground hover:bg-primary/90 ${
                 !isValidToSubmit() && "bg-slate-500 hover:bg-slate-500"
@@ -234,7 +269,15 @@ export default function AddNewOrder() {
               }`}
               onClick={() => {
                 if (isValidToSubmit()) {
-                  Formupload(clientNameCheck, dueDate, itemData, urgent, note);
+                  Formupload(
+                    clientNameCheck,
+                    dueDate,
+                    itemData,
+                    urgent,
+                    note,
+                    totalprice,
+                    userId
+                  );
                 } else {
                   console.log("hi");
                 }
@@ -281,7 +324,7 @@ export default function AddNewOrder() {
                 <IoMdArrowRoundBack />
               </Button>
               <ItemName
-                onSelectInfo={setSelectedItemInfo}
+                onSelectInfo={handleChangeItemInfo}
                 data={selectedItemInfo}
               />
               {console.log(selectedItemInfo)}
@@ -296,23 +339,68 @@ export default function AddNewOrder() {
   );
 }
 
-export const Formupload = (client, date, items, urgent, note) => {
-  console.log({
-    client: client,
-    date: date,
-    items: items,
-    urgent: urgent,
-    note: note,
-  });
+export const Formupload = (
+  client,
+  date,
+  items,
+  urgent,
+  note,
+  totalprice,
+  userId
+) => {
+  console.log(items);
+  const totalquantity = () => {
+    let total = 0;
+    for (let i of items) {
+      total = total + Number(i.quantity);
+    }
+    return total;
+  };
+  const data = {
+    preorder: {
+      client_id: client,
+      quantity: totalquantity(),
+      order_date: date,
+      total: totalprice,
+      urgent: urgent,
+      user_id: userId,
+      note: note,
+    },
+    preorder_items: items.map((e) => ({
+      stock_id: e.itemId,
+      quantity: e.quantity,
+    })),
+  };
+  axios
+    .post("https://flavor-wave-api.onrender.com/api/v1/preorders", data)
+    .then(function (response) {
+      console.log(data);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
 };
 
 export function ItemName({ onSelectInfo, data, selectedCommandItem }) {
   const stockselector = useSelector((state) => state.stock);
   //redux data
-  const truckLists = stockselector.stocks;
-  const [allTruck, setAllTruck] = useState(truckLists);
+  // const truckLists = stockselector.stocks;
+  const [allTruck, setAllTruck] = useState();
   const [commandText, setCommandText] = useState("");
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState({});
+  //   const [finalItem, setFinalItem] = useState({});
+
+  console.log(allTruck, "is trucklsit");
+  const handleChangeItemInfo = (item) => {
+    onSelectInfo({
+      ...data,
+      itemId: item.id,
+      availableQuantity: item.quantity,
+      price: data.quantity * item.unit_price,
+      unit_price: item.unit_price,
+      itemInfo: item.name,
+    });
+  };
 
   useEffect(() => {
     if (!commandText) {
@@ -327,6 +415,7 @@ export function ItemName({ onSelectInfo, data, selectedCommandItem }) {
           `https://flavor-wave-api.onrender.com/api/v1/stocks?search=${commandText}`
         )
         .then((response) => {
+          console.log(response);
           // Assuming the server response is an array of data
           setAllTruck(response.data);
         });
@@ -366,12 +455,10 @@ export function ItemName({ onSelectInfo, data, selectedCommandItem }) {
                 key={truck.id}
                 value={truck.name}
                 onSelect={(currentValue) => {
-                  setValue(currentValue === value ? "" : currentValue);
+                  console.log(truck, "is truck on slec");
+                  setValue(truck);
                   setCommandText(currentValue);
-                  onSelectInfo({
-                    ...data,
-                    itemInfo: currentValue,
-                  });
+                  handleChangeItemInfo(truck);
                 }}
               >
                 {truck.name}
